@@ -1962,3 +1962,134 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_195400
+- Request time: 2026-04-02 19:54:00 BST
+- User instruction: up the size of the page titles for the 4 main pages, home, calendar, flock, sales to our h1 style
+- Notes: deploy started
+
+## deploy_195400
+- Request time: 2026-04-02 19:54:00 BST
+- User instruction: up the size of the page titles for the 4 main pages, home, calendar, flock, sales to our h1 style
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_195700
+- Request time: 2026-04-02 19:57:00 BST
+- User instruction: make the page title style properly dominant so it feels unmistakably H1, not H2-ish
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_200700
+- Request time: 2026-04-02 20:07:00 BST
+- User instruction: WeeklySummaryCard tweaks: bigger subtext, updated positive/negative copy, make trend icon the background of the corner card, and make X% bigger in grey H3 styling
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_201100
+- Request time: 2026-04-02 20:11:00 BST
+- User instruction: WeeklySummaryCard: center X%, halve trend card size, increase trend icon opacity to about 75%, and create H3 Sub-text style in TypographySampleBlock for the subtext
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_202300
+- Request time: 2026-04-02 20:23:00 BST
+- User instruction: WeeklySummaryCard: remove trend icon, double the trend card size, center the X% value in green/red, and double the H3 Sub-text font size
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_202400
+- Request time: 2026-04-02 20:24:00 BST
+- User instruction: put the standard gradient background we are using into a variable so it can be controlled centrally later
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_202600
+- Request time: 2026-04-02 20:26:00 BST
+- User instruction: reduce H3 Sub-text by 25% and halve its weight, and keep the trend card structure but make it transparent so the red/green value remains
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_203000
+- Request time: 2026-04-02 20:30:00 BST
+- User instruction: in the FillEffects section show the gradient variable as text above the existing container, and add a second container using the current gradient the same size as the first
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_204700
+- Request time: 2026-04-02 20:47:00 BST
+- User instruction: ProfitLossCard: change SALES/EXPENSE to IN/OUT, tighten gaps, move Cluck Statement to the top, make Cluck Statement H3-sized with conditional colour, use sales-green/red image by value, and ensure gradient cards use the shared gradient variable
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205100
+- Request time: 2026-04-02 20:51:00 BST
+- User instruction: ProfitLossCard: hide IN and OUT, reduce the +/- values by 25%, and make the +/- values grey
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205300
+- Request time: 2026-04-02 20:53:00 BST
+- User instruction: add global default plus local override support for the shared surface gradient while components are still centralised
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205500
+- Request time: 2026-04-02 20:55:00 BST
+- User instruction: ProfitLossCard final tweaks: reduce vertical gap below the Cluck card as much as possible, remove the divider between the lower values, and pull the values slightly inward with about 20px outside margin
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205700
+- Request time: 2026-04-02 20:57:00 BST
+- User instruction: ProfitLossCard: add a touch more margin on the lower values, about another 10px
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205800
+- Request time: 2026-04-02 20:58:00 BST
+- User instruction: make the Cluck card transparent
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_212500
+- Request time: 2026-04-02 21:25:00 BST
+- User instruction: MiniStatCardHalf: use ico-fried-egg and ico-chick, rename labels to Yokes to Go and Buns to Cook, and ensure the background follows the shared gradient variable setup
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213800
+- Request time: 2026-04-02 21:38:00 BST
+- User instruction: redeploy updated ico-chick.png asset
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214500
+- Request time: 2026-04-02 21:45:00 BST
+- User instruction: redeploy latest asset state again
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214700
+- Request time: 2026-04-02 21:47:00 BST
+- User instruction: deploy the newly updated ico-chick.png after minor edits
+- Notes: deploy started
+
+- Result: deployed successfully
+

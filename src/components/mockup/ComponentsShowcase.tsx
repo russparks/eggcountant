@@ -15,8 +15,9 @@ import navIconHome from '../../../media/nav-icons/lm-home.png';
 import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
 import navIconFlock from '../../../media/nav-icons/lm-flock.png';
 import navIconSales from '../../../media/nav-icons/lm-sales.png';
+import { SURFACE_GRADIENT } from '../../constants';
 
-const surfaceGradient = 'bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#c4b2f4_100%)]';
+const surfaceGradient = SURFACE_GRADIENT;
 
 const formatDisplayDate = (value: string) => {
   if (!value) return '';
@@ -25,8 +26,9 @@ const formatDisplayDate = (value: string) => {
   return `${day}/${month}/${year.slice(-2)}`;
 };
 
-function ShellCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={`rounded-[var(--ui-radius)] bg-white shadow-[0_10px_30px_rgba(47,31,77,0.08)] border border-white/60 ${className}`}>{children}</div>;
+function ShellCard({ children, className = '', surfaceGradient = SURFACE_GRADIENT }: { children: React.ReactNode; className?: string; surfaceGradient?: string }) {
+  const resolvedClassName = className.replaceAll(SURFACE_GRADIENT, surfaceGradient);
+  return <div className={`rounded-[var(--ui-radius)] bg-white shadow-[0_10px_30px_rgba(47,31,77,0.08)] border border-white/60 ${resolvedClassName}`}>{children}</div>;
 }
 
 function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAccountModal, openLogoutConfirm }: { hidden: boolean; settingsOpen: boolean; setSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>; closeBottomNav: () => void; openAccountModal: () => void; openLogoutConfirm: () => void }) {
@@ -276,6 +278,9 @@ function TypographySampleBlock() {
           <div className="text-[1.35rem] font-bold leading-tight text-[#6f4bb8]">H3 / Card Title</div>
         </div>
         <div>
+          <div className="text-[1.215rem] font-medium leading-tight text-[#9E9E9E]">H3 Sub-text / Grey supporting line for cards and summaries</div>
+        </div>
+        <div>
           <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Label / Form Label</div>
         </div>
         <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
@@ -320,15 +325,15 @@ function MetricCard({ title, value, subtitle, tone = 'purple', translucent = fal
   );
 }
 
-function WeeklySummaryCard({ trend = '+12%', positive = true, headline = <>Your girls laid <span className="font-bold">94</span> eggs and earned you <span className="font-bold">£13.25</span> in profit!</>, subtext = 'Cheeky little bump from last week, Willow continues to show egg-stra effort...' }: { trend?: string; positive?: boolean; headline?: React.ReactNode; subtext?: React.ReactNode }) {
+function WeeklySummaryCard({ trend = '+12%', positive = true, headline = <>Your girls laid <span className="font-bold">94</span> eggs and earned you <span className="font-bold">£13.25</span> in profit!</>, subtext = positive ? 'Willow continues to show egg-stra effort, if she had a hand she\'d deserve a high-five...' : 'Mabel might still claw it back with some egg-streme hustle, if she has it in her...' }: { trend?: string; positive?: boolean; headline?: React.ReactNode; subtext?: React.ReactNode }) {
   return (
     <ShellCard className={`overflow-hidden border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8]`}>
       <div className="relative min-h-[120px]">
-        <div data-component="WeeklySummaryCardTrendPill" className="float-right ml-2 mb-2 rounded-[var(--ui-radius)] bg-white/90 px-4 py-3 text-right shadow-sm backdrop-blur-sm">
-          <div data-component="WeeklySummaryCardTrendValue" className="mt-1 flex items-center gap-2 text-lg font-semibold text-[#6f4bb8]">{positive ? <TrendingUp data-component="WeeklySummaryCardTrendIcon" className="text-emerald-500" size={18} /> : <TrendingDown data-component="WeeklySummaryCardTrendIcon" className="text-rose-500" size={18} />} {trend}</div>
+        <div data-component="WeeklySummaryCardTrendPill" className="relative float-right ml-2 mb-2 flex h-[5.4rem] w-[7.5rem] items-center justify-center overflow-hidden rounded-[var(--ui-radius)] bg-white/0 px-3 py-3 text-center shadow-none backdrop-blur-none">
+          <div data-component="WeeklySummaryCardTrendValue" className={`relative text-[1.9rem] font-bold leading-none ${positive ? 'text-emerald-500' : 'text-rose-500'} sm:text-[2.05rem]`}>{trend}</div>
         </div>
         <h2 data-component="WeeklySummaryCardHeadline" className="text-[1.6rem] font-normal leading-tight text-[#6f4bb8]">{headline}</h2>
-        <p data-component="WeeklySummaryCardSubtext" className="mt-2 max-w-[42rem] text-sm text-[#c4b2f4]">{subtext}</p>
+        <p data-component="WeeklySummaryCardSubtext" className="mt-2 max-w-[42rem] text-[1.215rem] font-medium leading-tight text-[#9E9E9E]">{subtext}</p>
         <div className="clear-both" />
       </div>
     </ShellCard>
@@ -343,21 +348,10 @@ function ProfitLossCard() {
 
   return (
     <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex-1">
-          <div className="text-[1.69rem] font-bold text-[#6f4bb8]">+£13.25</div>
-          <div className="mt-px text-[0.9rem] uppercase text-[#9E9E9E]">Sales</div>
-        </div>
-        <div className="h-12 w-px shrink-0 bg-slate-200" />
-        <div className="flex-1 text-right">
-          <div className="text-[1.69rem] font-bold text-[#6f4bb8]">-£6.80</div>
-          <div className="mt-px text-[0.9rem] uppercase text-[#9E9E9E]">Expenses</div>
-        </div>
-      </div>
-      <div className="mt-5 rounded-[var(--ui-radius)] bg-white/80 px-4 py-4 shadow-sm border border-white/60">
+      <div className="rounded-[var(--ui-radius)] bg-white/0 px-4 py-4 shadow-none border border-transparent">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <div className={`m-0 text-[0.8rem] uppercase ${netPositive ? 'text-emerald-500' : 'text-rose-500'}`}>Cluck Statement</div>
+            <div className={`m-0 text-[1.35rem] font-bold leading-tight ${netPositive ? 'text-emerald-500' : 'text-rose-500'}`}>Cluck Statement</div>
             <div className={`mt-1 text-[2.25rem] font-bold ${netPositive ? 'text-emerald-500' : 'text-rose-500'}`}>
               {netPositive ? '+' : '-'}£{Math.abs(net).toFixed(2)}
             </div>
@@ -368,6 +362,17 @@ function ProfitLossCard() {
             alt=""
             className="h-21 w-auto object-contain"
           />
+        </div>
+      </div>
+
+      <div className="mt-1 flex items-center justify-between gap-0 px-5">
+        <div className="flex-1 ml-[30px]">
+          <div className="text-[1.2675rem] font-bold leading-none text-[#9E9E9E]">+£13.25</div>
+          <div className="hidden mt-[5px] text-[0.9rem] uppercase leading-none text-[#9E9E9E]">IN</div>
+        </div>
+        <div className="flex-1 mr-[30px] text-right">
+          <div className="text-[1.2675rem] font-bold leading-none text-[#9E9E9E]">-£6.80</div>
+          <div className="hidden mt-[5px] text-[0.9rem] uppercase leading-none text-[#9E9E9E]">OUT</div>
         </div>
       </div>
     </ShellCard>
@@ -2340,7 +2345,7 @@ export default function ComponentsShowcase() {
       ) : null}
 
       <div className="mx-auto max-w-6xl px-4 pt-5 sm:px-6 lg:px-8">
-        <h2 data-component="PageTitleText" className="text-[1.6rem] font-black italic leading-none tracking-tight text-[#6f4bb8] sm:text-[1.88rem]">
+        <h2 data-component="PageTitleText" className="text-[2.55rem] font-black italic leading-[0.94] tracking-tight text-[#6f4bb8] sm:text-[2.8rem]">
           This week, <span className="text-[#6f4bb8]">in a <span><span data-component="PageTitleStrikeWord" className="opacity-50 line-through">Nut</span>shell...</span></span>
         </h2>
       </div>
@@ -2399,10 +2404,10 @@ export default function ComponentsShowcase() {
             <ComponentLabel name="MiniStatCardHalf" />
             <div className="grid grid-cols-2 gap-6">
               <div>
-                <MiniStatCardHalf title="Yokes Broke" value="12" icon="/egg/media/icons/1-fried.png" align="left" />
+                <MiniStatCardHalf title="Yokes to Go" value="12" icon="/egg/media/icons/ico-fried-egg.png" align="left" />
               </div>
               <div>
-                <MiniStatCardHalf title="Buns Cooked" value="6" icon="/egg/media/icons/1-hatching.png" align="right" />
+                <MiniStatCardHalf title="Buns to Cook" value="6" icon="/egg/media/icons/ico-chick.png" align="right" />
               </div>
             </div>
           </div>
@@ -2485,7 +2490,9 @@ export default function ComponentsShowcase() {
 
           <div className="grid gap-6">
             <div><ComponentLabel name="FillEffects" /></div>
+            <div className="text-[0.95rem] font-medium leading-relaxed text-[#9E9E9E] break-all">SURFACE_GRADIENT = {SURFACE_GRADIENT}</div>
             <div><BlankProfileCard /></div>
+            <div><div className={`relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3`} /></div>
           </div>
 
           <div className="grid gap-6">

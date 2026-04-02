@@ -4,8 +4,9 @@ import navIconHome from '../../../media/nav-icons/lm-home.png';
 import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
 import navIconFlock from '../../../media/nav-icons/lm-flock.png';
 import navIconSales from '../../../media/nav-icons/lm-sales.png';
+import { SURFACE_GRADIENT } from '../../constants';
 
-const surfaceGradient = 'bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#c4b2f4_100%)]';
+const surfaceGradient = SURFACE_GRADIENT;
 
 type PageKey = 'home' | 'calendar' | 'flock' | 'sales' | 'blank';
 type ModalKey = 'none' | 'account' | 'logout' | 'eggs' | 'chicks' | 'meds' | 'expense';
@@ -933,7 +934,7 @@ function HomeContent() {
 function PlaceholderContent({ title }: { title: string }) {
   return (
     <div className="w-full">
-      <h1 className="text-[1.6rem] font-black italic leading-none tracking-tight text-[#6f4bb8] sm:text-[1.88rem]">
+      <h1 className="text-[2.55rem] font-black italic leading-[0.94] tracking-tight text-[#6f4bb8] sm:text-[2.8rem]">
         {title}
       </h1>
     </div>
