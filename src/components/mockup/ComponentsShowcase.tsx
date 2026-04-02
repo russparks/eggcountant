@@ -1,4 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
+
+declare global {
+  interface Window {
+    visualViewport?: {
+      height: number;
+      offsetTop: number;
+      addEventListener: (type: string, listener: EventListenerOrEventListenerObject) => void;
+      removeEventListener: (type: string, listener: EventListenerOrEventListenerObject) => void;
+    };
+  }
+}
 import { Egg, TrendingUp, TrendingDown, MapPin, CalendarDays, Home, Calendar, Users, PoundSterling, ChevronUp } from 'lucide-react';
 import navIconHome from '../../../media/nav-icons/lm-home.png';
 import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
@@ -1369,9 +1380,13 @@ function BottomNavMock({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModa
           onClick={() => setMenuOpen(false)}
         />
       ) : null}
-      <div className="fixed bottom-0 left-0 right-0 z-50 overflow-visible">
-        <div className="relative h-[4.8rem] overflow-visible border-t-[1.2px] border-slate-200 bg-white/95 backdrop-blur-[2px]">
-          <div className="absolute left-1/2 bottom-0 z-[60] flex -translate-x-1/2 flex-col items-center gap-3">
+      <div className="fixed inset-x-0 bottom-0 z-40 pointer-events-none">
+        <div className="h-[6.07rem] border-t-[1.2px] border-slate-200 bg-white/95 backdrop-blur-[2px]" />
+      </div>
+
+      <div className="fixed inset-x-0 bottom-0 z-50 overflow-visible">
+        <div className="relative h-[6.07rem] overflow-visible">
+          <div className="absolute left-1/2 bottom-[20%] z-[60] flex -translate-x-1/2 flex-col items-center gap-3">
             {menuOpen ? (
               <div className="mb-2 grid gap-[0.7rem] animate-[fadeSlideUp_220ms_ease-out]">
                 {speedDialItems.map((item) => (
@@ -1413,19 +1428,19 @@ function BottomNavMock({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModa
                 setMenuOpen((open) => !open);
               }}
             >
-              <img src="/egg/media/icons/big-egg-button.png" alt="Add" className="block h-full w-full object-contain" />
+              <img src="/egg/media/icons/big-egg-button.png" alt="Add" className="block h-full w-full object-contain drop-shadow-[0_14px_24px_rgba(111,75,184,0.66)]" />
             </button>
           </div>
 
-          <div className="relative z-10 mx-auto grid h-full max-w-[32rem] grid-cols-[1fr_1fr_6.25rem_1fr_1fr] items-center gap-0 px-3 text-center sm:px-4">
+          <div className="relative z-10 mx-auto grid h-[6.07rem] max-w-[32rem] grid-cols-[1fr_1fr_6.25rem_1fr_1fr] items-center gap-0 px-3 text-center sm:px-4">
               <button className="flex h-full justify-self-start flex-col items-center justify-center text-[#6f4bb8]">
                 <img src={navIcons.home} alt="Home" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
               </button>
-              <button className="flex h-full justify-self-start flex-col items-center justify-center text-[#c4b2f4]">
+              <button className="flex h-full justify-self-start translate-x-[0.18rem] flex-col items-center justify-center text-[#c4b2f4]">
                 <img src={navIcons.calendar} alt="Calendar" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
               </button>
               <div className="h-full min-w-[6.25rem]" />
-              <button className="flex h-full justify-self-end flex-col items-center justify-center text-[#c4b2f4]">
+              <button className="flex h-full justify-self-end -translate-x-[0.18rem] flex-col items-center justify-center text-[#c4b2f4]">
                 <img src={navIcons.flock} alt="Flock" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
               </button>
               <button className="flex h-full justify-self-end flex-col items-center justify-center text-[#c4b2f4]">

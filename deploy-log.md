@@ -1745,3 +1745,178 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_150900
+- Request time: 2026-04-02 15:09:00 BST
+- User instruction: Add a core purples palette grid under the architecture map and above everything else, with each colour shown as a shape and its hex code displayed in that same colour.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_151000
+- Request time: 2026-04-02 15:10:00 BST
+- User instruction: Add a quick typography sample block beneath the core purples palette showing h1, h2, h3, labels, input text, helper copy, and button styles currently in use.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_151200
+- Request time: 2026-04-02 15:12:00 BST
+- User instruction: Normalize colours: replace #8b5cf6 and #7c3aed with #6f4bb8, replace #8c79bb with #c4b2f4, and replace #f6f1ff with #c4b2f4 throughout the components mockup file.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_151300
+- Request time: 2026-04-02 15:13:00 BST
+- User instruction: Remove duplicated colour samples from the palette block and add the greys currently used for text.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_151800
+- Request time: 2026-04-02 15:18:00 BST
+- User instruction: Replace all remaining #c7b2f7 usages with #c4b2f4 and remove #c7b2f7 from the colour block.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_152000
+- Request time: 2026-04-02 15:20:00 BST
+- User instruction: Replace all remaining #8f79c6 instances with #c4b2f4.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_152200
+- Request time: 2026-04-02 15:22:00 BST
+- User instruction: Remove the spare duplicated #c4b2f4 blocks from the palette sample area and label the remaining colours as purple, mid-purple, lightpurple, grey, and purplegrey.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_152500
+- Request time: 2026-04-02 15:25:00 BST
+- User instruction: Change the page background to the lightpurple colour.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_162500
+- Request time: 2026-04-02 16:25:00 BST
+- User instruction: Switch the bottom nav to the new lm-* icon set in media/nav-icons everywhere and remove the small-phone conditional icon logic for now.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_164010
+- Request time: 2026-04-02 16:40:10 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_164247
+- Request time: 2026-04-02 16:42:47 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_164841
+- Request time: 2026-04-02 16:48:41 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_165253
+- Request time: 2026-04-02 16:52:53 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_165427
+- Request time: 2026-04-02 16:54:27 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_165652
+- Request time: 2026-04-02 16:56:52 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_165847
+- Request time: 2026-04-02 16:58:47 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_170014
+- Request time: 2026-04-02 17:00:14 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_170322
+- Request time: 2026-04-02 17:03:22 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_170533
+- Request time: 2026-04-02 17:05:33 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_170831
+- Request time: 2026-04-02 17:08:31 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_171036
+- Request time: 2026-04-02 17:10:36 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_171225
+- Request time: 2026-04-02 17:12:24 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_171541
+- Request time: 2026-04-02 17:15:41 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_171756
+- Request time: 2026-04-02 17:17:56 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_171917
+- Request time: 2026-04-02 17:19:17 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
