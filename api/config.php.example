@@ -1,0 +1,14 @@
+<?php
+return [
+    'allowed_origins' => [
+        'http://localhost:3000',
+        'https://your-domain.example',
+    ],
+    'db' => [
+        'host' => 'localhost',
+        'name' => 'eggcountant',
+        'user' => 'root',
+        'password' => 'your-password-here',
+        'charset' => 'utf8mb4',
+    ],
+];

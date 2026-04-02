@@ -1,0 +1,1481 @@
+# egg2 deploy log
+
+Use one entry per deploy checkpoint.
+
+Format:
+- Checkpoint: `deploy_HHMMSS`
+- Request time: `YYYY-MM-DD HH:MM:SS TZ`
+- User instruction: `<original edit/deploy request>`
+- Notes: `<what changed / what was deployed / rollback hints>`
+
+## deploy_210100
+- Request time: 2026-03-30 21:01:00 BST
+- User instruction: 1. the sales and expense font that is currently at 1.47rem, i need it to be about 15% larger
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_211800
+- Request time: 2026-03-30 21:18:00 BST
+- User instruction: change the Sales label (the text label not the monetary value) to the sale purple as the font in the weeklysummarycards
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213700
+- Request time: 2026-03-30 21:37:00 BST
+- User instruction: lets go with all caps on it, increase font size by 50%, remove margins from it
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213800
+- Request time: 2026-03-30 21:38:00 BST
+- User instruction: that was more than 50% lol, reduce by half of what you increased it by
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213900
+- Request time: 2026-03-30 21:39:00 BST
+- User instruction: reduce the padding of this to py-3
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214200
+- Request time: 2026-03-30 21:42:00 BST
+- User instruction: i want the text in the ProfitLossCard to be left aligned with the text in the WeeklySummaryCard, make their respective padding and margins the same
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214500
+- Request time: 2026-03-30 21:45:00 BST
+- User instruction: 1. reduce the gap between SALES and the sales value by half 2. style the Expenses text the same as the Sales text 3. style Cluck Statement text the same as the Sales text 4. reduce the size of the Cluck Statement value (currently +£6.45) by half
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214700
+- Request time: 2026-03-30 21:47:00 BST
+- User instruction: 1. reduce the size of cluck statement text by 25% 2. reduce sales text by 20% 3. reduce expenses text by 20%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_220500
+- Request time: 2026-03-30 22:05:00 BST
+- User instruction: place the sales and expense texts below their value, reduce their size by 10%, and change their colour to #9E9E9E, then change the colour of their values (+13.25 and -£6.80 to the standard purple)
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_220700
+- Request time: 2026-03-30 22:07:00 BST
+- User instruction: 1. reduce the vertical gap between sales / expense and their values by 50% 2. reduce cluck statement text by 15% and make it be green if positive, red if negative
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_220900
+- Request time: 2026-03-30 22:09:00 BST
+- User instruction: 1. reduce the vertical margin between the sales / expense text and the cluck statement card by half 2. if the cluckstatement value is positive, add a green, 1px solid border to the cluck statement card, red if negative
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_221000
+- Request time: 2026-03-30 22:10:00 BST
+- User instruction: revert
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_221900
+- Request time: 2026-03-30 22:19:00 BST
+- User instruction: use the menu-icon.png file for now
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222100
+- Request time: 2026-03-30 22:21:00 BST
+- User instruction: use sales-green.png to see if that works
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222500
+- Request time: 2026-03-30 22:25:00 BST
+- User instruction: add a copy of the ministatcard section directly below the existing one, call it ministatcardhalf
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222900
+- Request time: 2026-03-30 22:29:00 BST
+- User instruction: only one of them needs a ministatcard section title, its confusing to duplicate titles
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_223100
+- Request time: 2026-03-30 22:31:00 BST
+- User instruction: same with the metriccard and hencard
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_223100
+- Request time: 2026-03-30 22:31:00 BST
+- User instruction: in the ministatcardhalf section, those two cards need to be side by side, not on top of each other
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_223300
+- Request time: 2026-03-30 22:33:00 BST
+- User instruction: i think this has happened because you have put the section title text inside the ministatcard section, rather than spanning 100% above it
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_224300
+- Request time: 2026-03-30 22:43:00 BST
+- User instruction: in those half containers, id like the following - justified left and right accordingly: 1. card title, same size and style as the SALES and EXPENSES text (just put TITLE for now) 2. icon, 40% the size of the container (use 1-fried.png on the left card, and 1-hatching.png on the right card) these should be to the left in the left container, and right in the right container 3. value text (use 12 for the left, and 6 for the right) bold text, 1.6rem, aligned on the same row as the icon, but to the opposite side of the container
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225100
+- Request time: 2026-03-30 22:51:00 BST
+- User instruction: 1. icons need to half equal height so the cards have equal height 2. value text needs to be twice as large with increased padding (extra margin right for the left icon, extra margin left for the right icon)
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225300
+- Request time: 2026-03-30 22:53:00 BST
+- User instruction: reduce the value font size by 15%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225400
+- Request time: 2026-03-30 22:54:00 BST
+- User instruction: reduce the icon size by 15%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225700
+- Request time: 2026-03-30 22:57:00 BST
+- User instruction: 1. reduce the gap between card title and icon by half 2. the left card title should read Yokes Broke, and the right should say Oven Buns 3. text should be the purple
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225900
+- Request time: 2026-03-30 22:59:00 BST
+- User instruction: move the ministatcardhalf section up so its beneath the profitlosscard section
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_230000
+- Request time: 2026-03-30 23:00:00 BST
+- User instruction: swap sides with the icon and the value text, so the left card has the value on the left and icon on the right etc.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_230200
+- Request time: 2026-03-30 23:02:00 BST
+- User instruction: change oven buns to buns cooked
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_230400
+- Request time: 2026-03-30 23:04:00 BST
+- User instruction: move the hencard section beneath the ministatcardhalf section
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_231100
+- Request time: 2026-03-30 23:11:00 BST
+- User instruction: hencard edit: 1. hen name - m-0 1.4rem bold #6f4bb8 2. replace medal emoji with media/gold.png, silver, bronze 3. reduce vertical gap between hen name and value as much as possible 4. add horizontal progress bar light purple on grey bg with values 66/51/46 5. change bottom text to XX% Egg Bossing with random up/down emoji
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_231300
+- Request time: 2026-03-30 23:13:00 BST
+- User instruction: remove the up down emojis, increase the egg bossing text size by 50%, same purple as the progress bar
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_231800
+- Request time: 2026-03-30 23:18:00 BST
+- User instruction: 1. remove eggs from the value and add an icon called 1-egg.png, about 70% height of value text 2. increase hen name font by 50% 3. change hen name colour to match trophy FFCC01/999999/CC6602 4. add coop name after hen name at 50% smaller, uppercase, same grey as Sales/Expenses
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_232200
+- Request time: 2026-03-30 23:22:00 BST
+- User instruction: 1. the padding needs to be the same as the padding on the ministatcardhalf cards 2. add the standard bg gradient 3. reduce the gap between hen name and coop name 4. increase size of coop name by double 5. float the coop name to the right of the egg bossing text 6. increase the egg value font size by 30%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_232600
+- Request time: 2026-03-30 23:26:00 BST
+- User instruction: 1. font color = d9c9fb 2. reduce coop name size by 20% 3. reduce egg value size by 15% 4. increase size of trophy by 50%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233000
+- Request time: 2026-03-30 23:30:00 BST
+- User instruction: 1. egg value text font color = 704BB8 2. egg icon size reduce by 25% 3. coop name font to match style of sales / expenses (uppercase, grey etc) 4. add a hr beneath hen name and trophy to separate from the rest of the card visually
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233200
+- Request time: 2026-03-30 23:32:00 BST
+- User instruction: move the rollinglayratecard section beneath the hencard section, and make it 14 days, not 7
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233500
+- Request time: 2026-03-30 23:35:00 BST
+- User instruction: the section is still where it was, move it directly underneath the henname section
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_234300
+- Request time: 2026-03-30 23:43:00 BST
+- User instruction: rollinglayratecard edits: 1. day labels to chart values random 6-11 over 14 days 2. reduce gap between chart and text 3. remove Last 14 days text 4. padding same as above containers 5. remove calendar icon 6. change title to Rollin' 14 Days Lays 7. card title style m-0 text-[1rem] uppercase text-[#6f4bb8]
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_234500
+- Request time: 2026-03-30 23:45:00 BST
+- User instruction: increase the title font size by 20% and double the font weight
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_234900
+- Request time: 2026-03-30 23:49:00 BST
+- User instruction: add a new section under rollinglayrate called calendarcard
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_235300
+- Request time: 2026-03-30 23:53:00 BST
+- User instruction: make the title the same style as the rollinglayratecard
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_235500
+- Request time: 2026-03-30 23:55:00 BST
+- User instruction: put a calendar in the calendarcard, something like this but more visible
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_000400
+- Request time: 2026-03-31 00:04:00 BST
+- User instruction: calendarcard updates: add filter buttons for eggs/chicks/sales/expenses; increase date box size and align date to top; make entry value more prominent than date; entry border #876BC2 and empty border #ece3ff; change title to month name; add < and > either side of the month name
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_000700
+- Request time: 2026-03-31 00:07:00 BST
+- User instruction: add a second set of filters for 1 week, 2 weeks, 1 month, at the bottom
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_002000
+- Request time: 2026-03-31 00:20:00 BST
+- User instruction: update the calendar date boxes to the cleaner mockup style
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_003000
+- Request time: 2026-03-31 00:30:00 BST
+- User instruction: 1. reduce the radius on the date boxes by 50% 2. reduce the height of the date boxes by 30% 3. increase the font size of the date by 60% 4. change the font colour of the date to the same grey as Sales / Expenses 5. increase the border thickness of dates with values to 2px 6. reduce the height of the eggs/chicks etc filters by 30% 7. increase the month title by 30%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_003500
+- Request time: 2026-03-31 00:35:00 BST
+- User instruction: 1. reduce the date font size by 15%, it needs to be smaller than the value font 2. style the bottom filters exactly like the top filters 3. size the top filters so the text fits and width is auto, but all four filters spread out in the available space
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_003800
+- Request time: 2026-03-31 00:38:00 BST
+- User instruction: move locationprogresscard so its directly underneath the calendar section
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_004400
+- Request time: 2026-03-31 00:44:00 BST
+- User instruction: edit LocationProgressCard: remove geo icon; style coop title like rolling 14 days lays; add 3 progress bars total; title and subtitle for top bar, subtitles for other two; show 78/67/59 as the values
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_004700
+- Request time: 2026-03-31 00:47:00 BST
+- User instruction: 1. change the title to It's not a competition...but... 2. remove the main subtitle 3. title of prog bars should be coop names - Eggstein Island, Pecking Palace, Cluck the Fuck Up
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_005800
+- Request time: 2026-03-31 00:58:00 BST
+- User instruction: add a fixed bottom nav with Home, Cal, Flock, Sale and a big egg speed-dial add button in the middle that greys out the page and pops actions up
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_010200
+- Request time: 2026-03-31 01:02:00 BST
+- User instruction: the menu only appears when the big egg is clicked - use the big-egg-button.png file for this - it needs to be in the centre of the bottom nav
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_010800
+- Request time: 2026-03-31 01:08:00 BST
+- User instruction: 1. remove weird outline from egg 2. increase its size by 25% 3. position at bottom with ~10px margin 4. make speed dial work 5. bottom nav white should have zero rounded corners or drop shadow like header 6. make the 4 icons about 20% bigger
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_011100
+- Request time: 2026-03-31 01:11:00 BST
+- User instruction: 1. increase the bg blur effect by 50% 2. bottom nav needs to be its own full-width container 3. increase bottom margin by 5px 4. move CAL and FLOCK nav items up by 15px
+- Notes: deploy started
+
+## deploy_011200
+- Request time: 2026-03-31 01:12:00 BST
+- User instruction: try again
+- Notes: deploy started
+
+## deploy_011200
+- Request time: 2026-03-31 01:12:00 BST
+- User instruction: try again
+- Notes: deploy started
+
+## deploy_072855
+- Request time: 2026-03-31 07:28:55 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_073100
+- Request time: 2026-03-31 07:31:00 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_073342
+- Request time: 2026-03-31 07:33:42 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_073455
+- Request time: 2026-03-31 07:34:55 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_073643
+- Request time: 2026-03-31 07:36:43 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_073800
+- Request time: 2026-03-31 07:38:00 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_073855
+- Request time: 2026-03-31 07:38:55 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_074028
+- Request time: 2026-03-31 07:40:28 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_074135
+- Request time: 2026-03-31 07:41:35 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_074452
+- Request time: 2026-03-31 07:44:52 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_074607
+- Request time: 2026-03-31 07:46:07 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_074740
+- Request time: 2026-03-31 07:47:40 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_074848
+- Request time: 2026-03-31 07:48:48 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_075416
+- Request time: 2026-03-31 07:54:16 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_075638
+- Request time: 2026-03-31 07:56:38 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_075749
+- Request time: 2026-03-31 07:57:49 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_075954
+- Request time: 2026-03-31 07:59:54 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_080848
+- Request time: 2026-03-31 08:08:48 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_081105
+- Request time: 2026-03-31 08:11:05 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_081404
+- Request time: 2026-03-31 08:14:04 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_081550
+- Request time: 2026-03-31 08:15:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_081741
+- Request time: 2026-03-31 08:17:41 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_081948
+- Request time: 2026-03-31 08:19:48 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_082527
+- Request time: 2026-03-31 08:25:27 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_082721
+- Request time: 2026-03-31 08:27:21 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_083143
+- Request time: 2026-03-31 08:31:43 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_083713
+- Request time: 2026-03-31 08:37:13 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_083805
+- Request time: 2026-03-31 08:38:05 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_084233
+- Request time: 2026-03-31 08:42:33 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_084429
+- Request time: 2026-03-31 08:44:29 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_085255
+- Request time: 2026-03-31 08:52:55 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_085756
+- Request time: 2026-03-31 08:57:56 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_085837
+- Request time: 2026-03-31 08:58:37 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_090051
+- Request time: 2026-03-31 09:00:51 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_090337
+- Request time: 2026-03-31 09:03:37 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_090608
+- Request time: 2026-03-31 09:06:08 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_091044
+- Request time: 2026-03-31 09:10:44 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_091617
+- Request time: 2026-03-31 09:16:17 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_091832
+- Request time: 2026-03-31 09:18:32 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_092050
+- Request time: 2026-03-31 09:20:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_092157
+- Request time: 2026-03-31 09:21:57 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_092316
+- Request time: 2026-03-31 09:23:16 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_092459
+- Request time: 2026-03-31 09:24:59 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_092543
+- Request time: 2026-03-31 09:25:43 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_092624
+- Request time: 2026-03-31 09:26:24 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_092841
+- Request time: 2026-03-31 09:28:41 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_093114
+- Request time: 2026-03-31 09:31:14 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_093321
+- Request time: 2026-03-31 09:33:21 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_093537
+- Request time: 2026-03-31 09:35:37 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_093851
+- Request time: 2026-03-31 09:38:51 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_094132
+- Request time: 2026-03-31 09:41:32 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_094324
+- Request time: 2026-03-31 09:43:24 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_094859
+- Request time: 2026-03-31 09:48:59 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_100834
+- Request time: 2026-03-31 10:08:34 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_101320
+- Request time: 2026-03-31 10:13:20 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_101755
+- Request time: 2026-03-31 10:17:55 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_101956
+- Request time: 2026-03-31 10:19:56 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102252
+- Request time: 2026-03-31 10:22:52 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102406
+- Request time: 2026-03-31 10:24:06 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102750
+- Request time: 2026-03-31 10:27:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102929
+- Request time: 2026-03-31 10:29:29 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103118
+- Request time: 2026-03-31 10:31:18 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103426
+- Request time: 2026-03-31 10:34:26 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103550
+- Request time: 2026-03-31 10:35:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103819
+- Request time: 2026-03-31 10:38:19 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_104039
+- Request time: 2026-03-31 10:40:39 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_104200
+- Request time: 2026-03-31 10:42:00 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_104459
+- Request time: 2026-03-31 10:44:59 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_104712
+- Request time: 2026-03-31 10:47:12 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_104829
+- Request time: 2026-03-31 10:48:29 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_104936
+- Request time: 2026-03-31 10:49:36 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_105555
+- Request time: 2026-03-31 10:55:55 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_105726
+- Request time: 2026-03-31 10:57:26 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_105811
+- Request time: 2026-03-31 10:58:11 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_105911
+- Request time: 2026-03-31 10:59:11 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110005
+- Request time: 2026-03-31 11:00:05 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110121
+- Request time: 2026-03-31 11:01:21 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110226
+- Request time: 2026-03-31 11:02:26 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110451
+- Request time: 2026-03-31 11:04:51 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111505
+- Request time: 2026-03-31 11:15:05 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111848
+- Request time: 2026-03-31 11:18:48 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213839
+- Request time: 2026-03-31 21:38:39 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214429
+- Request time: 2026-03-31 21:44:29 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214836
+- Request time: 2026-03-31 21:48:36 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215034
+- Request time: 2026-03-31 21:50:34 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215210
+- Request time: 2026-03-31 21:52:10 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_220856
+- Request time: 2026-03-31 22:08:56 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222323
+- Request time: 2026-03-31 22:23:23 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_224708
+- Request time: 2026-03-31 22:47:08 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225631
+- Request time: 2026-03-31 22:56:31 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225942
+- Request time: 2026-03-31 22:59:42 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_230143
+- Request time: 2026-03-31 23:01:43 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_231351
+- Request time: 2026-03-31 23:13:51 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_232149
+- Request time: 2026-03-31 23:21:49 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_232650
+- Request time: 2026-03-31 23:26:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233225
+- Request time: 2026-03-31 23:32:25 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233302
+- Request time: 2026-03-31 23:33:02 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233341
+- Request time: 2026-03-31 23:33:41 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233415
+- Request time: 2026-03-31 23:34:15 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233620
+- Request time: 2026-03-31 23:36:20 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233952
+- Request time: 2026-03-31 23:39:52 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_000008
+- Request time: 2026-04-01 00:00:08 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_001735
+- Request time: 2026-04-01 00:17:35 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_002131
+- Request time: 2026-04-01 00:21:31 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_002439
+- Request time: 2026-04-01 00:24:39 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_204333
+- Request time: 2026-04-01 20:43:33 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205350
+- Request time: 2026-04-01 20:53:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_210529
+- Request time: 2026-04-01 21:05:29 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_210640
+- Request time: 2026-04-01 21:06:40 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_210701
+- Request time: 2026-04-01 21:07:01 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_210818
+- Request time: 2026-04-01 21:08:18 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_211013
+- Request time: 2026-04-01 21:10:13 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_211119
+- Request time: 2026-04-01 21:11:19 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_211205
+- Request time: 2026-04-01 21:12:05 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_211327
+- Request time: 2026-04-01 21:13:27 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_211732
+- Request time: 2026-04-01 21:17:32 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214050
+- Request time: 2026-04-01 21:40:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214219
+- Request time: 2026-04-01 21:42:19 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214434
+- Request time: 2026-04-01 21:44:34 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214614
+- Request time: 2026-04-01 21:46:14 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214907
+- Request time: 2026-04-01 21:49:07 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215210
+- Request time: 2026-04-01 21:52:10 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215515
+- Request time: 2026-04-01 21:55:15 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215859
+- Request time: 2026-04-01 21:58:59 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_220058
+- Request time: 2026-04-01 22:00:58 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_221528
+- Request time: 2026-04-01 22:15:28 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_221750
+- Request time: 2026-04-01 22:17:50 BST
+- User instruction: put the date picker cal icons back lol
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222228
+- Request time: 2026-04-01 22:22:28 BST
+- User instruction: put the behaviour back for click now please
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222849
+- Request time: 2026-04-01 22:28:49 BST
+- User instruction: increase med text, widen given to card, and make photo button match the add eggs modal
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_223309
+- Request time: 2026-04-01 22:33:09 BST
+- User instruction: make the notes card have equal height to its width, so its square
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_223603
+- Request time: 2026-04-01 22:36:03 BST
+- User instruction: match the default GIVEN TO and Notes card sizing/proportions to the Add Eggs modal, while allowing GIVEN TO to grow if selections expand
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_223749
+- Request time: 2026-04-01 22:37:49 BST
+- User instruction: revert the last layout change because it made the page laggy again
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_224259
+- Request time: 2026-04-01 22:42:59 BST
+- User instruction: make the meds modal GIVEN TO and Notes row match the Add Eggs Egg creator and Notes sizing pattern
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_224735
+- Request time: 2026-04-01 22:47:35 BST
+- User instruction: make the meds Notes button on the right match the left card height, uniform like Add Eggs
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_224952
+- Request time: 2026-04-01 22:49:52 BST
+- User instruction: change the meds modal select button text to plus, and make the photo card/button match Add Eggs
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225312
+- Request time: 2026-04-01 22:53:12 BST
+- User instruction: remove the feed button from the big egg nav, just hide it for now
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225901
+- Request time: 2026-04-01 22:59:01 BST
+- User instruction: revert the last deploy and bring the Feed button back in the big egg nav
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_230344
+- Request time: 2026-04-01 23:03:44 BST
+- User instruction: patch the bottom nav big egg positioning to be more Safari-proof
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_230724
+- Request time: 2026-04-01 23:07:24 BST
+- User instruction: simplify the bottom nav structure to make Safari rendering more stable
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_232115
+- Request time: 2026-04-01 23:21:15 BST
+- User instruction: carefully hide Feed from the bottom nav only
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_232325
+- Request time: 2026-04-01 23:23:25 BST
+- User instruction: disable background interaction and page scroll whenever a modal is active
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233140
+- Request time: 2026-04-01 23:31:40 BST
+- User instruction: build the first expense modal based on the agreed spec
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_234711
+- Request time: 2026-04-01 23:47:11 BST
+- User instruction: refine the expense modal with placeholder input, tag chaining, date label update, 50/50 price-photo row, and full-width save button
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_235139
+- Request time: 2026-04-01 23:51:39 BST
+- User instruction: remove the extra grey expense input text and make the placeholder normal weight
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_235416
+- Request time: 2026-04-01 23:54:16 BST
+- User instruction: remove the grey header above the expense item input and reduce the input font weight
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_000054
+- Request time: 2026-04-02 00:00:54 BST
+- User instruction: refine the expense modal with placeholder hiding, tag chaining feel, label tweaks, narrower cost width, and None added photo text
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_010605
+- Request time: 2026-04-02 01:06:05 BST
+- User instruction: keep the ampersand expense tag pinned on the left
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_011051
+- Request time: 2026-04-02 01:10:51 BST
+- User instruction: fix the expense tag logic and add a small plus control for creating regular custom expense tags
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_011400
+- Request time: 2026-04-02 01:14:00 BST
+- User instruction: change Where is it for? to Where for? in the expense modal
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_011616
+- Request time: 2026-04-02 01:16:16 BST
+- User instruction: add a line under the expense placeholder/input text
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_011659
+- Request time: 2026-04-02 01:16:59 BST
+- User instruction: revert the last expense input underline change
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_011832
+- Request time: 2026-04-02 01:18:32 BST
+- User instruction: add a little blank vertical space under the expense input text
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_012159
+- Request time: 2026-04-02 01:21:59 BST
+- User instruction: validate the expense cost entry so it only accepts proper money values
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_012921
+- Request time: 2026-04-02 01:29:21 BST
+- User instruction: replace the cost input with a mini modal keypad that fills digits from the right with fixed two decimals
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_013031
+- Request time: 2026-04-02 01:30:31 BST
+- User instruction: change Add Expense to Add an Expense
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_013232
+- Request time: 2026-04-02 01:32:32 BST
+- User instruction: make the expense item text wrap properly
+- Notes: deploy started
+
+- Result: deployed successfully
+
