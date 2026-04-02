@@ -1605,3 +1605,59 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_114300
+- Request time: 2026-04-02 11:43:00 BST
+- User instruction: Duplicate the Add Hen card into an Edit Hen card, unhide the egg count, prefill the name, keep breed/date/coop/notes, show an existing hen photo, add Update and Sadly Departed buttons, create a departure mini-modal with dead/sold/cancel options, and add a Cancel button to Add Hen too.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_114700
+- Request time: 2026-04-02 11:47:00 BST
+- User instruction: Add Edit Coop using Edit Hen as the template, remove breed and DoB, change the dropdown to Location with home/allotment/other, keep notes, use the Add Meds photo style, and use cancel/save buttons.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_114900
+- Request time: 2026-04-02 11:49:00 BST
+- User instruction: On Edit Hen, move Hen Has Died below the sold button, rename Hen Was Sold to Hen Sold / Moved, and make the departed modal copy include the hen's actual name, matching the button wording style too.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_115100
+- Request time: 2026-04-02 11:51:00 BST
+- User instruction: On Edit Coop, add a coop photo for now, change Photo Ready to Current Photo when one exists, and add the top-right egg count as the total from hens in that coop.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_115200
+- Request time: 2026-04-02 11:52:00 BST
+- User instruction: On the Sadly Departed modal, change Hen Sold / Moved to Sold / Moved, and change Hen Has Died to Passed Away.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_115600
+- Request time: 2026-04-02 11:56:00 BST
+- User instruction: Duplicate Edit Coop into Add Coop with entered name placeholder Eggstein Island, same location, blank notes so the button says Notes, no current photo, and the same cancel/save buttons.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_120400
+- Request time: 2026-04-02 12:04:00 BST
+- User instruction: Add a Record a Sale modal below the architecture map using the hen/coop modal format with sale type selectors, units sold slider, price mode inputs, date plus notes row, sold-to field, optional email receipt with basic validation, and cancel/save buttons.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_120800
+- Request time: 2026-04-02 12:08:00 BST
+- User instruction: On the sale modal, make Units Sold a 70/30 slider plus manual number entry layout, and add an automatic £ prefix to the price entry sections.
+- Notes: deploy started
+
+- Result: deployed successfully
+
