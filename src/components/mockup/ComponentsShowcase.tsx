@@ -1283,6 +1283,29 @@ function CalendarCard() {
 }
 
 function BottomNavMock({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModal, openEggsModal, openMedsModal, openExpenseModal }: { menuOpen: boolean; setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>; closeSettingsNav: () => void; openChicksModal: () => void; openEggsModal: () => void; openMedsModal: () => void; openExpenseModal: () => void }) {
+  const [useNarrowIcons, setUseNarrowIcons] = useState(typeof window !== 'undefined' ? window.innerWidth < 426 : false);
+
+  useEffect(() => {
+    const update = () => setUseNarrowIcons(window.innerWidth < 426);
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  const navIcons = useNarrowIcons
+    ? {
+        home: '/egg/media/nav-icons/n-test-home.png',
+        calendar: '/egg/media/nav-icons/n-test-calendar.png',
+        flock: '/egg/media/nav-icons/n-test-flock.png',
+        sales: '/egg/media/nav-icons/n-test-sales.png',
+      }
+    : {
+        home: '/egg/media/nav-icons/test-home.png',
+        calendar: '/egg/media/nav-icons/test-calendar.png',
+        flock: '/egg/media/nav-icons/test-flock.png',
+        sales: '/egg/media/nav-icons/test-sales.png',
+      };
+
   const speedDialItems = [
     { label: 'Eggs', icon: '/egg/media/icons/1-egg.png', action: 'eggs' },
     { label: 'Chicks', icon: '/egg/media/icons/1-hatching.png', action: 'chicks' },
@@ -1348,23 +1371,19 @@ function BottomNavMock({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModa
             </button>
           </div>
 
-          <div className="relative z-10 mx-auto grid h-full max-w-[32rem] grid-cols-[1fr_1fr_5.5rem_1fr_1fr] items-center gap-0 px-4 text-center">
+          <div className="relative z-10 mx-auto grid h-full max-w-[32rem] grid-cols-[1fr_1fr_6.25rem_1fr_1fr] items-center gap-0 px-3 text-center sm:px-4">
               <button className="flex h-full justify-self-start flex-col items-center justify-center text-[#8b5cf6]">
-                <img src="/egg/media/icons/nav-home.png" alt="" className="h-[2.375rem] w-[2.375rem] object-contain" />
-                <span className="hidden text-[0.8rem] font-bold uppercase tracking-wide">Home</span>
+                <img src={navIcons.home} alt="Home" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
               </button>
-              <a href="/egg/chicks" className="flex h-full justify-self-start flex-col items-center justify-center text-[#c4b2f4]">
-                <img src="/egg/media/icons/nav-calendar.png" alt="" className="h-[2.375rem] w-[2.375rem] object-contain" />
-                <span className="hidden text-[0.8rem] font-bold uppercase tracking-wide">Cal</span>
-              </a>
-              <div className="h-full" />
+              <button className="flex h-full justify-self-start flex-col items-center justify-center text-[#c4b2f4]">
+                <img src={navIcons.calendar} alt="Calendar" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
+              </button>
+              <div className="h-full min-w-[6.25rem]" />
               <button className="flex h-full justify-self-end flex-col items-center justify-center text-[#c4b2f4]">
-                <img src="/egg/media/icons/nav-flocks.png" alt="" className="h-[2.375rem] w-[2.375rem] object-contain" />
-                <span className="hidden text-[0.8rem] font-bold uppercase tracking-wide">Flock</span>
+                <img src={navIcons.flock} alt="Flock" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
               </button>
               <button className="flex h-full justify-self-end flex-col items-center justify-center text-[#c4b2f4]">
-                <img src="/egg/media/icons/nav-sales.png" alt="" className="h-[2.375rem] w-[2.375rem] object-contain" />
-                <span className="hidden text-[0.8rem] font-bold uppercase tracking-wide">Sale</span>
+                <img src={navIcons.sales} alt="Sales" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
               </button>
             </div>
           </div>
