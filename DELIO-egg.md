@@ -52,11 +52,12 @@ Project memory for The Eggcountant project (formerly `egg2`).
 
 ## Backup rule
 When Russ says "backup" for this project:
-1. Zip the entire folder: `/Users/russparks/.openclaw/workspace/projects/web/theeggcountant`
-2. Save the zip on Desktop
-3. Create a checkpoint name
-4. Use the checkpoint name as the zip filename
-5. Update this file (`DELIO-egg.md`) before or during backup so it stays current
+1. Run helper script: `/Users/russparks/.openclaw/workspace/projects/web/theeggcountant/scripts/backup.sh`
+2. It zips the entire folder: `/Users/russparks/.openclaw/workspace/projects/web/theeggcountant`
+3. Save the zip in `/Users/russparks/Desktop/Egg BUs/`
+4. Create a checkpoint name
+5. Use the checkpoint name as the zip filename
+6. Update this file (`DELIO-egg.md`) before or during backup so it stays current
 
 ## Deploy checkpoint rule
 For every deploy/edit request from Russ:

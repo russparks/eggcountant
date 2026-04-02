@@ -1661,3 +1661,87 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_121900
+- Request time: 2026-04-02 12:19:00 BST
+- User instruction: On the bottom nav central component, leave the structural spacing in place for the background and central add button, but remove the four nav icons and any reference to them.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_122200
+- Request time: 2026-04-02 12:22:00 BST
+- User instruction: Use the new test nav icons in the bottom nav in this order: home, calendar, [center add button], flock, sales, and start them at around 20 percent of the screen width.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_122600
+- Request time: 2026-04-02 12:26:00 BST
+- User instruction: Redeploy after Russ tweaked the nav icon colours in media.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_122800
+- Request time: 2026-04-02 12:28:00 BST
+- User instruction: Update the bottom nav to use the renamed test-* icon files so the new media changes bypass cache, then deploy.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_123100
+- Request time: 2026-04-02 12:31:00 BST
+- User instruction: Make the bottom-nav icons scale down better below 425px width for iPhone and smaller Samsung screens.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_123300
+- Request time: 2026-04-02 12:33:00 BST
+- User instruction: Set the bottom nav test icons to 18vw for direct sizing comparison.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_123400
+- Request time: 2026-04-02 12:34:00 BST
+- User instruction: Reduce the bottom nav test icons from 18vw to 14vw.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_123700
+- Request time: 2026-04-02 12:37:00 BST
+- User instruction: Fix the bottom-nav CAB gap so Safari preserves the visible center spacing like Chrome on small screens.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_124100
+- Request time: 2026-04-02 12:41:00 BST
+- User instruction: Change the bottom nav test icon size from 14vw to 15vw.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_124300
+- Request time: 2026-04-02 12:43:00 BST
+- User instruction: On smaller screens, pull the two right-side bottom-nav icons back toward the CAB so they sit more symmetrically instead of being nudged too far right.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_141000
+- Request time: 2026-04-02 14:10:00 BST
+- User instruction: Use the n-* nav icon set whenever the screen width is below 426px, otherwise keep using the normal icon set.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_141500
+- Request time: 2026-04-02 14:15:00 BST
+- User instruction: Fix the narrow-screen nav icon paths to match the actual filenames in media/nav-icons.
+- Notes: deploy started
+
+- Result: deployed successfully
+
