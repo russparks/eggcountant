@@ -1,7 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Egg, TrendingUp, TrendingDown, MapPin, CalendarDays, Home, Calendar, Users, PoundSterling, ChevronUp } from 'lucide-react';
+import navIconHome from '../../../media/nav-icons/lm-home.png';
+import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
+import navIconFlock from '../../../media/nav-icons/lm-flock.png';
+import navIconSales from '../../../media/nav-icons/lm-sales.png';
 
-const surfaceGradient = 'bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f6f1ff_100%)]';
+const surfaceGradient = 'bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#c4b2f4_100%)]';
 
 const formatDisplayDate = (value: string) => {
   if (!value) return '';
@@ -126,7 +130,7 @@ function ArchitectureTreeNode({ node, depth = 0, collapseVersion = 0 }: { node: 
         )}
         <div className="min-w-0">
           <div className="text-[1rem] font-semibold leading-tight text-[#6f4bb8]">{node.label}</div>
-          {node.note ? <div className="mt-1 text-[0.9rem] leading-snug text-[#8c79bb]">{node.note}</div> : null}
+          {node.note ? <div className="mt-1 text-[0.9rem] leading-snug text-[#c4b2f4]">{node.note}</div> : null}
         </div>
       </div>
       {hasChildren && open ? (
@@ -219,6 +223,64 @@ function ArchitectureCard() {
   );
 }
 
+function CorePurplesPalette() {
+  const colors = [
+    { name: 'purple', hex: '#6f4bb8' },
+    { name: 'mid-purple', hex: '#c4b2f4' },
+    { name: 'lightpurple', hex: '#f3edff' },
+    { name: 'grey', hex: '#9E9E9E' },
+    { name: 'purplegrey', hex: '#b2aacb' },
+  ];
+
+  return (
+    <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-4`}>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        {colors.map((color) => (
+          <div key={color.hex} className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 p-3 shadow-sm">
+            <div className="h-16 w-full rounded-[1rem] border border-white/70 shadow-inner" style={{ backgroundColor: color.hex }} />
+            <div className="mt-3 text-[0.82rem] font-semibold uppercase tracking-wide" style={{ color: color.hex }}>
+              {color.name}
+            </div>
+            <div className="mt-1 text-[0.95rem] font-bold tracking-wide" style={{ color: color.hex }}>
+              {color.hex}
+            </div>
+          </div>
+        ))}
+      </div>
+    </ShellCard>
+  );
+}
+
+function TypographySampleBlock() {
+  return (
+    <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8]`}>
+      <div className="space-y-4">
+        <div>
+          <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">H1 / Page Title</div>
+        </div>
+        <div>
+          <div className="text-[1.6rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">H2 / Section Title</div>
+        </div>
+        <div>
+          <div className="text-[1.35rem] font-bold leading-tight text-[#6f4bb8]">H3 / Card Title</div>
+        </div>
+        <div>
+          <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Label / Form Label</div>
+        </div>
+        <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+          <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Input label</div>
+          <div className="mt-2 text-[1rem] font-semibold text-[#6f4bb8]">Input / Select / Value text</div>
+        </div>
+        <div className="text-[0.95rem] leading-relaxed text-[#c4b2f4]">Body / helper copy — softer supporting text used in notes, helper lines, and confirmations.</div>
+        <div className="grid grid-cols-2 gap-3">
+          <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm">Secondary Button</button>
+          <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Primary Button</button>
+        </div>
+      </div>
+    </ShellCard>
+  );
+}
+
 function ComponentLabel({ name }: { name: string }) {
   return (
     <div className="mb-3 w-full">
@@ -255,7 +317,7 @@ function WeeklySummaryCard({ trend = '+12%', positive = true, headline = <>Your 
           <div data-component="WeeklySummaryCardTrendValue" className="mt-1 flex items-center gap-2 text-lg font-semibold text-[#6f4bb8]">{positive ? <TrendingUp data-component="WeeklySummaryCardTrendIcon" className="text-emerald-500" size={18} /> : <TrendingDown data-component="WeeklySummaryCardTrendIcon" className="text-rose-500" size={18} />} {trend}</div>
         </div>
         <h2 data-component="WeeklySummaryCardHeadline" className="text-[1.6rem] font-normal leading-tight text-[#6f4bb8]">{headline}</h2>
-        <p data-component="WeeklySummaryCardSubtext" className="mt-2 max-w-[42rem] text-sm text-[#8c79bb]">{subtext}</p>
+        <p data-component="WeeklySummaryCardSubtext" className="mt-2 max-w-[42rem] text-sm text-[#c4b2f4]">{subtext}</p>
         <div className="clear-both" />
       </div>
     </ShellCard>
@@ -408,7 +470,7 @@ function AddEditHenDraft() {
         <div className="mt-4 space-y-4">
           <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm block">
             <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Name</div>
-            <input type="text" placeholder="Henrietta" className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c7b2f7]" />
+            <input type="text" placeholder="Henrietta" className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
           </label>
 
           <div className="grid grid-cols-2 gap-3">
@@ -416,7 +478,7 @@ function AddEditHenDraft() {
               <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Breed</div>
               <div className="mt-2 flex items-center justify-between gap-3 text-[1rem] font-semibold text-[#6f4bb8]">
                 <span className="truncate">{selectedBreed === 'Other (enter breed)' && otherBreed ? otherBreed : selectedBreed}</span>
-                <span className="text-[#8c79bb]">+</span>
+                <span className="text-[#c4b2f4]">+</span>
               </div>
             </button>
 
@@ -473,7 +535,7 @@ function AddEditHenDraft() {
               <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Breed</div>
               <div className="mt-2 flex items-center justify-between gap-3 text-[1rem] font-semibold text-[#6f4bb8]">
                 <span className="truncate">{editSelectedBreed === 'Other (enter breed)' && editOtherBreed ? editOtherBreed : editSelectedBreed}</span>
-                <span className="text-[#8c79bb]">+</span>
+                <span className="text-[#c4b2f4]">+</span>
               </div>
             </button>
 
@@ -530,7 +592,7 @@ function AddEditHenDraft() {
           <div className={`max-h-[90vh] w-full max-w-[28rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.35rem] font-bold text-[#6f4bb8]">Breed</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setBreedModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setBreedModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3">
               {breeds.map((breed) => {
@@ -539,7 +601,7 @@ function AddEditHenDraft() {
                   <button
                     key={breed}
                     type="button"
-                    className={`rounded-[var(--ui-radius)] border px-3 py-3 text-center shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#8c79bb]'}`}
+                    className={`rounded-[var(--ui-radius)] border px-3 py-3 text-center shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#c4b2f4]'}`}
                     onClick={() => setSelectedBreed(breed)}
                   >
                     <div className="text-[1.5rem]">🐔</div>
@@ -561,7 +623,7 @@ function AddEditHenDraft() {
           <div className={`max-h-[90vh] w-full max-w-[28rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.35rem] font-bold text-[#6f4bb8]">Breed</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setEditBreedModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setEditBreedModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3">
               {breeds.map((breed) => {
@@ -570,7 +632,7 @@ function AddEditHenDraft() {
                   <button
                     key={`edit-${breed}`}
                     type="button"
-                    className={`rounded-[var(--ui-radius)] border px-3 py-3 text-center shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#8c79bb]'}`}
+                    className={`rounded-[var(--ui-radius)] border px-3 py-3 text-center shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#c4b2f4]'}`}
                     onClick={() => setEditSelectedBreed(breed)}
                   >
                     <div className="text-[1.5rem]">🐔</div>
@@ -592,11 +654,11 @@ function AddEditHenDraft() {
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Edit photo</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setHenPhotoMiniModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setHenPhotoMiniModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 flex justify-center">
               <div className="relative h-[11rem] w-[11rem] overflow-hidden rounded-full border-2 border-[#e7ddfb] bg-[#f3edff]">
-                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#8c79bb]" style={{ transform: `translateX(${henPhotoOffset}px) scale(${henPhotoZoom})` }}>
+                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#c4b2f4]" style={{ transform: `translateX(${henPhotoOffset}px) scale(${henPhotoZoom})` }}>
                   Photo preview
                 </div>
               </div>
@@ -625,7 +687,7 @@ function AddEditHenDraft() {
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Edit photo</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setEditHenPhotoMiniModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setEditHenPhotoMiniModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 flex justify-center">
               <div className="relative h-[11rem] w-[11rem] overflow-hidden rounded-full border-2 border-[#e7ddfb] bg-[#f3edff]">
@@ -655,7 +717,7 @@ function AddEditHenDraft() {
         <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
           <div className={`w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
             <div className="text-[1.45rem] font-bold text-[#6f4bb8]">Mark Willow as departed?</div>
-            <div className="mt-2 text-[0.98rem] text-[#8c79bb]">Choose how Willow left the flock. This keeps her records tidy without deleting her history.</div>
+            <div className="mt-2 text-[0.98rem] text-[#c4b2f4]">Choose how Willow left the flock. This keeps her records tidy without deleting her history.</div>
             <div className="mt-4 grid gap-3">
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setHenDepartureModalOpen(false)}>Sold / Moved</button>
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-4 py-3 text-[1rem] font-semibold text-[#d14d6f] shadow-sm" onClick={() => setHenDepartureModalOpen(false)}>Passed Away</button>
@@ -698,7 +760,7 @@ function SaleModalDraft() {
                 <button
                   key={item}
                   type="button"
-                  className={`flex items-center justify-center rounded-[var(--ui-radius)] border px-2 py-2.5 text-center text-[0.84rem] font-semibold leading-tight shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#8c79bb]'}`}
+                  className={`flex items-center justify-center rounded-[var(--ui-radius)] border px-2 py-2.5 text-center text-[0.84rem] font-semibold leading-tight shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#c4b2f4]'}`}
                   onClick={() => setSaleType(item)}
                 >
                   <span>{item}</span>
@@ -722,8 +784,8 @@ function SaleModalDraft() {
         <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
           <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Price</div>
           <div className="mt-3 grid grid-cols-2 gap-3">
-            <button type="button" className={`rounded-[var(--ui-radius)] border px-3 py-2.5 text-[0.92rem] font-semibold shadow-sm ${salePriceMode === 'per-unit' ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#8c79bb]'}`} onClick={() => setSalePriceMode('per-unit')}>Per unit</button>
-            <button type="button" className={`rounded-[var(--ui-radius)] border px-3 py-2.5 text-[0.92rem] font-semibold shadow-sm ${salePriceMode === 'grand-total' ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#8c79bb]'}`} onClick={() => setSalePriceMode('grand-total')}>Grand total</button>
+            <button type="button" className={`rounded-[var(--ui-radius)] border px-3 py-2.5 text-[0.92rem] font-semibold shadow-sm ${salePriceMode === 'per-unit' ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#c4b2f4]'}`} onClick={() => setSalePriceMode('per-unit')}>Per unit</button>
+            <button type="button" className={`rounded-[var(--ui-radius)] border px-3 py-2.5 text-[0.92rem] font-semibold shadow-sm ${salePriceMode === 'grand-total' ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#c4b2f4]'}`} onClick={() => setSalePriceMode('grand-total')}>Grand total</button>
           </div>
           <div className="mt-3 grid grid-cols-2 gap-3">
             <label className={`rounded-[var(--ui-radius)] border px-4 py-3 shadow-sm ${salePriceMode === 'per-unit' ? 'border-[#6f4bb8] bg-white' : 'border-[#e7ddfb] bg-white/60 opacity-65'}`}>
@@ -760,12 +822,12 @@ function SaleModalDraft() {
 
         <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm block">
           <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Sold to (optional)</div>
-          <input type="text" value={soldTo} onChange={(e) => setSoldTo(e.target.value)} placeholder="Customer name" className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c7b2f7]" />
+          <input type="text" value={soldTo} onChange={(e) => setSoldTo(e.target.value)} placeholder="Customer name" className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
         </label>
 
         <label className={`rounded-[var(--ui-radius)] border bg-white/85 px-4 py-3 shadow-sm block ${receiptEmail.length > 0 && !emailLooksValid ? 'border-[#f0bfd0]' : 'border-[#e7ddfb]'}`}>
           <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Email receipt (optional)</div>
-          <input type="email" value={receiptEmail} onChange={(e) => setReceiptEmail(e.target.value)} placeholder="name@example.com" className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c7b2f7]" />
+          <input type="email" value={receiptEmail} onChange={(e) => setReceiptEmail(e.target.value)} placeholder="name@example.com" className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
           {receiptEmail.length > 0 && !emailLooksValid ? <div className="mt-2 text-[0.82rem] font-semibold text-[#d14d6f]">Enter a valid email address.</div> : null}
         </label>
 
@@ -855,7 +917,7 @@ function EditCoopDraft() {
         <div className="mt-4 space-y-4">
           <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm block">
             <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Name</div>
-            <input type="text" value={addCoopName} onChange={(e) => setAddCoopName(e.target.value)} placeholder="Eggstein Island" className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c7b2f7]" />
+            <input type="text" value={addCoopName} onChange={(e) => setAddCoopName(e.target.value)} placeholder="Eggstein Island" className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
           </label>
 
           <div className="grid grid-cols-[1fr_auto] gap-3">
@@ -897,7 +959,7 @@ function EditCoopDraft() {
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Photograph coop</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setCoopPhotoMiniModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setCoopPhotoMiniModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 flex justify-center">
               <div className="relative h-[11rem] w-full max-w-[14rem] overflow-hidden rounded-[1rem] border-2 border-[#e7ddfb] bg-[#f3edff]">
@@ -928,11 +990,11 @@ function EditCoopDraft() {
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Photograph coop</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setAddCoopPhotoMiniModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setAddCoopPhotoMiniModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 flex justify-center">
               <div className="relative h-[11rem] w-full max-w-[14rem] overflow-hidden rounded-[1rem] border-2 border-[#e7ddfb] bg-[#f3edff]">
-                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#8c79bb]" style={{ transform: `translateX(${addCoopPhotoOffset}px) scale(${addCoopPhotoZoom})` }}>
+                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#c4b2f4]" style={{ transform: `translateX(${addCoopPhotoOffset}px) scale(${addCoopPhotoZoom})` }}>
                   Coop photo preview
                 </div>
               </div>
@@ -973,11 +1035,11 @@ function ChickCard({ count, started, status, progress, daysLeft, hatched, brewin
           <img src="/egg/media/icons/3-eggs.png" alt="" className="h-[3.6rem] w-[3.6rem] object-contain" />
           <div className="min-w-0">
             <div className="text-[2.3rem] font-black leading-none text-[#6f4bb8]">{hatchedCount} of {totalEggs}</div>
-            <div className="mt-1 text-[1.45rem] font-bold leading-tight text-[#8f79c6]">hatched</div>
+            <div className="mt-1 text-[1.45rem] font-bold leading-tight text-[#c4b2f4]">hatched</div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button type="button" className="flex h-[2.88rem] w-[2.88rem] items-center justify-center rounded-[var(--ui-radius)] bg-[#f6f1ff] text-[#6f4bb8] shadow-sm" onClick={onEdit}>
+          <button type="button" className="flex h-[2.88rem] w-[2.88rem] items-center justify-center rounded-[var(--ui-radius)] bg-[#c4b2f4] text-[#6f4bb8] shadow-sm" onClick={onEdit}>
             <img src="/egg/media/icons/1-hatching.png" alt="" className="h-[1.47rem] w-[1.47rem] object-contain opacity-75" />
           </button>
           <button type="button" className="flex h-[2.88rem] w-[2.88rem] items-center justify-center rounded-[var(--ui-radius)] bg-[#fff1f4] text-[#ff6b8a] shadow-sm" onClick={onDelete}>
@@ -991,17 +1053,17 @@ function ChickCard({ count, started, status, progress, daysLeft, hatched, brewin
 
       <div className="mt-3 flex items-center gap-4">
         <div className="h-[0.7rem] w-[70%] overflow-hidden rounded-[var(--ui-radius)] bg-[#eadffd]">
-          <div className="h-full rounded-[var(--ui-radius)] bg-[linear-gradient(90deg,#ddd3fb_0%,#b49cf5_35%,#8b5cf6_68%,#6f4bb8_100%)]" style={{ width: `${progress}%` }} />
+          <div className="h-full rounded-[var(--ui-radius)] bg-[linear-gradient(90deg,#ddd3fb_0%,#b49cf5_35%,#6f4bb8_68%,#6f4bb8_100%)]" style={{ width: `${progress}%` }} />
         </div>
         <div className="ml-auto flex items-center gap-2 text-right">
-          <span className="text-[1.2rem] font-semibold text-[#8f79c6]">{daysLeft.replace(' days', 'd')}</span>
+          <span className="text-[1.2rem] font-semibold text-[#c4b2f4]">{daysLeft.replace(' days', 'd')}</span>
           <img src="/egg/media/icons/1-hatching.png" alt="" className="h-[2.85rem] w-[2.85rem] object-contain" />
         </div>
       </div>
 
       <hr className="mt-3 border-0 border-t border-slate-200" />
 
-      <div className="mt-4 grid grid-cols-3 gap-3 text-[1rem] text-[#8f79c6]">
+      <div className="mt-4 grid grid-cols-3 gap-3 text-[1rem] text-[#c4b2f4]">
         <div className="flex items-center justify-center gap-2">
           <span className="text-[2rem] leading-none">🐣</span>
           <span>{hatched} hatched</span>
@@ -1101,7 +1163,7 @@ function HenCard({
         </div>
         <hr className="mt-3 border-0 border-t border-slate-200" />
         {compactMode === 'hen' ? (
-          <div className="mt-[0.05rem] text-center text-[1.14rem] text-[#c7b2f7]">AGE: {note.replace('AGE: ', '')}</div>
+          <div className="mt-[0.05rem] text-center text-[1.14rem] text-[#c4b2f4]">AGE: {note.replace('AGE: ', '')}</div>
         ) : null}
         <div className="mt-[0.05rem] text-center text-[0.9rem] uppercase text-[#9E9E9E]">{compactMode === 'coop' ? note : coop}</div>
         <hr className="mt-[0.35rem] border-0 border-t border-slate-200" />
@@ -1130,10 +1192,10 @@ function HenCard({
         <img src="/egg/media/icons/1-egg.png" alt="" className="h-[2.05rem] w-auto object-contain" />
       </div>
       <div className="mt-3 h-2.5 w-full overflow-hidden rounded-[var(--ui-radius)] bg-slate-200">
-        <div className="h-full rounded-[var(--ui-radius)] bg-[#c7b2f7]" style={{ width: `${progress}%` }} />
+        <div className="h-full rounded-[var(--ui-radius)] bg-[#c4b2f4]" style={{ width: `${progress}%` }} />
       </div>
       <div className="mt-2 flex items-center justify-between gap-3">
-        <div className="text-[1.3125rem] text-[#c7b2f7]">{note}</div>
+        <div className="text-[1.3125rem] text-[#c4b2f4]">{note}</div>
         <div className="text-[0.9rem] uppercase text-[#9E9E9E]">{coop}</div>
       </div>
     </ShellCard>
@@ -1226,7 +1288,7 @@ function CalendarCard() {
             key={filter}
             className={[
               'min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold shadow-sm',
-              index === 0 ? 'bg-[#7c3aed] text-white' : 'bg-white/80 text-[#8f79c6]',
+              index === 0 ? 'bg-[#6f4bb8] text-white' : 'bg-white/80 text-[#c4b2f4]',
             ].join(' ')}
           >
             {filter}
@@ -1234,7 +1296,7 @@ function CalendarCard() {
         ))}
       </div>
 
-      <div className="mt-4 grid grid-cols-7 gap-2 text-center text-[0.8rem] font-semibold uppercase text-[#c7b2f7]">
+      <div className="mt-4 grid grid-cols-7 gap-2 text-center text-[0.8rem] font-semibold uppercase text-[#c4b2f4]">
         {weekdays.map((day) => (
           <div key={day}>{day}</div>
         ))}
@@ -1254,10 +1316,10 @@ function CalendarCard() {
                   className={[
                     'h-[4.2rem] rounded-[var(--ui-radius)] px-2 py-1 flex flex-col items-center',
                     isSelected
-                      ? 'border-2 border-[#7c3aed] bg-[#7c3aed] text-white shadow-[0_10px_24px_rgba(124,58,237,0.28)]'
+                      ? 'border-2 border-[#6f4bb8] bg-[#6f4bb8] text-white shadow-[0_10px_24px_rgba(124,58,237,0.28)]'
                       : hasEntry
                         ? 'border-2 border-[#876BC2] bg-white text-[#6f4bb8]'
-                        : 'border border-[#ece3ff] bg-white/90 text-[#c7b2f7]',
+                        : 'border border-[#ece3ff] bg-white/90 text-[#c4b2f4]',
                   ].join(' ')}
                 >
                   <div className={`w-full text-center text-[1.09rem] font-medium leading-none ${isSelected ? 'text-white/90' : 'text-[#9E9E9E]'}`}>{cell.day}</div>
@@ -1274,37 +1336,21 @@ function CalendarCard() {
       </div>
 
       <div className="mt-4 flex items-center justify-between gap-2">
-        <button className="min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold bg-white/80 text-[#8f79c6] shadow-sm">1 week</button>
-        <button className="min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold bg-white/80 text-[#8f79c6] shadow-sm">2 weeks</button>
-        <button className="min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold bg-[#7c3aed] text-white shadow-sm">1 month</button>
+        <button className="min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold bg-white/80 text-[#c4b2f4] shadow-sm">1 week</button>
+        <button className="min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold bg-white/80 text-[#c4b2f4] shadow-sm">2 weeks</button>
+        <button className="min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold bg-[#6f4bb8] text-white shadow-sm">1 month</button>
       </div>
     </ShellCard>
   );
 }
 
 function BottomNavMock({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModal, openEggsModal, openMedsModal, openExpenseModal }: { menuOpen: boolean; setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>; closeSettingsNav: () => void; openChicksModal: () => void; openEggsModal: () => void; openMedsModal: () => void; openExpenseModal: () => void }) {
-  const [useNarrowIcons, setUseNarrowIcons] = useState(typeof window !== 'undefined' ? window.innerWidth < 426 : false);
-
-  useEffect(() => {
-    const update = () => setUseNarrowIcons(window.innerWidth < 426);
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
-
-  const navIcons = useNarrowIcons
-    ? {
-        home: '/egg/media/nav-icons/n-test-home.png',
-        calendar: '/egg/media/nav-icons/n-test-calendar.png',
-        flock: '/egg/media/nav-icons/n-test-flock.png',
-        sales: '/egg/media/nav-icons/n-test-sales.png',
-      }
-    : {
-        home: '/egg/media/nav-icons/test-home.png',
-        calendar: '/egg/media/nav-icons/test-calendar.png',
-        flock: '/egg/media/nav-icons/test-flock.png',
-        sales: '/egg/media/nav-icons/test-sales.png',
-      };
+  const navIcons = {
+    home: navIconHome,
+    calendar: navIconCalendar,
+    flock: navIconFlock,
+    sales: navIconSales,
+  };
 
   const speedDialItems = [
     { label: 'Eggs', icon: '/egg/media/icons/1-egg.png', action: 'eggs' },
@@ -1372,7 +1418,7 @@ function BottomNavMock({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModa
           </div>
 
           <div className="relative z-10 mx-auto grid h-full max-w-[32rem] grid-cols-[1fr_1fr_6.25rem_1fr_1fr] items-center gap-0 px-3 text-center sm:px-4">
-              <button className="flex h-full justify-self-start flex-col items-center justify-center text-[#8b5cf6]">
+              <button className="flex h-full justify-self-start flex-col items-center justify-center text-[#6f4bb8]">
                 <img src={navIcons.home} alt="Home" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
               </button>
               <button className="flex h-full justify-self-start flex-col items-center justify-center text-[#c4b2f4]">
@@ -1496,7 +1542,7 @@ export default function ComponentsShowcase() {
   }, [anyModalOpen]);
 
   return (
-    <div className="min-h-screen bg-[#f6f1ff] text-slate-900">
+    <div className="min-h-screen bg-[#f3edff] text-slate-900">
       <Header hidden={headerHidden} settingsOpen={settingsOpen} setSettingsOpen={setSettingsOpen} closeBottomNav={() => setBottomNavOpen(false)} openAccountModal={() => setAccountModalOpen(true)} openLogoutConfirm={() => setLogoutConfirmOpen(true)} />
       {headerHidden ? (
         <button
@@ -1526,7 +1572,7 @@ export default function ComponentsShowcase() {
                 <div>
                   <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Account</div>
                 </div>
-                <button type="button" className="text-[2.2rem] leading-none text-[#8c79bb]" onClick={() => setAccountModalOpen(false)}>×</button>
+                <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={() => setAccountModalOpen(false)}>×</button>
               </div>
 
               <div className="mt-4 space-y-3">
@@ -1549,7 +1595,7 @@ export default function ComponentsShowcase() {
                 <div>
                   <div className="mb-2 text-[0.75rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Download Data</div>
                   <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
-                    <div className="mb-3 text-[0.82rem] leading-relaxed text-[#8c79bb]">Select the items you'd like to download, or leave All Data selected and press the Download button.</div>
+                    <div className="mb-3 text-[0.82rem] leading-relaxed text-[#c4b2f4]">Select the items you'd like to download, or leave All Data selected and press the Download button.</div>
                     <div className="grid grid-cols-3 gap-2">
                       {['Eggs', 'Chicks', 'Flocks', 'Hens', 'Coops', 'Meds', 'Expenses', 'Sales', 'All Data'].map((item) => {
                         const active = downloadSelections.includes(item);
@@ -1557,7 +1603,7 @@ export default function ComponentsShowcase() {
                           <button
                             key={item}
                             type="button"
-                            className={`flex items-center justify-center rounded-[var(--ui-radius)] border px-2 py-2.5 text-center text-[0.84rem] font-semibold leading-tight shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#8c79bb]'}`}
+                            className={`flex items-center justify-center rounded-[var(--ui-radius)] border px-2 py-2.5 text-center text-[0.84rem] font-semibold leading-tight shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#c4b2f4]'}`}
                             onClick={() => {
                               if (item === 'All Data') {
                                 setDownloadSelections((prev) => prev.includes('All Data') ? [] : ['All Data']);
@@ -1583,7 +1629,7 @@ export default function ComponentsShowcase() {
                     >
                       Download
                     </button>
-                    <div className="mt-2 text-[0.75rem] leading-relaxed text-[#8c79bb]">
+                    <div className="mt-2 text-[0.75rem] leading-relaxed text-[#c4b2f4]">
                       Only you can see your data while it is stored on our servers, and sensitive account details are hashed securely. If you have any queries, please review our <a href="#" className="font-semibold text-[#6f4bb8] underline underline-offset-2">privacy policy</a>.
                     </div>
                   </div>
@@ -1617,7 +1663,7 @@ export default function ComponentsShowcase() {
         <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="text-[1.3rem] font-bold text-[#6f4bb8]">Log out?</div>
-            <div className="mt-2 text-[0.98rem] text-[#8c79bb]">Are you sure you want to log out of your account?</div>
+            <div className="mt-2 text-[0.98rem] text-[#c4b2f4]">Are you sure you want to log out of your account?</div>
             <div className="mt-4 grid grid-cols-2 gap-3">
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setLogoutConfirmOpen(false)}>Cancel</button>
               <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setLogoutConfirmOpen(false)}>Log out</button>
@@ -1630,7 +1676,7 @@ export default function ComponentsShowcase() {
         <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="text-[1.3rem] font-bold text-[#6f4bb8]">Reset password?</div>
-            <div className="mt-2 text-[0.98rem] text-[#8c79bb]">A password reset link will be sent to your registered email address.</div>
+            <div className="mt-2 text-[0.98rem] text-[#c4b2f4]">A password reset link will be sent to your registered email address.</div>
             <div className="mt-4 grid grid-cols-2 gap-3">
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setResetPasswordConfirmOpen(false)}>Cancel</button>
               <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setResetPasswordConfirmOpen(false)}>Send reset</button>
@@ -1643,7 +1689,7 @@ export default function ComponentsShowcase() {
         <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="text-[1.3rem] font-bold text-[#6f4bb8]">Data Download</div>
-            <div className="mt-2 text-[0.98rem] text-[#8c79bb]">A download link will be sent to your registered email address, please give it a few minutes.</div>
+            <div className="mt-2 text-[0.98rem] text-[#c4b2f4]">A download link will be sent to your registered email address, please give it a few minutes.</div>
             <div className="mt-4 flex justify-end">
               <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setDownloadConfirmOpen(false)}>Okay</button>
             </div>
@@ -1692,7 +1738,7 @@ export default function ComponentsShowcase() {
           <div className={`max-h-[92vh] w-full max-w-[36rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)] animate-[fadeSlideUp_220ms_ease-out]`}>
             <div className="flex items-start justify-between gap-4">
               <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Add Eggs</div>
-              <button type="button" className="text-[2.2rem] leading-none text-[#8c79bb]" onClick={() => setEggsModalOpen(false)}>×</button>
+              <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={() => setEggsModalOpen(false)}>×</button>
             </div>
 
             <div className="mt-4 space-y-4">
@@ -1733,7 +1779,7 @@ export default function ComponentsShowcase() {
               </div>
 
               {noteAdded && !notesOpen ? (
-                <div className="w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[0.98rem] text-[#8c79bb] shadow-sm">{noteAdded}</div>
+                <div className="w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[0.98rem] text-[#c4b2f4] shadow-sm">{noteAdded}</div>
               ) : null}
 
               {notesOpen ? (
@@ -1760,7 +1806,7 @@ export default function ComponentsShowcase() {
                       <div className="text-[0.72rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Temp</div>
                       <div className="mt-1 text-[1rem] font-semibold text-[#6f4bb8]">{selectedTemp}</div>
                     </div>
-                    <span className="text-[#8c79bb]">{tempOpen ? '−' : '+'}</span>
+                    <span className="text-[#c4b2f4]">{tempOpen ? '−' : '+'}</span>
                   </button>
                   {tempOpen ? (
                     <>
@@ -1785,7 +1831,7 @@ export default function ComponentsShowcase() {
           <div className={`max-h-[92vh] w-full max-w-[36rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)] animate-[fadeSlideUp_220ms_ease-out]`}>
             <div className="flex items-start justify-between gap-4">
               <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Add Chicks</div>
-              <button type="button" className="text-[2.2rem] leading-none text-[#8c79bb]" onClick={() => setChicksModalOpen(false)}>×</button>
+              <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={() => setChicksModalOpen(false)}>×</button>
             </div>
 
             <div className="mt-4 space-y-4">
@@ -1826,7 +1872,7 @@ export default function ComponentsShowcase() {
               </div>
 
               {noteAdded && !notesOpen ? (
-                <div className="w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[0.98rem] text-[#8c79bb] shadow-sm">{noteAdded}</div>
+                <div className="w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[0.98rem] text-[#c4b2f4] shadow-sm">{noteAdded}</div>
               ) : null}
 
               {notesOpen ? (
@@ -1853,7 +1899,7 @@ export default function ComponentsShowcase() {
                       <div className="text-[0.72rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Temp</div>
                       <div className="mt-1 text-[1rem] font-semibold text-[#6f4bb8]">{selectedTemp}</div>
                     </div>
-                    <span className="text-[#8c79bb]">{tempOpen ? '−' : '+'}</span>
+                    <span className="text-[#c4b2f4]">{tempOpen ? '−' : '+'}</span>
                   </button>
                   {tempOpen ? (
                     <>
@@ -1878,7 +1924,7 @@ export default function ComponentsShowcase() {
           <div className={`max-h-[92vh] w-full max-w-[36rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)] animate-[fadeSlideUp_220ms_ease-out]`}>
             <div className="flex items-start justify-between gap-4">
               <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Add Meds</div>
-              <button type="button" className="text-[2.2rem] leading-none text-[#8c79bb]" onClick={() => setMedsModalOpen(false)}>×</button>
+              <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={() => setMedsModalOpen(false)}>×</button>
             </div>
 
             <div className="mt-4 space-y-4">
@@ -1927,7 +1973,7 @@ export default function ComponentsShowcase() {
                           <button
                             key={recipient}
                             type="button"
-                            className={`flex items-center justify-between rounded-[var(--ui-radius)] border px-3 py-3 text-left text-[0.98rem] font-semibold shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#8c79bb]'}`}
+                            className={`flex items-center justify-between rounded-[var(--ui-radius)] border px-3 py-3 text-left text-[0.98rem] font-semibold shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#c4b2f4]'}`}
                             onClick={() => setMedRecipients((prev) => prev.includes(recipient) ? prev.filter((item) => item !== recipient) : [...prev, recipient])}
                           >
                             <span>{recipient}</span>
@@ -1967,7 +2013,7 @@ export default function ComponentsShowcase() {
           <div className={`max-h-[92vh] w-full max-w-[36rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)] animate-[fadeSlideUp_220ms_ease-out]`}>
             <div className="flex items-start justify-between gap-4">
               <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Add an Expense</div>
-              <button type="button" className="text-[2.2rem] leading-none text-[#8c79bb]" onClick={() => setExpenseModalOpen(false)}>×</button>
+              <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={() => setExpenseModalOpen(false)}>×</button>
             </div>
 
             <div className="mt-4 space-y-4">
@@ -1977,7 +2023,7 @@ export default function ComponentsShowcase() {
                   <button
                     type="button"
                     aria-label="Add current text as regular expense"
-                    className="absolute right-0 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-[#e7ddfb] bg-[#f8f5ff] text-[0.9rem] font-semibold text-[#8c79bb]"
+                    className="absolute right-0 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-[#e7ddfb] bg-[#f8f5ff] text-[0.9rem] font-semibold text-[#c4b2f4]"
                     onClick={() => {
                       const trimmed = expenseItem.trim().replace(/\s*&\s*/g, ' & ');
                       if (!trimmed || trimmed === '&') return;
@@ -1988,9 +2034,9 @@ export default function ComponentsShowcase() {
                   </button>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <button type="button" className="rounded-full border border-[#e7ddfb] bg-[#f8f5ff] px-3 py-1.5 text-[0.82rem] font-semibold text-[#8c79bb]" onClick={() => setExpenseItem((prev) => prev ? `${prev}${prev.endsWith(' ') ? '' : ' '}& ` : '& ')}>&</button>
+                  <button type="button" className="rounded-full border border-[#e7ddfb] bg-[#f8f5ff] px-3 py-1.5 text-[0.82rem] font-semibold text-[#c4b2f4]" onClick={() => setExpenseItem((prev) => prev ? `${prev}${prev.endsWith(' ') ? '' : ' '}& ` : '& ')}>&</button>
                   {expenseTags.filter((item) => !expenseItem.includes(item)).map((item) => (
-                    <button key={item} type="button" className="rounded-full border border-[#e7ddfb] bg-[#f8f5ff] px-3 py-1.5 text-[0.82rem] font-semibold text-[#8c79bb]" onClick={() => setExpenseItem((prev) => prev ? `${prev}${prev.endsWith(' ') ? '' : ' '}${item} ` : `${item} `)}>{item}</button>
+                    <button key={item} type="button" className="rounded-full border border-[#e7ddfb] bg-[#f8f5ff] px-3 py-1.5 text-[0.82rem] font-semibold text-[#c4b2f4]" onClick={() => setExpenseItem((prev) => prev ? `${prev}${prev.endsWith(' ') ? '' : ' '}${item} ` : `${item} `)}>{item}</button>
                   ))}
                 </div>
               </div>
@@ -2036,7 +2082,7 @@ export default function ComponentsShowcase() {
           <div className="w-full max-w-[22rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Enter cost</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setExpenseCostModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setExpenseCostModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-[#f8f5ff] px-4 py-4 text-center text-[2rem] font-semibold text-[#6f4bb8]">
               £{expenseCostDigits ? `${expenseCostDigits.padStart(3, '0').slice(0, -2) || '0'}.${expenseCostDigits.padStart(2, '0').slice(-2)}` : '0.00'}
@@ -2072,11 +2118,11 @@ export default function ComponentsShowcase() {
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Photograph expense</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setExpensePhotoMiniModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setExpensePhotoMiniModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 flex justify-center">
               <div className="relative h-[11rem] w-full max-w-[14rem] overflow-hidden rounded-[1rem] border-2 border-[#e7ddfb] bg-[#f3edff]">
-                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#8c79bb]" style={{ transform: `translateX(${photoOffset}px) scale(${photoZoom})` }}>
+                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#c4b2f4]" style={{ transform: `translateX(${photoOffset}px) scale(${photoZoom})` }}>
                   Expense photo preview
                 </div>
               </div>
@@ -2105,11 +2151,11 @@ export default function ComponentsShowcase() {
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Photograph med</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setMedPhotoMiniModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setMedPhotoMiniModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 flex justify-center">
               <div className="relative h-[11rem] w-full max-w-[14rem] overflow-hidden rounded-[1rem] border-2 border-[#e7ddfb] bg-[#f3edff]">
-                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#8c79bb]" style={{ transform: `translateX(${photoOffset}px) scale(${photoZoom})` }}>
+                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#c4b2f4]" style={{ transform: `translateX(${photoOffset}px) scale(${photoZoom})` }}>
                   Med photo preview
                 </div>
               </div>
@@ -2138,11 +2184,11 @@ export default function ComponentsShowcase() {
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Edit photo</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setPhotoMiniModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setPhotoMiniModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 flex justify-center">
               <div className="relative h-[11rem] w-[11rem] overflow-hidden rounded-full border-2 border-[#e7ddfb] bg-[#f3edff]">
-                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#8c79bb]" style={{ transform: `translateX(${photoOffset}px) scale(${photoZoom})` }}>
+                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#c4b2f4]" style={{ transform: `translateX(${photoOffset}px) scale(${photoZoom})` }}>
                   Photo preview
                 </div>
               </div>
@@ -2173,7 +2219,7 @@ export default function ComponentsShowcase() {
               <div>
                 <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Edit Chicks</div>
               </div>
-              <button type="button" className="text-[2.2rem] leading-none text-[#8c79bb]" onClick={() => setEditChicksModalOpen(false)}>×</button>
+              <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={() => setEditChicksModalOpen(false)}>×</button>
             </div>
 
             <div className="mt-5 space-y-4">
@@ -2191,7 +2237,7 @@ export default function ComponentsShowcase() {
                     </button>
                   ))}
                 </div>
-                <div className="mt-3 text-center text-[0.98rem] text-[#8c79bb]">
+                <div className="mt-3 text-center text-[0.98rem] text-[#c4b2f4]">
                   {eggStates.filter((v) => v === 1).length} hatched • {eggStates.filter((v) => v === 2).length} perished • {eggStates.filter((v) => v === 0).length} still brewing
                 </div>
               </div>
@@ -2200,7 +2246,7 @@ export default function ComponentsShowcase() {
                 <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-4 shadow-sm">
                   <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Photo</div>
                   <div className="mt-3 flex justify-center">
-                    <button type="button" className="flex h-[7.5rem] w-[7.5rem] items-center justify-center rounded-full border border-dashed border-[#d9c9fb] bg-[#f8f5ff] text-center text-[0.95rem] font-semibold text-[#8c79bb]" onClick={() => setEditPhotoMiniModalOpen(true)}>
+                    <button type="button" className="flex h-[7.5rem] w-[7.5rem] items-center justify-center rounded-full border border-dashed border-[#d9c9fb] bg-[#f8f5ff] text-center text-[0.95rem] font-semibold text-[#c4b2f4]" onClick={() => setEditPhotoMiniModalOpen(true)}>
                       {editPhotoAdded ? 'Tap to edit photo' : 'Tap to add photo'}
                     </button>
                   </div>
@@ -2208,7 +2254,7 @@ export default function ComponentsShowcase() {
                 <div className="space-y-3">
                   <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setEditNoteOpen(true)}>{editNoteAdded ? 'Edit notes' : 'Notes'}</button>
                   {editNoteAdded ? (
-                    <div className="w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[0.98rem] text-[#8c79bb] shadow-sm">{editNoteAdded}</div>
+                    <div className="w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[0.98rem] text-[#c4b2f4] shadow-sm">{editNoteAdded}</div>
                   ) : null}
                 </div>
               </div>
@@ -2237,11 +2283,11 @@ export default function ComponentsShowcase() {
           <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
             <div className="flex items-start justify-between gap-4">
               <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Edit photo</div>
-              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setEditPhotoMiniModalOpen(false)}>×</button>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setEditPhotoMiniModalOpen(false)}>×</button>
             </div>
             <div className="mt-4 flex justify-center">
               <div className="relative h-[11rem] w-[11rem] overflow-hidden rounded-full border-2 border-[#e7ddfb] bg-[#f3edff]">
-                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#8c79bb]" style={{ transform: `translateX(${photoOffset}px) scale(${photoZoom})` }}>
+                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#c4b2f4]" style={{ transform: `translateX(${photoOffset}px) scale(${photoZoom})` }}>
                   Photo preview
                 </div>
               </div>
@@ -2269,7 +2315,7 @@ export default function ComponentsShowcase() {
         <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
           <div className={`w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
             <div className="text-[2.03rem] font-bold text-[#6f4bb8]">Delete clutch?</div>
-            <div className="mt-2 text-[1.57rem] text-[#8c79bb]">Once deleted, clutches and their date cannot be brought back, please be sure.</div>
+            <div className="mt-2 text-[1.57rem] text-[#c4b2f4]">Once deleted, clutches and their date cannot be brought back, please be sure.</div>
             <div className="mt-4 grid grid-cols-2 gap-3">
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setDeleteConfirmOpen(false)}>Cancel</button>
               <button type="button" className="rounded-[var(--ui-radius)] bg-[#e85b7b] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setDeleteConfirmOpen(false)}>Delete</button>
@@ -2289,6 +2335,16 @@ export default function ComponentsShowcase() {
           <div>
             <ComponentLabel name="ArchitectureMap" />
             <ArchitectureCard />
+          </div>
+
+          <div>
+            <ComponentLabel name="CorePurplesPalette" />
+            <CorePurplesPalette />
+          </div>
+
+          <div>
+            <ComponentLabel name="TypographySampleBlock" />
+            <TypographySampleBlock />
           </div>
 
           <div>
@@ -2402,12 +2458,12 @@ export default function ComponentsShowcase() {
               <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-6 py-4 text-center text-[1.1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.10)]">Full</button>
               <div className="grid grid-cols-2 gap-4">
                 <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-6 py-4 text-center text-[1.1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.10)]">Half</button>
-                <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white text-[#8c79bb] px-6 py-4 text-center text-[1.1rem] font-semibold shadow-[0_10px_24px_rgba(47,31,77,0.06)]">Half</button>
+                <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white text-[#c4b2f4] px-6 py-4 text-center text-[1.1rem] font-semibold shadow-[0_10px_24px_rgba(47,31,77,0.06)]">Half</button>
               </div>
               <div className="grid grid-cols-3 gap-4">
                 <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-4 text-center text-[1.1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.10)]">Third</button>
-                <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white text-[#8c79bb] px-4 py-4 text-center text-[1.1rem] font-semibold shadow-[0_10px_24px_rgba(47,31,77,0.06)]">Third</button>
-                <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white text-[#8c79bb] px-4 py-4 text-center text-[1.1rem] font-semibold shadow-[0_10px_24px_rgba(47,31,77,0.06)]">Third</button>
+                <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white text-[#c4b2f4] px-4 py-4 text-center text-[1.1rem] font-semibold shadow-[0_10px_24px_rgba(47,31,77,0.06)]">Third</button>
+                <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white text-[#c4b2f4] px-4 py-4 text-center text-[1.1rem] font-semibold shadow-[0_10px_24px_rgba(47,31,77,0.06)]">Third</button>
               </div>
             </div>
           </div>
