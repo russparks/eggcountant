@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Egg, TrendingUp, TrendingDown, MapPin, CalendarDays, Home, Calendar, Users, PoundSterling, ChevronUp } from 'lucide-react';
 
 const surfaceGradient = 'bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f6f1ff_100%)]';
@@ -14,11 +14,10 @@ function ShellCard({ children, className = '' }: { children: React.ReactNode; cl
   return <div className={`rounded-[var(--ui-radius)] bg-white shadow-[0_10px_30px_rgba(47,31,77,0.08)] border border-white/60 ${className}`}>{children}</div>;
 }
 
-function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav }: { hidden: boolean; settingsOpen: boolean; setSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>; closeBottomNav: () => void }) {
+function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAccountModal, openLogoutConfirm }: { hidden: boolean; settingsOpen: boolean; setSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>; closeBottomNav: () => void; openAccountModal: () => void; openLogoutConfirm: () => void }) {
   const settingsItems = [
-    { label: 'Dark', icon: '◐' },
-    { label: 'Account', icon: '/egg/media/icons/coop-icon.png', image: true },
-    { label: 'Logout', icon: '/egg/media/icons/logout-icon.png', image: true },
+    { label: 'Account', icon: '/egg/media/icons/coop-icon.png', image: true, action: 'account' },
+    { label: 'Logout', icon: '/egg/media/icons/logout-icon.png', image: true, action: 'logout' },
   ];
 
   return (
@@ -47,6 +46,16 @@ function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav }: { hid
                     key={item.label}
                     type="button"
                     className="flex min-w-max items-center justify-end gap-3 rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/95 px-[1.5rem] py-[0.8rem] text-[1.56rem] font-semibold text-[#6f4bb8] shadow-[0_10px_24px_rgba(47,31,77,0.10)]"
+                    onClick={() => {
+                      if (item.action === 'account') {
+                        setSettingsOpen(false);
+                        openAccountModal();
+                      }
+                      if (item.action === 'logout') {
+                        setSettingsOpen(false);
+                        openLogoutConfirm();
+                      }
+                    }}
                   >
                     <span className="text-right">{item.label}</span>
                     {item.image ? (
@@ -82,6 +91,133 @@ function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav }: { hid
   );
 }
 
+
+type ArchitectureNode = {
+  label: string;
+  note?: string;
+  children?: ArchitectureNode[];
+  defaultOpen?: boolean;
+};
+
+function ArchitectureTreeNode({ node, depth = 0, collapseVersion = 0 }: { node: ArchitectureNode; depth?: number; collapseVersion?: number }) {
+  const hasChildren = Boolean(node.children?.length);
+  const [open, setOpen] = useState(node.defaultOpen ?? false);
+
+  useEffect(() => {
+    if (collapseVersion > 0) {
+      setOpen(false);
+    }
+  }, [collapseVersion]);
+
+  return (
+    <div>
+      <div className="flex items-start gap-2">
+        {hasChildren ? (
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            className="mt-[0.15rem] min-h-[1.5rem] min-w-[1.5rem] rounded-md border border-[#dccffc] bg-white text-[0.9rem] font-bold leading-none text-[#6f4bb8]"
+            aria-label={`${open ? 'Collapse' : 'Expand'} ${node.label}`}
+          >
+            {open ? '−' : '+'}
+          </button>
+        ) : (
+          <span className="mt-[0.2rem] inline-flex min-h-[1.5rem] min-w-[1.5rem] items-center justify-center text-[#c4b2f4]">·</span>
+        )}
+        <div className="min-w-0">
+          <div className="text-[1rem] font-semibold leading-tight text-[#6f4bb8]">{node.label}</div>
+          {node.note ? <div className="mt-1 text-[0.9rem] leading-snug text-[#8c79bb]">{node.note}</div> : null}
+        </div>
+      </div>
+      {hasChildren && open ? (
+        <div className="mt-3 space-y-3 border-l border-[#e8defd] pl-4 ml-3">
+          {node.children!.map((child) => (
+            <ArchitectureTreeNode key={`${node.label}-${child.label}`} node={child} depth={depth + 1} collapseVersion={collapseVersion} />
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function ArchitectureCard() {
+  const [collapseVersion, setCollapseVersion] = useState(0);
+
+  const tree = useMemo<ArchitectureNode[]>(() => [
+    {
+      label: 'Pages / routes',
+      children: [
+        { label: '/egg/', note: 'Main app entry. Currently resolves to the home/mockup experience.' },
+        { label: '/egg/components', note: 'Component playground and visual test bed.' },
+        { label: '/egg/chicks', note: 'Dedicated chicks page route.' },
+        { label: '/egg/calendar', note: 'Dedicated calendar page route.' },
+        { label: '/egg/blank', note: 'Spare blank page for testing layouts.' },
+      ],
+    },
+    {
+      label: 'Top-level app switching',
+      children: [
+        { label: 'App.tsx', note: 'Reads pathname and chooses which route component to render.' },
+        { label: 'Auth flow', note: 'Session check exists, but current app falls back to ComponentsShowcase either way.' },
+      ],
+    },
+    {
+      label: 'Primary screens / components',
+      children: [
+        {
+          label: 'ComponentsShowcase',
+          note: 'Main mockup lab. Holds most UI experiments and modal flows.',
+          children: [
+            { label: 'Header + settings menu' },
+            { label: 'Bottom nav mock + floating add button' },
+            { label: 'Dashboard cards', note: 'WeeklySummaryCard, ProfitLossCard, MetricCard, MiniStatCard, RollingLayRateCard, LocationProgressCard.' },
+            { label: 'Entity cards', note: 'HenCard, CoopCards, ChickCard, profile variants.' },
+            { label: 'Reference bits', note: 'CalendarCard, WikiElements, Buttons, FillEffects.' },
+            { label: 'Modal flows', note: 'Add Eggs, Add Chicks, Edit Chicks, Add Meds, Add Expense, cost keypad, photo mini-modals, delete confirm.' },
+          ],
+        },
+        { label: 'ChicksPage', note: 'Standalone route for chicks-specific page work.' },
+        { label: 'CalendarPage', note: 'Standalone calendar route.' },
+        { label: 'BlankPage', note: 'Safe scratch page.' },
+      ],
+    },
+    {
+      label: 'Navigation model',
+      children: [
+        { label: 'Top bar', note: 'Logo left, settings button right.' },
+        { label: 'Bottom nav items', note: 'Home, Calendar/Chicks, Flocks, Sales.' },
+        { label: 'Center action button', note: 'Opens quick-add menu for Eggs, Chicks, Meds, Expense.' },
+      ],
+    },
+    {
+      label: 'Data / backend shape',
+      children: [
+        { label: 'src/api.ts', note: 'Frontend API client entry.' },
+        { label: 'api/', note: 'PHP auth/session/data endpoints.' },
+        { label: 'media/', note: 'Project assets: logos, icons, hens, coops, wiki media.' },
+      ],
+    },
+  ], []);
+
+  return (
+    <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8]`}>
+      <div className="flex justify-end">
+        <button
+          type="button"
+          className="rounded-[var(--ui-radius)] border border-[#dccffc] bg-white px-3 py-2 text-[0.88rem] font-semibold text-[#6f4bb8] shadow-sm"
+          onClick={() => setCollapseVersion((value) => value + 1)}
+        >
+          Collapse all
+        </button>
+      </div>
+      <div className="mt-4 space-y-4">
+        {tree.map((node) => (
+          <ArchitectureTreeNode key={node.label} node={node} collapseVersion={collapseVersion} />
+        ))}
+      </div>
+    </ShellCard>
+  );
+}
 
 function ComponentLabel({ name }: { name: string }) {
   return (
@@ -219,6 +355,160 @@ function BlankProfileCard() {
         }}
       />
     </ShellCard>
+  );
+}
+
+function AddEditHenDraft() {
+  const [breedModalOpen, setBreedModalOpen] = useState(false);
+  const [selectedBreed, setSelectedBreed] = useState('Black Rock');
+  const [otherBreed, setOtherBreed] = useState('');
+  const [henDob, setHenDob] = useState('2025-05-01');
+  const [henCoop, setHenCoop] = useState('Eggstein Island');
+  const [henPhotoAdded, setHenPhotoAdded] = useState(false);
+  const [henPhotoMiniModalOpen, setHenPhotoMiniModalOpen] = useState(false);
+  const [henNotesOpen, setHenNotesOpen] = useState(false);
+  const [henNotes, setHenNotes] = useState('');
+  const [henPhotoZoom, setHenPhotoZoom] = useState(1);
+  const [henPhotoOffset, setHenPhotoOffset] = useState(0);
+
+  const breeds = [
+    'Black Rock',
+    'Goldline',
+    'Speckledy (Speckled Ranger)',
+    'Sussex',
+    'Rhode Island Red',
+    'Buff Orpington',
+    'Marans',
+    'Silkie',
+    'Cream Legbar',
+    'Wyandotte',
+    'Pekin Bantam',
+    'Other (enter breed)',
+  ];
+
+  return (
+    <>
+      <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8]`}>
+        <div className="flex items-start justify-between gap-4">
+          <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Add Hen</div>
+        </div>
+
+        <div className="mt-4 space-y-4">
+          <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm block">
+            <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Name</div>
+            <input type="text" placeholder="Henrietta" className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c7b2f7]" />
+          </label>
+
+          <div className="grid grid-cols-2 gap-3">
+            <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-left shadow-sm" onClick={() => setBreedModalOpen(true)}>
+              <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Breed</div>
+              <div className="mt-2 flex items-center justify-between gap-3 text-[1rem] font-semibold text-[#6f4bb8]">
+                <span className="truncate">{selectedBreed === 'Other (enter breed)' && otherBreed ? otherBreed : selectedBreed}</span>
+                <span className="text-[#8c79bb]">+</span>
+              </div>
+            </button>
+
+            <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+              <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">DoB (approx.)</div>
+              <input type="date" value={henDob} onChange={(e) => setHenDob(e.target.value)} className="mt-2 w-full bg-transparent text-[1.04rem] font-semibold text-[#6f4bb8] outline-none" />
+            </label>
+          </div>
+
+          <div className="grid grid-cols-[1fr_auto] gap-3">
+            <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+              <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Coop</div>
+              <select value={henCoop} onChange={(e) => setHenCoop(e.target.value)} className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none">
+                <option>Eggstein Island</option>
+                <option>Willow House</option>
+                <option>Speckled Coop</option>
+                <option>Back Garden Coop</option>
+              </select>
+            </label>
+            <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setHenNotesOpen((v) => !v)}>{henNotes ? 'Edit notes' : 'Notes'}</button>
+          </div>
+
+          <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+            <div className="flex items-center justify-between gap-3">
+              <div className="text-[1rem] font-semibold text-[#6f4bb8]">{henPhotoAdded ? 'Photo ready' : 'No photo added yet'}</div>
+              <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setHenPhotoMiniModalOpen(true)}>{henPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
+            </div>
+          </div>
+
+          <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Let's Cluckin' Go!</button>
+
+          {henNotesOpen ? (
+            <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+              <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Notes</div>
+              <textarea value={henNotes} onChange={(e) => setHenNotes(e.target.value)} placeholder="Type notes..." className="mt-2 min-h-[6rem] w-full resize-none bg-transparent text-[1rem] text-[#6f4bb8] outline-none" />
+            </div>
+          ) : null}
+        </div>
+      </ShellCard>
+
+      {breedModalOpen ? (
+        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className={`max-h-[90vh] w-full max-w-[28rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
+            <div className="flex items-start justify-between gap-4">
+              <div className="text-[1.35rem] font-bold text-[#6f4bb8]">Breed</div>
+              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setBreedModalOpen(false)}>×</button>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              {breeds.map((breed) => {
+                const active = selectedBreed === breed;
+                return (
+                  <button
+                    key={breed}
+                    type="button"
+                    className={`rounded-[var(--ui-radius)] border px-3 py-3 text-center shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#8c79bb]'}`}
+                    onClick={() => setSelectedBreed(breed)}
+                  >
+                    <div className="text-[1.5rem]">🐔</div>
+                    <div className="mt-2 text-[0.88rem] font-semibold leading-tight">{breed}</div>
+                  </button>
+                );
+              })}
+            </div>
+            {selectedBreed === 'Other (enter breed)' ? (
+              <input type="text" value={otherBreed} onChange={(e) => setOtherBreed(e.target.value)} placeholder="Enter breed" className="mt-4 w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white px-3 py-3 text-[0.98rem] text-[#6f4bb8] outline-none" />
+            ) : null}
+            <button type="button" className="mt-4 w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setBreedModalOpen(false)}>Done</button>
+          </div>
+        </div>
+      ) : null}
+
+      {henPhotoMiniModalOpen ? (
+        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
+            <div className="flex items-start justify-between gap-4">
+              <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Edit photo</div>
+              <button type="button" className="text-[2rem] leading-none text-[#8c79bb]" onClick={() => setHenPhotoMiniModalOpen(false)}>×</button>
+            </div>
+            <div className="mt-4 flex justify-center">
+              <div className="relative h-[11rem] w-[11rem] overflow-hidden rounded-full border-2 border-[#e7ddfb] bg-[#f3edff]">
+                <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#8c79bb]" style={{ transform: `translateX(${henPhotoOffset}px) scale(${henPhotoZoom})` }}>
+                  Photo preview
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 space-y-3">
+              <div>
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Zoom</div>
+                <input type="range" min="1" max="2" step="0.1" value={henPhotoZoom} onChange={(e) => setHenPhotoZoom(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
+              </div>
+              <div>
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Pan</div>
+                <input type="range" min="-30" max="30" step="1" value={henPhotoOffset} onChange={(e) => setHenPhotoOffset(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setHenPhotoAdded(true)}>Upload</button>
+                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setHenPhotoAdded(true)}>Take photo</button>
+              </div>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => { setHenPhotoAdded(true); setHenPhotoMiniModalOpen(false); }}>Save photo</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 }
 
@@ -640,6 +930,14 @@ export default function ComponentsShowcase() {
   const [headerHidden, setHeaderHidden] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [bottomNavOpen, setBottomNavOpen] = useState(false);
+  const [accountModalOpen, setAccountModalOpen] = useState(false);
+  const [resetPasswordConfirmOpen, setResetPasswordConfirmOpen] = useState(false);
+  const [deleteAccountConfirmOpen, setDeleteAccountConfirmOpen] = useState(false);
+  const [deleteAccountFinalConfirmOpen, setDeleteAccountFinalConfirmOpen] = useState(false);
+  const [downloadConfirmOpen, setDownloadConfirmOpen] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [downloadSelections, setDownloadSelections] = useState<string[]>(['All Data']);
   const [chicksModalOpen, setChicksModalOpen] = useState(false);
   const [eggsModalOpen, setEggsModalOpen] = useState(false);
   const [eggCount, setEggCount] = useState(7);
@@ -713,7 +1011,7 @@ export default function ComponentsShowcase() {
     }
   }, [layDate]);
 
-  const anyModalOpen = eggsModalOpen || chicksModalOpen || medsModalOpen || expenseModalOpen || expenseCostModalOpen || photoMiniModalOpen || medPhotoMiniModalOpen || expensePhotoMiniModalOpen || editChicksModalOpen || editPhotoMiniModalOpen || deleteConfirmOpen;
+  const anyModalOpen = accountModalOpen || resetPasswordConfirmOpen || deleteAccountConfirmOpen || deleteAccountFinalConfirmOpen || downloadConfirmOpen || logoutConfirmOpen || eggsModalOpen || chicksModalOpen || medsModalOpen || expenseModalOpen || expenseCostModalOpen || photoMiniModalOpen || medPhotoMiniModalOpen || expensePhotoMiniModalOpen || editChicksModalOpen || editPhotoMiniModalOpen || deleteConfirmOpen;
 
   useEffect(() => {
     if (!anyModalOpen) return;
@@ -733,7 +1031,7 @@ export default function ComponentsShowcase() {
 
   return (
     <div className="min-h-screen bg-[#f6f1ff] text-slate-900">
-      <Header hidden={headerHidden} settingsOpen={settingsOpen} setSettingsOpen={setSettingsOpen} closeBottomNav={() => setBottomNavOpen(false)} />
+      <Header hidden={headerHidden} settingsOpen={settingsOpen} setSettingsOpen={setSettingsOpen} closeBottomNav={() => setBottomNavOpen(false)} openAccountModal={() => setAccountModalOpen(true)} openLogoutConfirm={() => setLogoutConfirmOpen(true)} />
       {headerHidden ? (
         <button
           type="button"
@@ -746,6 +1044,181 @@ export default function ComponentsShowcase() {
         >
           <ChevronUp size={20} />
         </button>
+      ) : null}
+
+      {accountModalOpen ? (
+        <>
+          <button
+            type="button"
+            aria-label="Close account panel"
+            className="fixed inset-0 z-[68] bg-[#2b124f]/28 backdrop-blur-[2px] animate-[fadeIn_180ms_ease-out]"
+            onClick={() => setAccountModalOpen(false)}
+          />
+          <div className="fixed inset-x-0 top-0 z-[69] flex max-h-screen justify-center overflow-y-auto px-2 pt-2 pb-4 sm:px-4 sm:pt-4">
+            <div className={`max-h-[calc(100vh-1rem)] w-full max-w-[36rem] overflow-y-auto rounded-[1.6rem] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)] animate-[fadeSlideDown_220ms_ease-out] sm:max-h-[calc(100vh-2rem)]`}>
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Account</div>
+                </div>
+                <button type="button" className="text-[2.2rem] leading-none text-[#8c79bb]" onClick={() => setAccountModalOpen(false)}>×</button>
+              </div>
+
+              <div className="mt-4 space-y-3">
+                <div className="grid grid-cols-[5.2rem_1fr] items-center gap-3">
+                  <div className="text-[0.75rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Name</div>
+                  <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                    <div className="text-[1.05rem] font-semibold leading-none text-[#b2aacb]">Russ Sparks</div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-[5.2rem_1fr] items-center gap-3">
+                  <div className="text-[0.75rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Email</div>
+                  <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                    <div className="text-[1.05rem] font-semibold leading-none text-[#b2aacb]">russ@example.com</div>
+                  </div>
+                </div>
+
+                <hr className="border-0 border-t border-[#e7ddfb]" />
+
+                <div>
+                  <div className="mb-2 text-[0.75rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Download Data</div>
+                  <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                    <div className="mb-3 text-[0.82rem] leading-relaxed text-[#8c79bb]">Select the items you'd like to download, or leave All Data selected and press the Download button.</div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {['Eggs', 'Chicks', 'Flocks', 'Hens', 'Coops', 'Meds', 'Expenses', 'Sales', 'All Data'].map((item) => {
+                        const active = downloadSelections.includes(item);
+                        return (
+                          <button
+                            key={item}
+                            type="button"
+                            className={`flex items-center justify-center rounded-[var(--ui-radius)] border px-2 py-2.5 text-center text-[0.84rem] font-semibold leading-tight shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#8c79bb]'}`}
+                            onClick={() => {
+                              if (item === 'All Data') {
+                                setDownloadSelections((prev) => prev.includes('All Data') ? [] : ['All Data']);
+                                return;
+                              }
+                              setDownloadSelections((prev) => {
+                                const withoutAll = prev.filter((entry) => entry !== 'All Data');
+                                return withoutAll.includes(item)
+                                  ? withoutAll.filter((entry) => entry !== item)
+                                  : [...withoutAll, item];
+                              });
+                            }}
+                          >
+                            <span>{item}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <button
+                      type="button"
+                      className="mt-3 w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-2.5 text-[0.95rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]"
+                      onClick={() => setDownloadConfirmOpen(true)}
+                    >
+                      Download
+                    </button>
+                    <div className="mt-2 text-[0.75rem] leading-relaxed text-[#8c79bb]">
+                      Only you can see your data while it is stored on our servers, and sensitive account details are hashed securely. If you have any queries, please review our <a href="#" className="font-semibold text-[#6f4bb8] underline underline-offset-2">privacy policy</a>.
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="border-0 border-t border-[#e7ddfb]" />
+
+                <div className="grid grid-cols-2 gap-2.5">
+                  <button
+                    type="button"
+                    className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-center text-[0.92rem] font-semibold text-[#6f4bb8] shadow-sm"
+                    onClick={() => setResetPasswordConfirmOpen(true)}
+                  >
+                    Reset Password
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded-[var(--ui-radius)] border border-[#f7c6d1] bg-[#fff6f8] px-4 py-3 text-center text-[0.92rem] font-semibold text-[#d14d6f] shadow-sm"
+                    onClick={() => setDeleteAccountConfirmOpen(true)}
+                  >
+                    Delete Account
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
+
+      {logoutConfirmOpen ? (
+        <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
+            <div className="text-[1.3rem] font-bold text-[#6f4bb8]">Log out?</div>
+            <div className="mt-2 text-[0.98rem] text-[#8c79bb]">Are you sure you want to log out of your account?</div>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setLogoutConfirmOpen(false)}>Cancel</button>
+              <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setLogoutConfirmOpen(false)}>Log out</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {resetPasswordConfirmOpen ? (
+        <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
+            <div className="text-[1.3rem] font-bold text-[#6f4bb8]">Reset password?</div>
+            <div className="mt-2 text-[0.98rem] text-[#8c79bb]">A password reset link will be sent to your registered email address.</div>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setResetPasswordConfirmOpen(false)}>Cancel</button>
+              <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setResetPasswordConfirmOpen(false)}>Send reset</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {downloadConfirmOpen ? (
+        <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
+            <div className="text-[1.3rem] font-bold text-[#6f4bb8]">Data Download</div>
+            <div className="mt-2 text-[0.98rem] text-[#8c79bb]">A download link will be sent to your registered email address, please give it a few minutes.</div>
+            <div className="mt-4 flex justify-end">
+              <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setDownloadConfirmOpen(false)}>Okay</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {deleteAccountConfirmOpen ? (
+        <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#f0bfd0] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
+            <div className="text-[1.3rem] font-bold text-[#d14d6f]">Delete account?</div>
+            <div className="mt-2 text-[0.98rem] text-[#c07b92]">This will permanently remove the account and all associated data.</div>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setDeleteAccountConfirmOpen(false)}>Cancel</button>
+              <button type="button" className="rounded-[var(--ui-radius)] bg-[#d14d6f] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => { setDeleteAccountConfirmOpen(false); setDeleteAccountFinalConfirmOpen(true); }}>Delete</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {deleteAccountFinalConfirmOpen ? (
+        <div className="fixed inset-0 z-[77] flex items-center justify-center bg-[#2b124f]/42 p-4 backdrop-blur-[3px]">
+          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#f0bfd0] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.18)]">
+            <div className="text-[1.3rem] font-bold text-[#d14d6f]">Are you SURE you want to delete all data and your account?</div>
+            <div className="mt-2 text-[0.98rem] font-semibold text-[#d14d6f]">This cannot be undone!</div>
+            <div className="mt-4">
+              <div className="mb-2 text-[0.75rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Password</div>
+              <input
+                type="password"
+                value={deletePassword}
+                onChange={(e) => setDeletePassword(e.target.value)}
+                placeholder="Enter password"
+                className="w-full rounded-[var(--ui-radius)] border border-[#f0bfd0] bg-[#fff8fa] px-4 py-3 text-[1rem] text-[#6f4bb8] outline-none"
+              />
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => { setDeleteAccountFinalConfirmOpen(false); setDeletePassword(''); }}>Cancel</button>
+              <button type="button" className="rounded-[var(--ui-radius)] bg-[#d14d6f] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => { setDeleteAccountFinalConfirmOpen(false); setDeletePassword(''); }}>Yes, delete</button>
+            </div>
+          </div>
+        </div>
       ) : null}
 
       {eggsModalOpen ? (
@@ -771,11 +1244,11 @@ export default function ComponentsShowcase() {
               <div className="grid grid-cols-2 gap-3">
                 <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                   <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Date laid</div>
-                  <input type="date" value={layDate} onChange={(e) => setLayDate(e.target.value)} className="mt-2 w-full bg-transparent text-[0.98rem] font-semibold text-[#6f4bb8] outline-none" />
+                  <input type="date" value={layDate} onChange={(e) => setLayDate(e.target.value)} className="mt-2 w-full bg-transparent text-[1.225rem] font-semibold text-[#6f4bb8] outline-none" />
                 </label>
                 <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                   <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Best before</div>
-                  <input type="date" value={anticipatedDate} onChange={(e) => setAnticipatedDate(e.target.value)} className="mt-2 w-full bg-transparent text-[0.98rem] font-semibold text-[#6f4bb8] outline-none" />
+                  <input type="date" value={anticipatedDate} onChange={(e) => setAnticipatedDate(e.target.value)} className="mt-2 w-full bg-transparent text-[1.225rem] font-semibold text-[#6f4bb8] outline-none" />
                 </label>
               </div>
 
@@ -864,11 +1337,11 @@ export default function ComponentsShowcase() {
               <div className="grid grid-cols-2 gap-3">
                 <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                   <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Date laid</div>
-                  <input type="date" value={layDate} onChange={(e) => setLayDate(e.target.value)} className="mt-2 w-full bg-transparent text-[0.98rem] font-semibold text-[#6f4bb8] outline-none" />
+                  <input type="date" value={layDate} onChange={(e) => setLayDate(e.target.value)} className="mt-2 w-full bg-transparent text-[1.225rem] font-semibold text-[#6f4bb8] outline-none" />
                 </label>
                 <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                   <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Hatch due</div>
-                  <input type="date" value={anticipatedDate} onChange={(e) => setAnticipatedDate(e.target.value)} className="mt-2 w-full bg-transparent text-[0.98rem] font-semibold text-[#6f4bb8] outline-none" />
+                  <input type="date" value={anticipatedDate} onChange={(e) => setAnticipatedDate(e.target.value)} className="mt-2 w-full bg-transparent text-[1.225rem] font-semibold text-[#6f4bb8] outline-none" />
                 </label>
               </div>
 
@@ -961,11 +1434,11 @@ export default function ComponentsShowcase() {
               <div className="grid grid-cols-2 gap-3">
                 <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                   <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Date</div>
-                  <input type="date" value={medDate} onChange={(e) => setMedDate(e.target.value)} className="mt-2 w-full bg-transparent text-[0.98rem] font-semibold text-[#6f4bb8] outline-none" />
+                  <input type="date" value={medDate} onChange={(e) => setMedDate(e.target.value)} className="mt-2 w-full bg-transparent text-[1.225rem] font-semibold text-[#6f4bb8] outline-none" />
                 </label>
                 <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                   <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Add reminder</div>
-                  <input type="date" value={medReminderDate} onChange={(e) => { setMedReminderDate(e.target.value); setMedReminderTouched(true); }} className={`mt-2 w-full bg-transparent text-[0.98rem] font-semibold outline-none ${medReminderTouched ? 'text-[#6f4bb8]' : 'text-[#d7d0fb]'}`} />
+                  <input type="date" value={medReminderDate} onChange={(e) => { setMedReminderDate(e.target.value); setMedReminderTouched(true); }} className={`mt-2 w-full bg-transparent text-[1.225rem] font-semibold outline-none ${medReminderTouched ? 'text-[#6f4bb8]' : 'text-[#d7d0fb]'}`} />
                 </label>
               </div>
 
@@ -1068,7 +1541,7 @@ export default function ComponentsShowcase() {
                 </label>
                 <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                   <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Date</div>
-                  <input type="date" value={expenseDate} onChange={(e) => setExpenseDate(e.target.value)} className="mt-2 w-full bg-transparent text-[0.98rem] font-semibold text-[#6f4bb8] outline-none" />
+                  <input type="date" value={expenseDate} onChange={(e) => setExpenseDate(e.target.value)} className="mt-2 w-full bg-transparent text-[1.225rem] font-semibold text-[#6f4bb8] outline-none" />
                 </label>
               </div>
 
@@ -1347,6 +1820,16 @@ export default function ComponentsShowcase() {
 
       <div className="mx-auto max-w-6xl px-4 py-6 pb-40 sm:px-6 lg:px-8">
         <div className="space-y-6">
+          <div>
+            <ComponentLabel name="ArchitectureMap" />
+            <ArchitectureCard />
+          </div>
+
+          <div>
+            <ComponentLabel name="AddEditHenModal" />
+            <AddEditHenDraft />
+          </div>
+
           <div>
             <ComponentLabel name="WeeklySummaryCard" />
             <div className="space-y-6">

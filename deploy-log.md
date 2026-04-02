@@ -1479,3 +1479,129 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_101600
+- Request time: 2026-04-02 10:16:00 BST
+- User instruction: Add a simple expandable architecture component at the top of the components page, then deploy it.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102300
+- Request time: 2026-04-02 10:23:00 BST
+- User instruction: Update top nav/settings so dark-light is hidden, Account opens a top-down account sheet with name, email, password reset, download data, and delete account; deploy on every edit by default.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103300
+- Request time: 2026-04-02 10:33:00 BST
+- User instruction: Refine the account sheet: remove helper text, move Name and Email labels above their containers, grey out uneditable values, move password reset and delete account to a shared bottom row with confirmation popups, and turn Download Data into selectable data toggles plus a confirmation popup.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103700
+- Request time: 2026-04-02 10:37:00 BST
+- User instruction: Add a second delete-account confirmation: ask if they are sure they want to delete all data and their account, warn that it cannot be undone, and if they continue ask for password; otherwise cancel.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103800
+- Request time: 2026-04-02 10:38:00 BST
+- User instruction: Add a small paragraph in the Download Data section saying: Select the items you'd like to download, or leave All Data selected and press the Download button.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_104200
+- Request time: 2026-04-02 10:42:00 BST
+- User instruction: Add an hr above the password and delete account buttons, rename them to exactly Reset Password and Delete Account, increase date selection text size by about 25%, and add a short privacy/security paragraph under Download with a blank privacy policy link.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_104600
+- Request time: 2026-04-02 10:46:00 BST
+- User instruction: Make the account sheet scrollable because the Reset Password and Delete Account buttons are not visible on smaller screens.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_105400
+- Request time: 2026-04-02 10:54:00 BST
+- User instruction: Compress the account modal to fit on one screen: make data selectors 3 per row, remove the little plus signs, and put Name/Email labels and containers on the same rows with EMAIL shortened to EMAIL.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110000
+- Request time: 2026-04-02 11:00:00 BST
+- User instruction: Add an hr above Download Data and round off the top corners of the main account modal.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110100
+- Request time: 2026-04-02 11:01:00 BST
+- User instruction: Add the usual logout confirmation dialogue on the Logout button.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110300
+- Request time: 2026-04-02 11:03:00 BST
+- User instruction: Add a Collapse all button to the architecture map and remove the main title and subtitle from that item.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110700
+- Request time: 2026-04-02 11:07:00 BST
+- User instruction: Add a draft Add / Edit Hen modal under the architecture map using the provided mockup style, with the photo input matching the Add Chicks circular pattern and aiming to fit on one screen.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111700
+- Request time: 2026-04-02 11:17:00 BST
+- User instruction: Delete the temporary Add / Edit Hen draft from the components page so we can rebuild it from scratch together.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111800
+- Request time: 2026-04-02 11:18:00 BST
+- User instruction: Set the architecture map default state to collapsed.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111900
+- Request time: 2026-04-02 11:19:00 BST
+- User instruction: Fix the architecture map so it actually loads collapsed by default.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_112800
+- Request time: 2026-04-02 11:28:00 BST
+- User instruction: Add a new Add / Edit Hen modal under the architecture map using the standard modal gradient, Add Chicks-style title, hen-card egg count on the right, name input, breed picker mini-modal, approximate DoB date picker, coop selector, Add Chicks-style photo input, Add Chicks-style notes, and a Let's Cluckin' Go! submit button.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_113300
+- Request time: 2026-04-02 11:33:00 BST
+- User instruction: For Add / Edit Hen, use the shared row styling for Coop and Notes like the provided grid example.
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_113700
+- Request time: 2026-04-02 11:37:00 BST
+- User instruction: Change Add / Edit Hen to Add Hen for now, hide the egg count, rename Appearance / breed to Breed, and reduce the date picker text size by about 15% with the dd/mm/yy style treatment.
+- Notes: deploy started
+
+- Result: deployed successfully
+
