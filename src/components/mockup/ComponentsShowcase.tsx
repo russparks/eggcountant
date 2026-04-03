@@ -1260,14 +1260,14 @@ function RollingLayRateCard() {
   const bars = [8, 10, 7, 11, 9, 6, 10, 8, 7, 11, 9, 10, 6, 8];
 
   return (
-    <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
+    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
       <div>
         <div className="m-0 text-[1.2rem] font-bold uppercase text-[#6f4bb8]">Rollin' 14 Days Lays</div>
       </div>
       <div className="mt-2 flex h-44 items-end gap-2">
         {bars.map((bar, i) => (
           <div key={`lay-${i}`} className="flex flex-1 flex-col items-center gap-1">
-            <div className="flex w-full items-end justify-center rounded-t-[var(--ui-radius)] bg-gradient-to-t from-violet-500 to-fuchsia-400" style={{ height: `${bar * 12}px` }} />
+            <div className="flex w-full items-end justify-center rounded-t-[var(--ui-radius)] bg-gradient-to-b from-[#6f4bb8] to-transparent" style={{ height: `${bar * 12}px` }} />
             <span className="text-xs font-medium text-slate-400">{bar}</span>
           </div>
         ))}
@@ -2434,38 +2434,38 @@ export default function ComponentsShowcase() {
             <CalendarCard />
           </div>
 
-          <div><ComponentLabel name="LocationProgressCard" /><ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
+          <div><ComponentLabel name="LocationProgressCard" /><ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
             <div>
               <div className="m-0 text-[1.2rem] font-bold uppercase text-[#6f4bb8]">It's not a competition...but...</div>
             </div>
 
             <div className="mt-4">
-              <div className="flex items-center justify-between gap-3 text-sm text-slate-500">
-                <span>Eggstein Island</span>
-                <span>78%</span>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Eggstein Island</span>
+                <span className="text-[0.95rem] font-bold text-[#FFCC01]">78%</span>
               </div>
               <div className="mt-2 h-3 w-full overflow-hidden rounded-[var(--ui-radius)] bg-slate-200">
-                <div className="h-full w-[78%] rounded-[var(--ui-radius)] bg-gradient-to-r from-violet-500 to-fuchsia-400" />
+                <div className="h-full w-[78%] rounded-[var(--ui-radius)] bg-gradient-to-r from-[#f3edff] to-[#6f4bb8]" />
               </div>
             </div>
 
             <div className="mt-4">
-              <div className="flex items-center justify-between gap-3 text-sm text-slate-500">
-                <span>Pecking Palace</span>
-                <span>67%</span>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Pecking Palace</span>
+                <span className="text-[0.95rem] font-bold text-[#999999]">67%</span>
               </div>
               <div className="mt-2 h-3 w-full overflow-hidden rounded-[var(--ui-radius)] bg-slate-200">
-                <div className="h-full w-[67%] rounded-[var(--ui-radius)] bg-gradient-to-r from-violet-500 to-fuchsia-400" />
+                <div className="h-full w-[67%] rounded-[var(--ui-radius)] bg-gradient-to-r from-[#f3edff] to-[#6f4bb8]" />
               </div>
             </div>
 
             <div className="mt-4">
-              <div className="flex items-center justify-between gap-3 text-sm text-slate-500">
-                <span>Cluck the Fuck Up</span>
-                <span>59%</span>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Cluck the Fuck Up</span>
+                <span className="text-[0.95rem] font-bold text-[#CC6602]">59%</span>
               </div>
               <div className="mt-2 h-3 w-full overflow-hidden rounded-[var(--ui-radius)] bg-slate-200">
-                <div className="h-full w-[59%] rounded-[var(--ui-radius)] bg-gradient-to-r from-violet-500 to-fuchsia-400" />
+                <div className="h-full w-[59%] rounded-[var(--ui-radius)] bg-gradient-to-r from-[#f3edff] to-[#6f4bb8]" />
               </div>
             </div>
           </ShellCard></div>

@@ -2191,3 +2191,31 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_103200
+- Request time: 2026-04-03 10:32:00 BST
+- User instruction: RollingLayRateCard: change bar gradients to purple at the top fading to transparent at the bottom
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103500
+- Request time: 2026-04-03 10:35:00 BST
+- User instruction: change the RollingLayRateCard local card gradient from purple to lightpurple
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103800
+- Request time: 2026-04-03 10:38:00 BST
+- User instruction: LocationProgressCard: progress bar gradient should go lightpurple to purple, and the card local gradient should be lightpurple
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_104000
+- Request time: 2026-04-03 10:40:00 BST
+- User instruction: LocationProgressCard: coop names should use Input Label styling, and percentages should be bold and use gold/silver/bronze ranking colors
+- Notes: deploy started
+
+- Result: deployed successfully
+
