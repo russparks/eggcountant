@@ -1195,24 +1195,22 @@ function HenCard({
   }
 
   return (
-    <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
-      <div className="flex items-center justify-between gap-3">
-        <div className="min-w-0">
-          <div className="m-0 text-[2.1rem] font-bold leading-none" style={{ color: nameColor }}>{name}</div>
+    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
+      <div className="flex items-center justify-center gap-3 text-center">
+        <div className="min-w-0 flex-1">
+          <div className="m-0 w-full text-center font-black italic leading-none tracking-tight" style={{ color: nameColor, fontSize: `${Math.max(0.88, 1.36 - Math.max(0, name.length - 10) * 0.045)}rem` }}>{name}</div>
         </div>
-        <img src={medal} alt="" className="h-12 w-12 object-contain" />
       </div>
       <hr className="mt-2 border-0 border-t border-slate-200" />
-      <div className="mt-2 flex items-center gap-2 text-[3.315rem] font-bold text-[#704BB8] leading-none">
-        <span>{eggs}</span>
-        <img src="/egg/media/icons/1-egg.png" alt="" className="h-[2.05rem] w-auto object-contain" />
+      <div className="mt-[0.15rem] flex items-center justify-center gap-3 text-center">
+        <div className="text-[1.03rem] font-medium leading-tight text-[#9E9E9E]">{coop}</div>
       </div>
-      <div className="mt-3 h-2.5 w-full overflow-hidden rounded-[var(--ui-radius)] bg-slate-200">
-        <div className="h-full rounded-[var(--ui-radius)] bg-[#c4b2f4]" style={{ width: `${progress}%` }} />
-      </div>
-      <div className="mt-2 flex items-center justify-between gap-3">
-        <div className="text-[1.3125rem] text-[#c4b2f4]">{note}</div>
-        <div className="text-[0.9rem] uppercase text-[#9E9E9E]">{coop}</div>
+      <div className="mt-2 flex items-center justify-between gap-3 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
+        <div className="flex items-center gap-2">
+          <img src={medal} alt="" className="h-[1.4365rem] w-auto object-contain" />
+          <span>x {eggs}</span>
+        </div>
+        <div className="text-[1.1271rem] font-bold leading-none" style={{ color: nameColor }}>{progress}%</div>
       </div>
     </ShellCard>
   );
@@ -2402,7 +2400,7 @@ export default function ComponentsShowcase() {
 
           <div>
             <ComponentLabel name="MiniStatCardHalf" />
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <MiniStatCardHalf title="Yokes to Go" value="12" icon="/egg/media/icons/ico-fried-egg.png" align="left" />
               </div>
@@ -2412,11 +2410,18 @@ export default function ComponentsShowcase() {
             </div>
           </div>
 
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-            <div className="sm:col-span-2 lg:col-span-2"><ComponentLabel name="HenCard" /></div>
-            <div><HenCard name="Willow" coop="Willow House" eggs="24" note="66% Egg Bossing" medal="/egg/media/icons/gold.png" progress={66} nameColor="#FFCC01" /></div>
-            <div><HenCard name="Dotty" coop="Speckled Coop" eggs="19" note="51% Egg Bossing" medal="/egg/media/icons/silver.png" progress={51} nameColor="#999999" /></div>
-            <div><HenCard name="Mabel" coop="Back Garden Coop" eggs="16" note="46% Egg Bossing" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#CC6602" /></div>
+          <div className="mt-6 grid gap-6">
+            <div><ComponentLabel name="HenCard" /></div>
+            <div className="grid grid-cols-2 gap-4">
+              <div><HenCard name="Willow" coop="Willow House" eggs="24" note="66% Egg Bossing" medal="/egg/media/icons/gold.png" progress={66} nameColor="#FFCC01" /></div>
+              <div><HenCard name="Dotty" coop="Speckled Coop" eggs="19" note="51% Egg Bossing" medal="/egg/media/icons/silver.png" progress={51} nameColor="#999999" /></div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div><HenCard name="Mabel" coop="Back Garden Coop" eggs="16" note="46% Egg Bossing" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#CC6602" /></div>
+              <div className="flex items-start justify-center pt-1">
+                <img src="/egg/media/icons/egg-volution.png" alt="Egg-volution" className="h-[6.48rem] w-auto object-contain" />
+              </div>
+            </div>
           </div>
 
           <div className="mt-6">

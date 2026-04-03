@@ -2093,3 +2093,101 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_093600
+- Request time: 2026-04-03 09:36:00 BST
+- User instruction: HenCards: 2-up layout language, H2 names with medal color, smaller trophy icon, profile-style egg count row, percentage on the right, and coop name left in grey H3 Sub-text
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_094200
+- Request time: 2026-04-03 09:42:00 BST
+- User instruction: put the gold and silver HenCards on the same line
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_094600
+- Request time: 2026-04-03 09:46:00 BST
+- User instruction: HenCards: reduce name/medal/coop/icon sizing, color the percentage to match the hen tier, tighten the coop spacing, and use a lighter local gradient override
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_095200
+- Request time: 2026-04-03 09:52:00 BST
+- User instruction: HenCards: remove trophy from top line, replace the egg icon with the trophy, centralise the hen name, and make long names shrink to fit
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_095700
+- Request time: 2026-04-03 09:57:00 BST
+- User instruction: HenCards final edits: center coop name, reduce trophy by 15%, reduce the percentage by 15%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_095900
+- Request time: 2026-04-03 09:59:00 BST
+- User instruction: fix HenCard name shrinking so it actually scales down instead of ellipsising
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_100900
+- Request time: 2026-04-03 10:09:00 BST
+- User instruction: add a blank HenCard in the gap after the bronze card using the egg-volution image from icons
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_101200
+- Request time: 2026-04-03 10:12:00 BST
+- User instruction: double the internal padding on the blank egg-volution HenCard tile
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_101400
+- Request time: 2026-04-03 10:14:00 BST
+- User instruction: revert the padding change on the egg-volution card, align the image to the top, and make the container transparent
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_101700
+- Request time: 2026-04-03 10:17:00 BST
+- User instruction: fix the egg-volution tile so the container is genuinely transparent
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102200
+- Request time: 2026-04-03 10:22:00 BST
+- User instruction: remove the extra egg-volution card and image
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102400
+- Request time: 2026-04-03 10:24:00 BST
+- User instruction: reduce the horizontal gap between MiniStatCardHalf cards so all double-card layouts use the same spacing as HenCards
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102600
+- Request time: 2026-04-03 10:26:00 BST
+- User instruction: in the HenCard section add the egg-volution image to the right of the bronze card
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102700
+- Request time: 2026-04-03 10:27:00 BST
+- User instruction: reduce the egg-volution image size by 10%
+- Notes: deploy started
+
+- Result: deployed successfully
+
