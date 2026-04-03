@@ -2233,3 +2233,94 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_154700
+- Request time: 2026-04-03 15:47:00 BST
+- User instruction: CalendarCard: make the calendar operational with today highlighted and swap the card gradient to lightpurple
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_154900
+- Request time: 2026-04-03 15:49:00 BST
+- User instruction: make CalendarCard fully operational with working month navigation and current month display
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_155400
+- Request time: 2026-04-03 15:54:00 BST
+- User instruction: CalendarCard: add divider under filters, add summary row with fried egg/chick/sales/expenses, and make clicking dates update the displayed values with fake current-month data
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_162100
+- Request time: 2026-04-03 16:21:00 BST
+- User instruction: CalendarCard: make summary items 100% larger, use fried egg icon from MiniStatCardHalf, align metrics in fixed containers, make top filters work, remove lower period filters, and stop showing future fake data
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_162400
+- Request time: 2026-04-03 16:24:00 BST
+- User instruction: CalendarCard: remove zero placeholders for future days and remove the duplicated lower metrics block
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_162600
+- Request time: 2026-04-03 16:26:00 BST
+- User instruction: CalendarCard: align the four summary metrics in fixed inner containers, move the selected date to the center, and remove the filters above the calendar
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_164400
+- Request time: 2026-04-03 16:44:00 BST
+- User instruction: CalendarCard: remove the filters entirely and restyle the bottom summary to match the screenshot with four boxed metrics and the date above them
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_165000
+- Request time: 2026-04-03 16:50:00 BST
+- User instruction: CalendarCard: use the ico-fried-egg icon and increase both bottom summary icons by 50%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_165300
+- Request time: 2026-04-03 16:53:00 BST
+- User instruction: CalendarCard: remove icons from eggs and chicks cards, add centered labels on all four metric tiles, and put values below the labels
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_165500
+- Request time: 2026-04-03 16:55:00 BST
+- User instruction: CalendarCard: increase the metric tile label size by 100%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_184600
+- Request time: 2026-04-03 18:46:00 BST
+- User instruction: make the CalendarCard metric tiles responsive so the labels and values clamp and the row collapses on small screens
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_184900
+- Request time: 2026-04-03 18:49:00 BST
+- User instruction: CalendarCard: increase label/value size by 40%, reduce vertical gap, and move the date above the metric cards
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_185600
+- Request time: 2026-04-03 18:56:00 BST
+- User instruction: move the hr so it sits between the date and the metric cards in CalendarCard
+- Notes: deploy started
+
+- Result: deployed successfully
+

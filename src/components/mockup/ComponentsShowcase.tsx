@@ -1278,37 +1278,72 @@ function RollingLayRateCard() {
 
 function CalendarCard() {
   const weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-  const filters = ['Eggs', 'Chicks', 'Sales', 'Expenses'];
-  const days = [
-    [null, null, null, null, null, null, { day: 1 }],
-    [{ day: 2 }, { day: 3 }, { day: 4 }, { day: 5 }, { day: 6 }, { day: 7 }, { day: 8 }],
-    [{ day: 9, value: 6, type: 'eggs' }, { day: 10 }, { day: 11 }, { day: 12 }, { day: 13 }, { day: 14 }, { day: 15 }],
-    [{ day: 16, value: 4, type: 'chicks' }, { day: 17 }, { day: 18 }, { day: 19, value: 3, type: 'sales' }, { day: 20 }, { day: 21 }, { day: 22 }],
-    [{ day: 23, value: 2, type: 'expenses' }, { day: 24 }, { day: 25 }, { day: 26 }, { day: 27 }, { day: 28, selected: true }, { day: 29 }],
-    [{ day: 30 }, { day: 31 }, null, null, null, null, null],
-  ];
+  const today = new Date();
+  const [displayMonth, setDisplayMonth] = useState(today.getMonth());
+  const [displayYear, setDisplayYear] = useState(today.getFullYear());
+  const [selectedDay, setSelectedDay] = useState(today.getDate());
+  const [activeFilter, setActiveFilter] = useState<'Eggs' | 'Chicks' | 'Sales' | 'Expenses'>('Eggs');
+  const todayMonth = today.getMonth();
+  const todayYear = today.getFullYear();
+
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const firstOfMonth = new Date(displayYear, displayMonth, 1);
+  const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
+  const startOffset = (firstOfMonth.getDay() + 6) % 7;
+  const totalSlots = Math.ceil((startOffset + daysInMonth) / 7) * 7;
+  const slots = Array.from({ length: totalSlots }, (_, index) => {
+    const day = index - startOffset + 1;
+    return day > 0 && day <= daysInMonth ? day : null;
+  });
+  const weeks = Array.from({ length: totalSlots / 7 }, (_, weekIndex) => slots.slice(weekIndex * 7, weekIndex * 7 + 7));
+  const fakeMonthData = Array.from({ length: daysInMonth }, (_, index) => {
+    const day = index + 1;
+    if (day > today.getDate()) {
+      return { eggs: 0, chicks: 0, sales: 0, expenses: 0 };
+    }
+    return {
+      eggs: 4 + ((day * 3) % 9),
+      chicks: 1 + (day % 3),
+      sales: Number((8 + ((day * 2.7) % 14)).toFixed(0)),
+      expenses: Number((2 + ((day * 1.9) % 8)).toFixed(0)),
+    };
+  });
+  const selectedMetrics = fakeMonthData[Math.max(0, selectedDay - 1)] || fakeMonthData[today.getDate() - 1] || fakeMonthData[0];
+  const summaryLabel = activeFilter === 'Eggs' ? 'Eggs' : activeFilter === 'Chicks' ? 'Chicks' : activeFilter === 'Sales' ? 'Sales' : 'Expenses';
 
   return (
-    <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
+    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
       <div className="flex items-center justify-between gap-3">
-        <button className="rounded-[var(--ui-radius)] bg-white/80 px-3 py-2 text-[1rem] font-bold text-[#6f4bb8] shadow-sm">&lt;</button>
-        <div className="m-0 text-[1.56rem] font-bold uppercase text-[#6f4bb8]">March</div>
-        <button className="rounded-[var(--ui-radius)] bg-white/80 px-3 py-2 text-[1rem] font-bold text-[#6f4bb8] shadow-sm">&gt;</button>
+        <button
+          type="button"
+          className="rounded-[var(--ui-radius)] bg-white/80 px-3 py-2 text-[1rem] font-bold text-[#6f4bb8] shadow-sm"
+          onClick={() => {
+            setDisplayMonth((current) => {
+              if (current === 0) {
+                setDisplayYear((year) => year - 1);
+                return 11;
+              }
+              return current - 1;
+            });
+          }}
+        >&lt;</button>
+        <div className="m-0 text-[1.56rem] font-bold uppercase text-[#6f4bb8]">{monthNames[displayMonth]}</div>
+        <button
+          type="button"
+          className="rounded-[var(--ui-radius)] bg-white/80 px-3 py-2 text-[1rem] font-bold text-[#6f4bb8] shadow-sm"
+          onClick={() => {
+            setDisplayMonth((current) => {
+              if (current === 11) {
+                setDisplayYear((year) => year + 1);
+                return 0;
+              }
+              return current + 1;
+            });
+          }}
+        >&gt;</button>
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-2">
-        {filters.map((filter, index) => (
-          <button
-            key={filter}
-            className={[
-              'min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold shadow-sm',
-              index === 0 ? 'bg-[#6f4bb8] text-white' : 'bg-white/80 text-[#c4b2f4]',
-            ].join(' ')}
-          >
-            {filter}
-          </button>
-        ))}
-      </div>
 
       <div className="mt-4 grid grid-cols-7 gap-2 text-center text-[0.8rem] font-semibold uppercase text-[#c4b2f4]">
         {weekdays.map((day) => (
@@ -1316,43 +1351,70 @@ function CalendarCard() {
         ))}
       </div>
       <div className="mt-2 space-y-2">
-        {days.map((week, weekIndex) => (
+        {weeks.map((week, weekIndex) => (
           <div key={weekIndex} className="grid grid-cols-7 gap-2">
             {week.map((cell, cellIndex) => {
-              if (!cell) return <div key={cellIndex} className="h-[4.2rem]" />;
+              if (cell === null) return <div key={cellIndex} className="h-[4.2rem]" />;
 
-              const hasEntry = typeof cell.value !== 'undefined';
-              const isSelected = Boolean(cell.selected);
+              const day = cell;
+              const isToday = displayYear === todayYear && displayMonth === todayMonth && day === today.getDate();
+              const isSelected = day === selectedDay && displayMonth === todayMonth && displayYear === todayYear;
+              const hasEntry = displayMonth === todayMonth && displayYear === todayYear && day <= today.getDate();
 
               return (
-                <div
+                <button
                   key={cellIndex}
+                  type="button"
+                  onClick={() => setSelectedDay(day)}
                   className={[
-                    'h-[4.2rem] rounded-[var(--ui-radius)] px-2 py-1 flex flex-col items-center',
+                    'h-[4.2rem] rounded-[var(--ui-radius)] px-2 py-1 flex flex-col items-center transition-colors',
                     isSelected
                       ? 'border-2 border-[#6f4bb8] bg-[#6f4bb8] text-white shadow-[0_10px_24px_rgba(124,58,237,0.28)]'
-                      : hasEntry
+                      : isToday
                         ? 'border-2 border-[#876BC2] bg-white text-[#6f4bb8]'
-                        : 'border border-[#ece3ff] bg-white/90 text-[#c4b2f4]',
+                        : hasEntry
+                          ? 'border border-[#ece3ff] bg-white/90 text-[#c4b2f4]'
+                          : 'border border-[#ece3ff] bg-white/90 text-[#c4b2f4]',
                   ].join(' ')}
                 >
-                  <div className={`w-full text-center text-[1.09rem] font-medium leading-none ${isSelected ? 'text-white/90' : 'text-[#9E9E9E]'}`}>{cell.day}</div>
+                  <div className={`w-full text-center text-[1.09rem] font-medium leading-none ${isSelected ? 'text-white/90' : isToday ? 'text-[#6f4bb8]' : 'text-[#9E9E9E]'}`}>{day}</div>
                   <div className="flex flex-1 items-center justify-center">
                     {hasEntry ? (
-                      <div className={`text-[1.55rem] font-bold leading-none ${isSelected ? 'text-white' : 'text-[#6f4bb8]'}`}>{cell.value}</div>
+                      <div className={`text-[1.55rem] font-bold leading-none ${isSelected ? 'text-white' : 'text-[#6f4bb8]'}`}>{fakeMonthData[day - 1].eggs}</div>
                     ) : null}
+                    {isSelected ? <div className="sr-only">Selected</div> : null}
                   </div>
-                </div>
+                </button>
               );
             })}
           </div>
         ))}
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-2">
-        <button className="min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold bg-white/80 text-[#c4b2f4] shadow-sm">1 week</button>
-        <button className="min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold bg-white/80 text-[#c4b2f4] shadow-sm">2 weeks</button>
-        <button className="min-h-[31px] flex-1 whitespace-nowrap rounded-[var(--ui-radius)] px-3 py-[0.35rem] text-[0.9rem] font-semibold bg-[#6f4bb8] text-white shadow-sm">1 month</button>
+      <div className="mt-3 text-center text-[1.6rem] font-black leading-none text-[#6f4bb8]">
+        {selectedDay}{selectedDay % 10 === 1 && selectedDay !== 11 ? 'st' : selectedDay % 10 === 2 && selectedDay !== 12 ? 'nd' : selectedDay % 10 === 3 && selectedDay !== 13 ? 'rd' : 'th'}
+        <span className="ml-2 font-normal italic text-[#9E9E9E]">{monthNames[displayMonth]}, {String(displayYear).slice(-2)}</span>
+      </div>
+
+      <hr className="my-4 border-0 border-t border-[#e7ddfb]" />
+
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/70 px-3 py-3 shadow-sm text-center">
+          <div className="text-[clamp(1.01rem,3.92vw,2.18rem)] font-bold uppercase tracking-wide text-[#9E9E9E]">EGGS</div>
+          <div className="mt-1 text-[clamp(1.54rem,5.6vw,2.24rem)] font-bold leading-none text-[#6f4bb8]">{selectedMetrics.eggs}</div>
+        </div>
+        <div className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/70 px-3 py-3 shadow-sm text-center">
+          <div className="text-[clamp(1.01rem,3.92vw,2.18rem)] font-bold uppercase tracking-wide text-[#9E9E9E]">CHICKS</div>
+          <div className="mt-1 text-[clamp(1.54rem,5.6vw,2.24rem)] font-bold leading-none text-[#6f4bb8]">{selectedMetrics.chicks}</div>
+        </div>
+        <div className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/70 px-3 py-3 shadow-sm text-center">
+          <div className="text-[clamp(1.01rem,3.92vw,2.18rem)] font-bold uppercase tracking-wide text-[#9E9E9E]">IN</div>
+          <div className="mt-1 text-[clamp(1.54rem,5.6vw,2.24rem)] font-bold leading-none text-[#999999]">£{selectedMetrics.sales}</div>
+        </div>
+        <div className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/70 px-3 py-3 shadow-sm text-center">
+          <div className="text-[clamp(1.01rem,3.92vw,2.18rem)] font-bold uppercase tracking-wide text-[#9E9E9E]">OUT</div>
+          <div className="mt-1 text-[clamp(1.54rem,5.6vw,2.24rem)] font-bold leading-none text-[#CC6602]">-£{selectedMetrics.expenses}</div>
+        </div>
       </div>
     </ShellCard>
   );
