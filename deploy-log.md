@@ -2219,3 +2219,17 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_111700
+- Request time: 2026-04-03 11:17:00 BST
+- User instruction: fix the bottom nav on iOS Chrome so it stays locked to the bottom and stops stretching/leaving a gap when scrolling
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_112000
+- Request time: 2026-04-03 11:20:00 BST
+- User instruction: bottom nav iOS Chrome fix: keep the CAB above the top border line and stop the white tray from stretching downward with it
+- Notes: deploy started
+
+- Result: deployed successfully
+

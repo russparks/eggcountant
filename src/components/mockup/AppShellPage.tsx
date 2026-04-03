@@ -110,11 +110,12 @@ function BottomNav({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModal, o
           onClick={() => setMenuOpen(false)}
         />
       ) : null}
-      <div className="fixed inset-x-0 bottom-0 z-40 pointer-events-none">
+      <div className="fixed left-0 bottom-0 z-40 w-[100dvw] max-w-[100dvw] pointer-events-none [transform:translateZ(0)]">
+        <div className="absolute inset-x-0 bottom-0 h-[env(safe-area-inset-bottom)] bg-white/95" />
         <div className="h-[6.07rem] border-t-[1.2px] border-slate-200 bg-white/95 backdrop-blur-[2px]" />
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-50 overflow-visible">
+      <div className="fixed left-0 bottom-0 z-50 w-[100dvw] max-w-[100dvw] overflow-visible [transform:translateZ(0)]">
         <div className="relative h-[6.07rem] overflow-visible">
           <div className="absolute left-1/2 bottom-[20%] z-[60] flex -translate-x-1/2 flex-col items-center gap-3">
             {menuOpen ? (
@@ -162,7 +163,7 @@ function BottomNav({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModal, o
             </button>
           </div>
 
-          <div className="relative z-10 mx-auto grid h-[6.07rem] max-w-[32rem] grid-cols-[1fr_1fr_6.25rem_1fr_1fr] items-center gap-0 px-3 text-center sm:px-4">
+          <div className="relative z-10 mx-auto grid h-[6.07rem] w-full max-w-[32rem] grid-cols-[1fr_1fr_6.25rem_1fr_1fr] items-center gap-0 px-3 text-center sm:px-4">
             <a href="/egg/" className={`flex h-full justify-self-start flex-col items-center justify-center ${active === 'home' ? 'text-[#6f4bb8]' : 'text-[#c4b2f4]'}`}>
               <img src={navIcons.home} alt="Home" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
             </a>
