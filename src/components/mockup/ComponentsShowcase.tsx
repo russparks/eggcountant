@@ -1393,29 +1393,26 @@ function CalendarCard() {
 
       <div className="mt-3 text-center text-[1.6rem] font-black leading-none text-[#6f4bb8]">
         {selectedDay}{selectedDay % 10 === 1 && selectedDay !== 11 ? 'st' : selectedDay % 10 === 2 && selectedDay !== 12 ? 'nd' : selectedDay % 10 === 3 && selectedDay !== 13 ? 'rd' : 'th'}
-        <span className="ml-2 font-normal italic text-[#9E9E9E]">{monthNames[displayMonth]}, {String(displayYear).slice(-2)}</span>
+        <span className="ml-2 text-[1.4rem] italic text-[#9E9E9E]">{monthNames[displayMonth]}, {String(displayYear).slice(-2)}</span>
       </div>
 
       <hr className="my-4 border-0 border-t border-[#e7ddfb]" />
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        <div className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/70 px-3 py-3 shadow-sm text-center">
-          <div className="text-[clamp(1.01rem,3.92vw,2.18rem)] font-bold uppercase tracking-wide text-[#9E9E9E]">EGGS</div>
-          <div className="mt-1 text-[clamp(1.54rem,5.6vw,2.24rem)] font-bold leading-none text-[#6f4bb8]">{selectedMetrics.eggs}</div>
+      <div className="mt-2 grid grid-cols-[15%_35%_15%_35%] gap-0">
+        <div className="rounded-[var(--ui-radius)] bg-transparent px-1 py-2">
+          <img src="/egg/media/icons/ico-fried-egg.png" alt="" className="h-[2.8rem] w-auto object-contain" />
         </div>
-        <div className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/70 px-3 py-3 shadow-sm text-center">
-          <div className="text-[clamp(1.01rem,3.92vw,2.18rem)] font-bold uppercase tracking-wide text-[#9E9E9E]">CHICKS</div>
-          <div className="mt-1 text-[clamp(1.54rem,5.6vw,2.24rem)] font-bold leading-none text-[#6f4bb8]">{selectedMetrics.chicks}</div>
+        <div className="rounded-[var(--ui-radius)] bg-transparent px-6 py-3">
+          <div className="text-[2.4rem] font-bold leading-none text-[#6f4bb8]">{selectedMetrics.eggs}</div>
         </div>
-        <div className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/70 px-3 py-3 shadow-sm text-center">
-          <div className="text-[clamp(1.01rem,3.92vw,2.18rem)] font-bold uppercase tracking-wide text-[#9E9E9E]">IN</div>
-          <div className="mt-1 text-[clamp(1.54rem,5.6vw,2.24rem)] font-bold leading-none text-[#999999]">£{selectedMetrics.sales}</div>
+        <div className="rounded-[var(--ui-radius)] bg-transparent px-1 py-2">
+          <img src="/egg/media/icons/ico-chick.png" alt="" className="h-[2.8rem] w-auto object-contain" />
         </div>
-        <div className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/70 px-3 py-3 shadow-sm text-center">
-          <div className="text-[clamp(1.01rem,3.92vw,2.18rem)] font-bold uppercase tracking-wide text-[#9E9E9E]">OUT</div>
-          <div className="mt-1 text-[clamp(1.54rem,5.6vw,2.24rem)] font-bold leading-none text-[#CC6602]">-£{selectedMetrics.expenses}</div>
+        <div className="rounded-[var(--ui-radius)] bg-transparent px-6 py-3">
+          <div className="text-[2.4rem] font-bold leading-none text-[#6f4bb8]">{selectedMetrics.chicks}</div>
         </div>
       </div>
+
     </ShellCard>
   );
 }
@@ -1499,21 +1496,21 @@ function BottomNavMock({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModa
           </div>
 
           <div className="relative z-10 mx-auto grid h-[6.07rem] w-full max-w-[32rem] grid-cols-[1fr_1fr_6.25rem_1fr_1fr] items-center gap-0 px-3 text-center sm:px-4">
-              <button className="flex h-full justify-self-start flex-col items-center justify-center text-[#6f4bb8]">
-                <img src={navIcons.home} alt="Home" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
-              </button>
-              <button className="flex h-full justify-self-start translate-x-[0.18rem] flex-col items-center justify-center text-[#c4b2f4]">
-                <img src={navIcons.calendar} alt="Calendar" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
-              </button>
-              <div className="h-full min-w-[6.25rem]" />
-              <button className="flex h-full justify-self-end -translate-x-[0.18rem] flex-col items-center justify-center text-[#c4b2f4]">
-                <img src={navIcons.flock} alt="Flock" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
-              </button>
-              <button className="flex h-full justify-self-end flex-col items-center justify-center text-[#c4b2f4]">
-                <img src={navIcons.sales} alt="Sales" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
-              </button>
-            </div>
+            <button className="flex h-full justify-self-start flex-col items-center justify-center text-[#6f4bb8]">
+              <img src={navIcons.home} alt="Home" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
+            </button>
+            <button className="flex h-full justify-self-start translate-x-[0.18rem] flex-col items-center justify-center text-[#c4b2f4]">
+              <img src={navIcons.calendar} alt="Calendar" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
+            </button>
+            <div className="h-full min-w-[6.25rem]" />
+            <button className="flex h-full justify-self-end -translate-x-[0.18rem] flex-col items-center justify-center text-[#c4b2f4]">
+              <img src={navIcons.flock} alt="Flock" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
+            </button>
+            <button className="flex h-full justify-self-end flex-col items-center justify-center text-[#c4b2f4]">
+              <img src={navIcons.sales} alt="Sales" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
+            </button>
           </div>
+        </div>
       </div>
     </>
   );
@@ -2169,7 +2166,7 @@ export default function ComponentsShowcase() {
               £{expenseCostDigits ? `${expenseCostDigits.padStart(3, '0').slice(0, -2) || '0'}.${expenseCostDigits.padStart(2, '0').slice(-2)}` : '0.00'}
             </div>
             <div className="mt-4 grid grid-cols-3 gap-3">
-              {['1','2','3','4','5','6','7','8','9','⌫','0','Done'].map((key) => (
+              {['1', '2', '3', '4', '5', '6', '7', '8', '9', '⌫', '0', 'Done'].map((key) => (
                 <button
                   key={key}
                   type="button"
