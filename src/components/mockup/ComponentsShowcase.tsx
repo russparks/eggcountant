@@ -164,18 +164,20 @@ function ArchitectureCard() {
     {
       label: 'Pages / routes',
       children: [
-        { label: '/egg/', note: 'Main app entry. Currently resolves to the home/mockup experience.' },
-        { label: '/egg/components', note: 'Component playground and visual test bed.' },
-        { label: '/egg/chicks', note: 'Dedicated chicks page route.' },
-        { label: '/egg/calendar', note: 'Dedicated calendar page route.' },
-        { label: '/egg/blank', note: 'Spare blank page for testing layouts.' },
+        { label: '/egg/', note: 'Home route. Falls through to AppShellPage with active="home".' },
+        { label: '/egg/components', note: 'Component playground and visual test bed via ComponentsShowcase.' },
+        { label: '/egg/calendar', note: 'Calendar route rendered through AppShellPage.' },
+        { label: '/egg/flock', note: 'Flock route rendered through AppShellPage.' },
+        { label: '/egg/sales', note: 'Sales route rendered through AppShellPage.' },
+        { label: '/egg/blank', note: 'Spare blank route rendered through AppShellPage.' },
       ],
     },
     {
       label: 'Top-level app switching',
       children: [
-        { label: 'App.tsx', note: 'Reads pathname and chooses which route component to render.' },
-        { label: 'Auth flow', note: 'Session check exists, but current app falls back to ComponentsShowcase either way.' },
+        { label: 'src/main.tsx', note: 'Bootstraps React and renders <App /> into the root element.' },
+        { label: 'src/App.tsx', note: 'Reads window.location.pathname and switches between ComponentsShowcase and AppShellPage.' },
+        { label: 'ViewMode', note: 'Current modes are home, components, calendar, flock, sales, blank.' },
       ],
     },
     {
@@ -183,26 +185,33 @@ function ArchitectureCard() {
       children: [
         {
           label: 'ComponentsShowcase',
-          note: 'Main mockup lab. Holds most UI experiments and modal flows.',
+          note: 'Main mockup lab. Used to refine and nitpick components before placing them on real pages.',
           children: [
-            { label: 'Header + settings menu' },
-            { label: 'Bottom nav mock + floating add button' },
+            { label: 'ArchitectureMap', note: 'This explainer tree.' },
             { label: 'Dashboard cards', note: 'WeeklySummaryCard, ProfitLossCard, MetricCard, MiniStatCard, RollingLayRateCard, LocationProgressCard.' },
-            { label: 'Entity cards', note: 'HenCard, CoopCards, ChickCard, profile variants.' },
-            { label: 'Reference bits', note: 'CalendarCard, WikiElements, Buttons, FillEffects.' },
-            { label: 'Modal flows', note: 'Add Eggs, Add Chicks, Edit Chicks, Add Meds, Add Expense, cost keypad, photo mini-modals, delete confirm.' },
+            { label: 'Entity cards', note: 'Hen cards, coop cards, chick cards, profile variants.' },
+            { label: 'Forms + modal flows', note: 'Eggs, chicks, meds, expenses, hen/coops, photo mini-modals, delete confirms.' },
+            { label: 'Reference bits', note: 'Calendar card, wiki cards, buttons, typography, palette, fill effects.' },
           ],
         },
-        { label: 'ChicksPage', note: 'Standalone route for chicks-specific page work.' },
-        { label: 'CalendarPage', note: 'Standalone calendar route.' },
-        { label: 'BlankPage', note: 'Safe scratch page.' },
+        {
+          label: 'AppShellPage',
+          note: 'Page assembly layer for routed views.',
+          children: [
+            { label: 'Header', note: 'Top logo + settings menu.' },
+            { label: 'BottomNav', note: 'Home, Calendar, Flock, Sales with central add button.' },
+            { label: 'HomeContent', note: 'Current home content placeholder.' },
+            { label: 'PlaceholderContent', note: 'Used for calendar, flock, sales, blank titles right now.' },
+            { label: 'Page-level modals', note: 'Account, logout, add eggs, add chicks, add meds, add expense.' },
+          ],
+        },
       ],
     },
     {
       label: 'Navigation model',
       children: [
         { label: 'Top bar', note: 'Logo left, settings button right.' },
-        { label: 'Bottom nav items', note: 'Home, Calendar/Chicks, Flocks, Sales.' },
+        { label: 'Bottom nav items', note: 'Home, Calendar, Flock, Sales.' },
         { label: 'Center action button', note: 'Opens quick-add menu for Eggs, Chicks, Meds, Expense.' },
       ],
     },
@@ -211,7 +220,8 @@ function ArchitectureCard() {
       children: [
         { label: 'src/api.ts', note: 'Frontend API client entry.' },
         { label: 'api/', note: 'PHP auth/session/data endpoints.' },
-        { label: 'media/', note: 'Project assets: logos, icons, hens, coops, wiki media.' },
+        { label: 'media/', note: 'Project assets used by the current mockup/frontend.' },
+        { label: 'dist/', note: 'Production build output created by Vite for deployment.' },
       ],
     },
   ], []);
@@ -379,19 +389,29 @@ function ProfitLossCard() {
   );
 }
 
-function PunFactCard() {
+function PunFactCard({ mode = 'pun', text }: { mode?: 'pun' | 'fact'; text: string }) {
+  const isPun = mode === 'pun';
+
   return (
-    <ShellCard className={`overflow-hidden border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8]`}>
-      <div className="flex justify-end">
-        <button
-          type="button"
-          className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-[0.62rem] py-[0.36rem] text-[0.72rem] font-semibold uppercase tracking-wide text-white shadow-sm"
-        >
-          Another Pun
-        </button>
-      </div>
-      <div className="mt-[0.45rem] w-full text-[1.6rem] font-normal italic leading-tight text-[#6f4bb8]">
-        “My flock's project management style? Scrum… and peck.”
+    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`overflow-hidden border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8]`}>
+      <div className="grid grid-cols-[1fr_auto] gap-x-3 gap-y-2 items-start">
+        <div className="text-[1.6rem] font-normal italic leading-tight text-[#6f4bb8]">
+          “{text}”
+        </div>
+        <div className="flex flex-col shrink-0 gap-2 pt-1">
+          <button
+            type="button"
+            className={`min-w-[3.6rem] rounded-[var(--ui-radius)] px-[0.62rem] py-[0.36rem] text-[0.72rem] font-semibold uppercase tracking-wide shadow-sm ${isPun ? 'bg-[#ece7f8] text-[#b7afcc]' : 'bg-[#6f4bb8] text-white'}`}
+          >
+            Pun
+          </button>
+          <button
+            type="button"
+            className={`min-w-[3.6rem] rounded-[var(--ui-radius)] px-[0.62rem] py-[0.36rem] text-[0.72rem] font-semibold uppercase tracking-wide shadow-sm ${!isPun ? 'bg-[#ece7f8] text-[#b7afcc]' : 'bg-[#6f4bb8] text-white'}`}
+          >
+            Fact
+          </button>
+        </div>
       </div>
     </ShellCard>
   );
@@ -400,12 +420,12 @@ function PunFactCard() {
 function WikiItemCard() {
   return (
     <a href="#" target="_blank" rel="noreferrer" className="block">
-      <ShellCard className={`overflow-hidden border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8]`}>
+      <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`overflow-hidden border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8]`}>
         <div className="text-[1.35rem] font-bold text-[#6f4bb8]">Egg marketing standards</div>
         <div className="mt-[0.45rem] w-full text-[1.12rem] font-normal leading-tight text-[#6f4bb8]">
           Explains egg marketing rules for producers, including when registration/stamping may apply and what information must be shown when selling direct or at markets.
         </div>
-        <div className="mt-3 text-[0.9rem] font-bold text-[#9E9E9E]">Open article →</div>
+        <div className="mt-3 text-right text-[1.215rem] font-medium leading-tight text-[#9E9E9E]">Open article →</div>
       </ShellCard>
     </a>
   );
@@ -413,10 +433,8 @@ function WikiItemCard() {
 
 function WikiShowMoreCard() {
   return (
-    <a href="#" target="_blank" rel="noreferrer" className="block">
-      <ShellCard className="overflow-hidden border border-[#d9c9fb] bg-white p-3 text-center text-[#6f4bb8]">
-        <div className="text-[1rem] font-bold text-[#6f4bb8]">Show more (45 remaining)</div>
-      </ShellCard>
+    <a href="#" target="_blank" rel="noreferrer" className="block rounded-[var(--ui-radius)] bg-[#6f4bb8] p-3 text-center text-white shadow-[0_10px_24px_rgba(47,31,77,0.10)]">
+      <div className="text-[1rem] font-bold text-white">Show more (45 remaining)</div>
     </a>
   );
 }
@@ -1160,14 +1178,13 @@ function HenCard({
 }) {
   if (compact) {
     return (
-      <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
+      <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
         <div className="flex min-h-[3.4rem] w-full items-center justify-center overflow-hidden">
           <div className="m-0 line-clamp-2 w-full text-center text-[1.55rem] font-bold leading-none text-[#6f4bb8]">{name}</div>
         </div>
-        <hr className="mt-2 border-0 border-t border-slate-200" />
         <div className="relative mt-3 flex justify-center">
           {profileImage ? (
-            <img src={profileImage} alt="" className="w-[92%] rounded-[var(--ui-radius)] border-[2px] border-black object-contain drop-shadow-[0_8px_12px_rgba(47,31,77,0.12)]" />
+            <img src={profileImage} alt="" className="w-[92%] rounded-[var(--ui-radius)] object-contain drop-shadow-[0_8px_12px_rgba(47,31,77,0.12)]" />
           ) : null}
           {profileBadge ? (
             <img
@@ -1188,7 +1205,7 @@ function HenCard({
             <img src={compactMode === 'coop' ? '/egg/media/icons/1-hatching.png' : '/egg/media/icons/1-egg.png'} alt="" className="h-[1.99rem] w-auto object-contain" />
             <span>x {eggs}</span>
           </div>
-          <img src="/egg/media/icons/edit-icon.png" alt="" className="h-[1.99rem] w-auto object-contain" />
+          <img src="/egg/media/icons/ico-edit.png" alt="" className="h-[1.99rem] w-auto object-contain" />
         </div>
       </ShellCard>
     );
@@ -2404,7 +2421,7 @@ export default function ComponentsShowcase() {
 
       <div className="mx-auto max-w-6xl px-4 pt-5 sm:px-6 lg:px-8">
         <h2 data-component="PageTitleText" className="text-[2.55rem] font-black italic leading-[0.94] tracking-tight text-[#6f4bb8] sm:text-[2.8rem]">
-          This week, <span className="text-[#6f4bb8]">in a <span><span data-component="PageTitleStrikeWord" className="opacity-50 line-through">Nut</span>shell...</span></span>
+          This week, <span className="text-[#6f4bb8]">in a <span><span data-component="PageTitleStrikeWord" className="opacity-50 line-through">nut</span>shell...</span></span>
         </h2>
       </div>
 
@@ -2532,7 +2549,8 @@ export default function ComponentsShowcase() {
 
           <div className="grid gap-6">
             <div><ComponentLabel name="WikiElements" /></div>
-            <div><PunFactCard /></div>
+            <div><PunFactCard mode="pun" text="My flock's project management style? Scrum… and peck." /></div>
+            <div><PunFactCard mode="fact" text="A hen usually lays best when daylight, nutrition, and stress levels are all nicely balanced." /></div>
             <div><WikiItemCard /></div>
             <div><WikiShowMoreCard /></div>
           </div>
@@ -2555,14 +2573,14 @@ export default function ComponentsShowcase() {
 
           <div className="grid gap-6">
             <div><ComponentLabel name="FillEffects" /></div>
-            <div className="text-[0.95rem] font-medium leading-relaxed text-[#9E9E9E] break-all">SURFACE_GRADIENT = {SURFACE_GRADIENT}</div>
-            <div><BlankProfileCard /></div>
-            <div><div className={`relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3`} /></div>
+            <div><div className={`relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3`}><div className="text-[1rem] font-bold text-[#6f4bb8]">dark-g</div></div></div>
+            <div><div className="relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)] p-3"><div className="text-[1rem] font-bold text-[#6f4bb8]">light-g</div></div></div>
+            <div><div className="relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-3"><div className="text-[1rem] font-bold text-[#6f4bb8]">white-g</div></div></div>
           </div>
 
           <div className="grid gap-6">
             <div><ComponentLabel name="ProfileCards" /></div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 rounded-[1.25rem] bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)] p-3">
               <div><HenCard name="Willow" coop="Willow House" eggs="24" note="AGE: 2" medal="/egg/media/icons/gold.png" progress={66} nameColor="#FFCC01" compact profileImage="/egg/media/hens/hen-1.png" profileBadge="gold" /></div>
               <div><HenCard name="Dotty" coop="Speckled Coop" eggs="19" note="AGE: 1" medal="/egg/media/icons/silver.png" progress={51} nameColor="#999999" compact profileImage="/egg/media/hens/hen-2.png" profileBadge="silver" /></div>
               <div><HenCard name="Mabel" coop="Back Garden Coop" eggs="16" note="AGE: 3" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#CC6602" compact profileImage="/egg/media/hens/hen-3.png" profileBadge="bronze" /></div>
@@ -2571,7 +2589,7 @@ export default function ComponentsShowcase() {
 
           <div className="grid gap-6">
             <div><ComponentLabel name="CoopCards" /></div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 rounded-[1.25rem] bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)] p-3">
               <div><HenCard name="Willow House" coop="Willow House" eggs="38" note="North Field" medal="/egg/media/icons/gold.png" progress={66} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-1.png" profileBadge="gold" /></div>
               <div><HenCard name="Speckled Coop" coop="Speckled Coop" eggs="24" note="Back Orchard" medal="/egg/media/icons/silver.png" progress={51} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-2.png" profileBadge="silver" /></div>
               <div><HenCard name="Garden Roost" coop="Garden Roost" eggs="31" note="South Run" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-3.png" profileBadge="bronze" /></div>
@@ -2580,7 +2598,7 @@ export default function ComponentsShowcase() {
 
           <div className="grid gap-6">
             <div><ComponentLabel name="ChickCards" /></div>
-            <div className="grid gap-6">
+            <div className="grid gap-6 rounded-[1.25rem] bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)] p-3">
               <ChickCard count="7" started="19 Mar 2026" status="Failed" progress={58} daysLeft="9 days" hatched="5" brewing="2" temperature="20.00°C" onEdit={() => setEditChicksModalOpen(true)} onDelete={() => setDeleteConfirmOpen(true)} />
               <ChickCard count="12" started="08 Apr 2026" status="Incubating" progress={72} daysLeft="4 days" hatched="8" brewing="4" temperature="20.50°C" onEdit={() => setEditChicksModalOpen(true)} onDelete={() => setDeleteConfirmOpen(true)} />
               <ChickCard count="4" started="02 Apr 2026" status="Complete" progress={100} daysLeft="0 days" hatched="3" brewing="0" temperature="19.80°C" onEdit={() => setEditChicksModalOpen(true)} onDelete={() => setDeleteConfirmOpen(true)} />
