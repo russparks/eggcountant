@@ -2548,3 +2548,38 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_210200
+- Request time: 2026-04-03 21:02:00 BST
+- User instruction: ok, i want to test placing components on pages, this is what i would like on the home page: 1. page title 2. hr 3. ProfitLossCard 4. MiniStatCardHalf 5. hr 6. WeeklySummaryCard (a positive one) 7. HenCard section 8. hr 9. RollingLayRateCard 10. hr 11. WikiElements
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213700
+- Request time: 2026-04-03 21:37:00 BST
+- User instruction: you hvent deployed the root components, youve made ish components... re-build the home page based on those instructions
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214400
+- Request time: 2026-04-03 21:44:00 BST
+- User instruction: now the page is just blank
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214700
+- Request time: 2026-04-03 21:47:00 BST
+- User instruction: remove all the page items (keep the shell header, nav etc.) from the home page, change the title to home
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_125850
+- Request time: 2026-04-04 12:58:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+

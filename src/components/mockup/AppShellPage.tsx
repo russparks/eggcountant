@@ -873,61 +873,10 @@ function PhotoMiniModal({ title, onClose, onSave, photoZoom, setPhotoZoom, photo
 
 function HomeContent() {
   return (
-    <div className="w-full space-y-5">
-      <h1 className="text-[1.6rem] font-black italic leading-none tracking-tight text-[#6f4bb8] sm:text-[1.88rem]">
-        This week, <span className="text-[#6f4bb8]">in a <span><span className="opacity-50 line-through">Nut</span>shell...</span></span>
+    <div className="w-full">
+      <h1 className="text-[2.55rem] font-black italic leading-[0.94] tracking-tight text-[#6f4bb8] sm:text-[2.8rem]">
+        Home
       </h1>
-
-      <section className={`overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8] shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-        <div className="relative min-h-[120px]">
-          <div className="float-right ml-2 mb-2 rounded-[var(--ui-radius)] bg-white/90 px-4 py-3 text-right shadow-sm backdrop-blur-sm">
-            <div className="mt-1 flex items-center gap-2 text-lg font-semibold text-[#6f4bb8]">+12%</div>
-          </div>
-          <h2 className="text-[1.6rem] font-normal leading-tight text-[#6f4bb8]">Your girls laid <span className="font-bold">94</span> eggs and earned you <span className="font-bold">£13.25</span> in profit!</h2>
-          <p className="mt-2 max-w-[42rem] text-sm text-[#c4b2f4]">Cheeky little bump from last week, Willow continues to show egg-stra effort...</p>
-          <div className="clear-both" />
-        </div>
-      </section>
-
-      <section className={`rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3 shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex-1">
-            <div className="text-[1.69rem] font-bold text-[#6f4bb8]">+£13.25</div>
-            <div className="mt-px text-[0.9rem] uppercase text-[#9E9E9E]">Sales</div>
-          </div>
-          <div className="h-12 w-px shrink-0 bg-slate-200" />
-          <div className="flex-1 text-right">
-            <div className="text-[1.69rem] font-bold text-[#6f4bb8]">-£6.80</div>
-            <div className="mt-px text-[0.9rem] uppercase text-[#9E9E9E]">Expenses</div>
-          </div>
-        </div>
-        <div className="mt-5 rounded-[var(--ui-radius)] bg-white/80 px-4 py-4 shadow-sm border border-white/60">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <div className="m-0 text-[0.8rem] uppercase text-emerald-500">Cluck Statement</div>
-              <div className="mt-1 text-[2.25rem] font-bold text-emerald-500">+£6.45</div>
-            </div>
-            <img src="/egg/media/icons/sales-green.png" alt="" className="h-21 w-auto object-contain" />
-          </div>
-        </div>
-      </section>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div className={`rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3 shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-          <div className="text-[1rem] uppercase text-[#6f4bb8]">Yokes Broke</div>
-          <div className="mt-1.5 flex items-center justify-between">
-            <img src="/egg/media/icons/1-fried.png" alt="" className="h-[3.4rem] w-auto max-w-[34%] object-contain" />
-            <div className="text-[2.72rem] font-bold text-[#6f4bb8]">12</div>
-          </div>
-        </div>
-        <div className={`rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3 shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-          <div className="text-right text-[1rem] uppercase text-[#6f4bb8]">Buns Cooked</div>
-          <div className="mt-1.5 flex items-center justify-between">
-            <div className="text-[2.72rem] font-bold text-[#6f4bb8]">6</div>
-            <img src="/egg/media/icons/1-hatching.png" alt="" className="h-[3.4rem] w-auto max-w-[34%] object-contain" />
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
