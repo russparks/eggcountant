@@ -4,8 +4,9 @@ import navIconHome from '../../../media/nav-icons/lm-home.png';
 import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
 import navIconFlock from '../../../media/nav-icons/lm-flock.png';
 import navIconSales from '../../../media/nav-icons/lm-sales.png';
+import { SURFACE_GRADIENT } from '../../constants';
 
-const surfaceGradient = 'bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#c4b2f4_100%)]';
+const surfaceGradient = SURFACE_GRADIENT;
 
 type PageKey = 'home' | 'calendar' | 'flock' | 'sales' | 'blank';
 type ModalKey = 'none' | 'account' | 'logout' | 'eggs' | 'chicks' | 'meds' | 'expense';
@@ -94,7 +95,7 @@ function BottomNav({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModal, o
 
   const speedDialItems = [
     { label: 'Eggs', icon: '/egg/media/icons/1-egg.png', action: 'eggs' },
-    { label: 'Chicks', icon: '/egg/media/icons/1-hatching.png', action: 'chicks' },
+    { label: 'Chicks', icon: '/egg/media/icons/ico-chick.png', action: 'chicks' },
     { label: 'Meds', icon: '/egg/media/icons/meds.png', action: 'meds' },
     { label: 'Expense', icon: '/egg/media/icons/expense-icon.png', action: 'expense' },
   ];
@@ -109,11 +110,12 @@ function BottomNav({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModal, o
           onClick={() => setMenuOpen(false)}
         />
       ) : null}
-      <div className="fixed inset-x-0 bottom-0 z-40 pointer-events-none">
+      <div className="fixed left-0 bottom-0 z-40 w-[100dvw] max-w-[100dvw] pointer-events-none [transform:translateZ(0)]">
+        <div className="absolute inset-x-0 bottom-0 h-[env(safe-area-inset-bottom)] bg-white/95" />
         <div className="h-[6.07rem] border-t-[1.2px] border-slate-200 bg-white/95 backdrop-blur-[2px]" />
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-50 overflow-visible">
+      <div className="fixed left-0 bottom-0 z-50 w-[100dvw] max-w-[100dvw] overflow-visible [transform:translateZ(0)]">
         <div className="relative h-[6.07rem] overflow-visible">
           <div className="absolute left-1/2 bottom-[20%] z-[60] flex -translate-x-1/2 flex-col items-center gap-3">
             {menuOpen ? (
@@ -161,7 +163,7 @@ function BottomNav({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModal, o
             </button>
           </div>
 
-          <div className="relative z-10 mx-auto grid h-[6.07rem] max-w-[32rem] grid-cols-[1fr_1fr_6.25rem_1fr_1fr] items-center gap-0 px-3 text-center sm:px-4">
+          <div className="relative z-10 mx-auto grid h-[6.07rem] w-full max-w-[32rem] grid-cols-[1fr_1fr_6.25rem_1fr_1fr] items-center gap-0 px-3 text-center sm:px-4">
             <a href="/egg/" className={`flex h-full justify-self-start flex-col items-center justify-center ${active === 'home' ? 'text-[#6f4bb8]' : 'text-[#c4b2f4]'}`}>
               <img src={navIcons.home} alt="Home" className="h-[15vw] w-[15vw] max-h-[4.75rem] max-w-[4.75rem] min-h-[2.5rem] min-w-[2.5rem] object-contain" />
             </a>
@@ -802,7 +804,7 @@ function AddExpenseModal({ onClose }: { onClose: () => void }) {
               £{formattedCost}
             </div>
             <div className="mt-4 grid grid-cols-3 gap-3">
-              {['1','2','3','4','5','6','7','8','9','⌫','0','Done'].map((key) => (
+              {['1', '2', '3', '4', '5', '6', '7', '8', '9', '⌫', '0', 'Done'].map((key) => (
                 <button
                   key={key}
                   type="button"
@@ -871,61 +873,10 @@ function PhotoMiniModal({ title, onClose, onSave, photoZoom, setPhotoZoom, photo
 
 function HomeContent() {
   return (
-    <div className="w-full space-y-5">
-      <h1 className="text-[1.6rem] font-black italic leading-none tracking-tight text-[#6f4bb8] sm:text-[1.88rem]">
-        This week, <span className="text-[#6f4bb8]">in a <span><span className="opacity-50 line-through">Nut</span>shell...</span></span>
+    <div className="w-full">
+      <h1 className="text-[2.55rem] font-black italic leading-[0.94] tracking-tight text-[#6f4bb8] sm:text-[2.8rem]">
+        Home
       </h1>
-
-      <section className={`overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8] shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-        <div className="relative min-h-[120px]">
-          <div className="float-right ml-2 mb-2 rounded-[var(--ui-radius)] bg-white/90 px-4 py-3 text-right shadow-sm backdrop-blur-sm">
-            <div className="mt-1 flex items-center gap-2 text-lg font-semibold text-[#6f4bb8]">+12%</div>
-          </div>
-          <h2 className="text-[1.6rem] font-normal leading-tight text-[#6f4bb8]">Your girls laid <span className="font-bold">94</span> eggs and earned you <span className="font-bold">£13.25</span> in profit!</h2>
-          <p className="mt-2 max-w-[42rem] text-sm text-[#c4b2f4]">Cheeky little bump from last week, Willow continues to show egg-stra effort...</p>
-          <div className="clear-both" />
-        </div>
-      </section>
-
-      <section className={`rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3 shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex-1">
-            <div className="text-[1.69rem] font-bold text-[#6f4bb8]">+£13.25</div>
-            <div className="mt-px text-[0.9rem] uppercase text-[#9E9E9E]">Sales</div>
-          </div>
-          <div className="h-12 w-px shrink-0 bg-slate-200" />
-          <div className="flex-1 text-right">
-            <div className="text-[1.69rem] font-bold text-[#6f4bb8]">-£6.80</div>
-            <div className="mt-px text-[0.9rem] uppercase text-[#9E9E9E]">Expenses</div>
-          </div>
-        </div>
-        <div className="mt-5 rounded-[var(--ui-radius)] bg-white/80 px-4 py-4 shadow-sm border border-white/60">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <div className="m-0 text-[0.8rem] uppercase text-emerald-500">Cluck Statement</div>
-              <div className="mt-1 text-[2.25rem] font-bold text-emerald-500">+£6.45</div>
-            </div>
-            <img src="/egg/media/icons/sales-green.png" alt="" className="h-21 w-auto object-contain" />
-          </div>
-        </div>
-      </section>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div className={`rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3 shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-          <div className="text-[1rem] uppercase text-[#6f4bb8]">Yokes Broke</div>
-          <div className="mt-1.5 flex items-center justify-between">
-            <img src="/egg/media/icons/1-fried.png" alt="" className="h-[3.4rem] w-auto max-w-[34%] object-contain" />
-            <div className="text-[2.72rem] font-bold text-[#6f4bb8]">12</div>
-          </div>
-        </div>
-        <div className={`rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3 shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-          <div className="text-right text-[1rem] uppercase text-[#6f4bb8]">Buns Cooked</div>
-          <div className="mt-1.5 flex items-center justify-between">
-            <div className="text-[2.72rem] font-bold text-[#6f4bb8]">6</div>
-            <img src="/egg/media/icons/1-hatching.png" alt="" className="h-[3.4rem] w-auto max-w-[34%] object-contain" />
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
@@ -933,7 +884,7 @@ function HomeContent() {
 function PlaceholderContent({ title }: { title: string }) {
   return (
     <div className="w-full">
-      <h1 className="text-[1.6rem] font-black italic leading-none tracking-tight text-[#6f4bb8] sm:text-[1.88rem]">
+      <h1 className="text-[2.55rem] font-black italic leading-[0.94] tracking-tight text-[#6f4bb8] sm:text-[2.8rem]">
         {title}
       </h1>
     </div>

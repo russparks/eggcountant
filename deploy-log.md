@@ -1962,3 +1962,916 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_195400
+- Request time: 2026-04-02 19:54:00 BST
+- User instruction: up the size of the page titles for the 4 main pages, home, calendar, flock, sales to our h1 style
+- Notes: deploy started
+
+## deploy_195400
+- Request time: 2026-04-02 19:54:00 BST
+- User instruction: up the size of the page titles for the 4 main pages, home, calendar, flock, sales to our h1 style
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_195700
+- Request time: 2026-04-02 19:57:00 BST
+- User instruction: make the page title style properly dominant so it feels unmistakably H1, not H2-ish
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_200700
+- Request time: 2026-04-02 20:07:00 BST
+- User instruction: WeeklySummaryCard tweaks: bigger subtext, updated positive/negative copy, make trend icon the background of the corner card, and make X% bigger in grey H3 styling
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_201100
+- Request time: 2026-04-02 20:11:00 BST
+- User instruction: WeeklySummaryCard: center X%, halve trend card size, increase trend icon opacity to about 75%, and create H3 Sub-text style in TypographySampleBlock for the subtext
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_202300
+- Request time: 2026-04-02 20:23:00 BST
+- User instruction: WeeklySummaryCard: remove trend icon, double the trend card size, center the X% value in green/red, and double the H3 Sub-text font size
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_202400
+- Request time: 2026-04-02 20:24:00 BST
+- User instruction: put the standard gradient background we are using into a variable so it can be controlled centrally later
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_202600
+- Request time: 2026-04-02 20:26:00 BST
+- User instruction: reduce H3 Sub-text by 25% and halve its weight, and keep the trend card structure but make it transparent so the red/green value remains
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_203000
+- Request time: 2026-04-02 20:30:00 BST
+- User instruction: in the FillEffects section show the gradient variable as text above the existing container, and add a second container using the current gradient the same size as the first
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_204700
+- Request time: 2026-04-02 20:47:00 BST
+- User instruction: ProfitLossCard: change SALES/EXPENSE to IN/OUT, tighten gaps, move Cluck Statement to the top, make Cluck Statement H3-sized with conditional colour, use sales-green/red image by value, and ensure gradient cards use the shared gradient variable
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205100
+- Request time: 2026-04-02 20:51:00 BST
+- User instruction: ProfitLossCard: hide IN and OUT, reduce the +/- values by 25%, and make the +/- values grey
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205300
+- Request time: 2026-04-02 20:53:00 BST
+- User instruction: add global default plus local override support for the shared surface gradient while components are still centralised
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205500
+- Request time: 2026-04-02 20:55:00 BST
+- User instruction: ProfitLossCard final tweaks: reduce vertical gap below the Cluck card as much as possible, remove the divider between the lower values, and pull the values slightly inward with about 20px outside margin
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205700
+- Request time: 2026-04-02 20:57:00 BST
+- User instruction: ProfitLossCard: add a touch more margin on the lower values, about another 10px
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205800
+- Request time: 2026-04-02 20:58:00 BST
+- User instruction: make the Cluck card transparent
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_212500
+- Request time: 2026-04-02 21:25:00 BST
+- User instruction: MiniStatCardHalf: use ico-fried-egg and ico-chick, rename labels to Yokes to Go and Buns to Cook, and ensure the background follows the shared gradient variable setup
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213800
+- Request time: 2026-04-02 21:38:00 BST
+- User instruction: redeploy updated ico-chick.png asset
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214500
+- Request time: 2026-04-02 21:45:00 BST
+- User instruction: redeploy latest asset state again
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214700
+- Request time: 2026-04-02 21:47:00 BST
+- User instruction: deploy the newly updated ico-chick.png after minor edits
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_093600
+- Request time: 2026-04-03 09:36:00 BST
+- User instruction: HenCards: 2-up layout language, H2 names with medal color, smaller trophy icon, profile-style egg count row, percentage on the right, and coop name left in grey H3 Sub-text
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_094200
+- Request time: 2026-04-03 09:42:00 BST
+- User instruction: put the gold and silver HenCards on the same line
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_094600
+- Request time: 2026-04-03 09:46:00 BST
+- User instruction: HenCards: reduce name/medal/coop/icon sizing, color the percentage to match the hen tier, tighten the coop spacing, and use a lighter local gradient override
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_095200
+- Request time: 2026-04-03 09:52:00 BST
+- User instruction: HenCards: remove trophy from top line, replace the egg icon with the trophy, centralise the hen name, and make long names shrink to fit
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_095700
+- Request time: 2026-04-03 09:57:00 BST
+- User instruction: HenCards final edits: center coop name, reduce trophy by 15%, reduce the percentage by 15%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_095900
+- Request time: 2026-04-03 09:59:00 BST
+- User instruction: fix HenCard name shrinking so it actually scales down instead of ellipsising
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_100900
+- Request time: 2026-04-03 10:09:00 BST
+- User instruction: add a blank HenCard in the gap after the bronze card using the egg-volution image from icons
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_101200
+- Request time: 2026-04-03 10:12:00 BST
+- User instruction: double the internal padding on the blank egg-volution HenCard tile
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_101400
+- Request time: 2026-04-03 10:14:00 BST
+- User instruction: revert the padding change on the egg-volution card, align the image to the top, and make the container transparent
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_101700
+- Request time: 2026-04-03 10:17:00 BST
+- User instruction: fix the egg-volution tile so the container is genuinely transparent
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102200
+- Request time: 2026-04-03 10:22:00 BST
+- User instruction: remove the extra egg-volution card and image
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102400
+- Request time: 2026-04-03 10:24:00 BST
+- User instruction: reduce the horizontal gap between MiniStatCardHalf cards so all double-card layouts use the same spacing as HenCards
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102600
+- Request time: 2026-04-03 10:26:00 BST
+- User instruction: in the HenCard section add the egg-volution image to the right of the bronze card
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_102700
+- Request time: 2026-04-03 10:27:00 BST
+- User instruction: reduce the egg-volution image size by 10%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103200
+- Request time: 2026-04-03 10:32:00 BST
+- User instruction: RollingLayRateCard: change bar gradients to purple at the top fading to transparent at the bottom
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103500
+- Request time: 2026-04-03 10:35:00 BST
+- User instruction: change the RollingLayRateCard local card gradient from purple to lightpurple
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_103800
+- Request time: 2026-04-03 10:38:00 BST
+- User instruction: LocationProgressCard: progress bar gradient should go lightpurple to purple, and the card local gradient should be lightpurple
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_104000
+- Request time: 2026-04-03 10:40:00 BST
+- User instruction: LocationProgressCard: coop names should use Input Label styling, and percentages should be bold and use gold/silver/bronze ranking colors
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111700
+- Request time: 2026-04-03 11:17:00 BST
+- User instruction: fix the bottom nav on iOS Chrome so it stays locked to the bottom and stops stretching/leaving a gap when scrolling
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_112000
+- Request time: 2026-04-03 11:20:00 BST
+- User instruction: bottom nav iOS Chrome fix: keep the CAB above the top border line and stop the white tray from stretching downward with it
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_154700
+- Request time: 2026-04-03 15:47:00 BST
+- User instruction: CalendarCard: make the calendar operational with today highlighted and swap the card gradient to lightpurple
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_154900
+- Request time: 2026-04-03 15:49:00 BST
+- User instruction: make CalendarCard fully operational with working month navigation and current month display
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_155400
+- Request time: 2026-04-03 15:54:00 BST
+- User instruction: CalendarCard: add divider under filters, add summary row with fried egg/chick/sales/expenses, and make clicking dates update the displayed values with fake current-month data
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_162100
+- Request time: 2026-04-03 16:21:00 BST
+- User instruction: CalendarCard: make summary items 100% larger, use fried egg icon from MiniStatCardHalf, align metrics in fixed containers, make top filters work, remove lower period filters, and stop showing future fake data
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_162400
+- Request time: 2026-04-03 16:24:00 BST
+- User instruction: CalendarCard: remove zero placeholders for future days and remove the duplicated lower metrics block
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_162600
+- Request time: 2026-04-03 16:26:00 BST
+- User instruction: CalendarCard: align the four summary metrics in fixed inner containers, move the selected date to the center, and remove the filters above the calendar
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_164400
+- Request time: 2026-04-03 16:44:00 BST
+- User instruction: CalendarCard: remove the filters entirely and restyle the bottom summary to match the screenshot with four boxed metrics and the date above them
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_165000
+- Request time: 2026-04-03 16:50:00 BST
+- User instruction: CalendarCard: use the ico-fried-egg icon and increase both bottom summary icons by 50%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_165300
+- Request time: 2026-04-03 16:53:00 BST
+- User instruction: CalendarCard: remove icons from eggs and chicks cards, add centered labels on all four metric tiles, and put values below the labels
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_165500
+- Request time: 2026-04-03 16:55:00 BST
+- User instruction: CalendarCard: increase the metric tile label size by 100%
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_184600
+- Request time: 2026-04-03 18:46:00 BST
+- User instruction: make the CalendarCard metric tiles responsive so the labels and values clamp and the row collapses on small screens
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_184900
+- Request time: 2026-04-03 18:49:00 BST
+- User instruction: CalendarCard: increase label/value size by 40%, reduce vertical gap, and move the date above the metric cards
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_185600
+- Request time: 2026-04-03 18:56:00 BST
+- User instruction: move the hr so it sits between the date and the metric cards in CalendarCard
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_190928
+- Request time: 2026-04-03 19:09:28 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_194017
+- Request time: 2026-04-03 19:40:17 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_194200
+- Request time: 2026-04-03 19:42:00 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_194259
+- Request time: 2026-04-03 19:42:59 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_194425
+- Request time: 2026-04-03 19:44:25 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_194550
+- Request time: 2026-04-03 19:45:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_194801
+- Request time: 2026-04-03 19:48:01 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_194854
+- Request time: 2026-04-03 19:48:54 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_195015
+- Request time: 2026-04-03 19:50:15 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_195419
+- Request time: 2026-04-03 19:54:19 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_195633
+- Request time: 2026-04-03 19:56:33 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_200217
+- Request time: 2026-04-03 20:02:17 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_200700
+- Request time: 2026-04-03 20:07:00 BST
+- User instruction: add a second four-card summary row below the calendar using a 20/30/20/30 layout with chick icons in cards 1 and 3 and 123 in cards 2 and 4
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_201100
+- Request time: 2026-04-03 20:11:00 BST
+- User instruction: restore the original four calendar summary cards and place the new 20/30/20/30 row underneath them
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_201527
+- Request time: 2026-04-03 20:15:27 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_201719
+- Request time: 2026-04-03 20:17:19 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_201915
+- Request time: 2026-04-03 20:19:15 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_202056
+- Request time: 2026-04-03 20:20:56 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+
+## deploy_202942
+- Request time: 2026-04-03 20:29:50 BST
+- User instruction: i made some tweaks to ComponentsShowcase.tsx, deploy please
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_203100
+- Request time: 2026-04-03 20:31:00 BST
+- User instruction: go
+- Notes: deploy started
+
+- Result: built successfully
+## deploy_203226
+- Request time: 2026-04-03 20:32:26 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+
+## deploy_203200
+- Request time: 2026-04-03 20:32:00 BST
+- User instruction: deploy!
+- Notes: remote deploy started
+
+- Result: in progress
+- Result: deployed successfully
+
+
+## deploy_203400
+- Request time: 2026-04-03 20:34:00 BST
+- User instruction: deploy
+- Notes: deploy requested by user; no code changes provided in this turn
+
+- Result: no-op (nothing to deploy)
+
+## deploy_203440
+- Request time: 2026-04-03 20:34:00 BST
+- User instruction: i am in the ComponentsShowcase.tsx file, i made edits, deploy
+- Notes: deploy started after inspecting diff
+
+- Result: in progress
+
+## deploy_203600
+- Request time: 2026-04-03 20:36:00 BST
+- User instruction: the online calendar card hasnt been updated with my changes to ComponentsShowcase.tsx, i want those changes deploying
+- Notes: redeploy requested specifically for calendar card changes
+
+- Result: in progress
+## deploy_203600
+- Request time: 2026-04-03 20:36:00 BST
+- User instruction: the online calendar card hasnt been updated with my changes to ComponentsShowcase.tsx, i want those changes deploying
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_203800
+- Request time: 2026-04-03 20:38:00 BST
+- User instruction: edits made, deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_204000
+- Request time: 2026-04-03 20:40:00 BST
+- User instruction: deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_204500
+- Request time: 2026-04-03 20:45:00 BST
+- User instruction: deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_204900
+- Request time: 2026-04-03 20:49:00 BST
+- User instruction: deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205200
+- Request time: 2026-04-03 20:52:00 BST
+- User instruction: deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205300
+- Request time: 2026-04-03 20:53:00 BST
+- User instruction: again
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_210200
+- Request time: 2026-04-03 21:02:00 BST
+- User instruction: ok, i want to test placing components on pages, this is what i would like on the home page: 1. page title 2. hr 3. ProfitLossCard 4. MiniStatCardHalf 5. hr 6. WeeklySummaryCard (a positive one) 7. HenCard section 8. hr 9. RollingLayRateCard 10. hr 11. WikiElements
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213700
+- Request time: 2026-04-03 21:37:00 BST
+- User instruction: you hvent deployed the root components, youve made ish components... re-build the home page based on those instructions
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214400
+- Request time: 2026-04-03 21:44:00 BST
+- User instruction: now the page is just blank
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214700
+- Request time: 2026-04-03 21:47:00 BST
+- User instruction: remove all the page items (keep the shell header, nav etc.) from the home page, change the title to home
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_125850
+- Request time: 2026-04-04 12:58:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_133236
+- Request time: 2026-04-04 13:32:36 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_133420
+- Request time: 2026-04-04 13:34:20 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_134005
+- Request time: 2026-04-04 13:40:05 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_134323
+- Request time: 2026-04-04 13:43:23 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_134619
+- Request time: 2026-04-04 13:46:19 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_134749
+- Request time: 2026-04-04 13:47:49 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_135230
+- Request time: 2026-04-04 13:52:30 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_135335
+- Request time: 2026-04-04 13:53:35 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_135511
+- Request time: 2026-04-04 13:55:11 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_140059
+- Request time: 2026-04-04 14:00:59 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_140442
+- Request time: 2026-04-04 14:04:42 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_140611
+- Request time: 2026-04-04 14:06:11 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_140649
+- Request time: 2026-04-04 14:06:49 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_140750
+- Request time: 2026-04-04 14:07:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_142225
+- Request time: 2026-04-04 14:22:25 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_143405
+- Request time: 2026-04-04 14:34:05 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_183522
+- Request time: 2026-04-04 18:35:22 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_185034
+- Request time: 2026-04-04 18:50:34 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_190447
+- Request time: 2026-04-04 19:04:47 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_190732
+- Request time: 2026-04-04 19:07:32 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_192152
+- Request time: 2026-04-04 19:21:52 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_192514
+- Request time: 2026-04-04 19:25:14 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_192847
+- Request time: 2026-04-04 19:28:47 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_193230
+- Request time: 2026-04-04 19:32:30 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_202711
+- Request time: 2026-04-04 20:27:11 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_211551
+- Request time: 2026-04-04 21:15:51 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213336
+- Request time: 2026-04-04 21:33:36 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213636
+- Request time: 2026-04-04 21:36:36 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214241
+- Request time: 2026-04-04 21:42:41 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215610
+- Request time: 2026-04-04 21:56:10 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215710
+- Request time: 2026-04-04 21:57:10 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_221531
+- Request time: 2026-04-04 22:15:31 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_221843
+- Request time: 2026-04-04 22:18:43 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222224
+- Request time: 2026-04-04 22:22:24 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222734
+- Request time: 2026-04-04 22:27:34 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_224050
+- Request time: 2026-04-04 22:40:50 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_224205
+- Request time: 2026-04-04 22:42:05 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_224800
+- Request time: 2026-04-04 22:48:00 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225639
+- Request time: 2026-04-04 22:56:39 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_230043
+- Request time: 2026-04-04 23:00:43 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_230344
+- Request time: 2026-04-04 23:03:44 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+## deploy_230403
+- Request time: 2026-04-04 23:04:03 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
