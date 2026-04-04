@@ -95,7 +95,7 @@ function BottomNav({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModal, o
 
   const speedDialItems = [
     { label: 'Eggs', icon: '/egg/media/icons/1-egg.png', action: 'eggs' },
-    { label: 'Chicks', icon: '/egg/media/icons/1-hatching.png', action: 'chicks' },
+    { label: 'Chicks', icon: '/egg/media/icons/ico-chick.png', action: 'chicks' },
     { label: 'Meds', icon: '/egg/media/icons/meds.png', action: 'meds' },
     { label: 'Expense', icon: '/egg/media/icons/expense-icon.png', action: 'expense' },
   ];
@@ -804,7 +804,7 @@ function AddExpenseModal({ onClose }: { onClose: () => void }) {
               £{formattedCost}
             </div>
             <div className="mt-4 grid grid-cols-3 gap-3">
-              {['1','2','3','4','5','6','7','8','9','⌫','0','Done'].map((key) => (
+              {['1', '2', '3', '4', '5', '6', '7', '8', '9', '⌫', '0', 'Done'].map((key) => (
                 <button
                   key={key}
                   type="button"

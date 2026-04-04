@@ -553,7 +553,7 @@ function AddEditHenDraft() {
         <div className="flex items-start justify-between gap-4">
           <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Edit Hen</div>
           <div className="flex items-center gap-2 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
-            <img src="/egg/media/icons/1-egg.png" alt="" className="h-[1.99rem] w-auto object-contain" />
+            <img src="/egg/media/icons/ico-egg.png" alt="" className="h-[1.99rem] w-auto object-contain" />
             <span>x 24</span>
           </div>
         </div>
@@ -610,6 +610,7 @@ function AddEditHenDraft() {
           <div className="grid grid-cols-2 gap-3">
             <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#f3c6d2] bg-[#fff5f7] px-5 py-4 text-[1.05rem] font-semibold text-[#d14d6f] shadow-sm" onClick={() => setHenDepartureModalOpen(true)}>Sadly Departed</button>
             <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Update</button>
+            <div className="flex min-h-[4.3125rem] items-center justify-center text-center text-[1.215rem] font-medium leading-tight text-[#9E9E9E]">Update</div>
           </div>
 
           {henNotesOpen ? (
@@ -898,7 +899,7 @@ function EditCoopDraft() {
         <div className="flex items-start justify-between gap-4">
           <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Edit Coop</div>
           <div className="flex items-center gap-2 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
-            <img src="/egg/media/icons/1-egg.png" alt="" className="h-[1.99rem] w-auto object-contain" />
+            <img src="/egg/media/icons/ico-egg.png" alt="" className="h-[1.99rem] w-auto object-contain" />
             <span>x 59</span>
           </div>
         </div>
@@ -1063,52 +1064,50 @@ function ChickCard({ count, started, status, progress, daysLeft, hatched, brewin
   const complete = brewingCount === 0;
 
   return (
-    <ShellCard className={`border border-[#e4dafb] ${surfaceGradient} p-5 text-[#6f4bb8] shadow-[0_10px_30px_rgba(47,31,77,0.08)] ${complete ? 'opacity-70' : ''}`}>
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-start gap-4">
-          <img src="/egg/media/icons/3-eggs.png" alt="" className="h-[3.6rem] w-[3.6rem] object-contain" />
+    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#e4dafb] ${surfaceGradient} p-5 text-[#6f4bb8] shadow-[0_10px_30px_rgba(47,31,77,0.08)] ${complete ? 'opacity-70' : ''}`}>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-1">
+          <img src="/egg/media/icons/ico-egg.png?v=20260404c" alt="" className="h-[3.6rem] w-[3.6rem] object-contain" />
           <div className="min-w-0">
-            <div className="text-[2.3rem] font-black leading-none text-[#6f4bb8]">{hatchedCount} of {totalEggs}</div>
-            <div className="mt-1 text-[1.45rem] font-bold leading-tight text-[#c4b2f4]">hatched</div>
+            <div className="text-[2.76rem] font-black leading-none text-[#6f4bb8]">{hatchedCount}</div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <button type="button" className="flex h-[2.88rem] w-[2.88rem] items-center justify-center rounded-[var(--ui-radius)] bg-[#c4b2f4] text-[#6f4bb8] shadow-sm" onClick={onEdit}>
-            <img src="/egg/media/icons/1-hatching.png" alt="" className="h-[1.47rem] w-[1.47rem] object-contain opacity-75" />
-          </button>
-          <button type="button" className="flex h-[2.88rem] w-[2.88rem] items-center justify-center rounded-[var(--ui-radius)] bg-[#fff1f4] text-[#ff6b8a] shadow-sm" onClick={onDelete}>
-            <span className="text-[1.23rem]">🗑️</span>
+        <div className="flex items-center gap-1">
+          <button type="button" className="flex items-center justify-center bg-transparent text-[#6f4bb8]" onClick={onEdit}>
+            <img src="/egg/media/icons/ico-eggclutch-edit.png?v=20260404b" alt="" className="h-[3.6rem] w-auto object-contain" />
           </button>
         </div>
       </div>
 
-      <hr className="mt-4 border-0 border-t border-slate-200" />
-      <div className="mt-3 w-full text-[1.275rem] text-[#b09bdb]">Started {started} • Willow House</div>
+      <hr className="mt-2 border-0 border-t border-slate-200" />
+      <div className="mt-2 grid grid-cols-2 gap-3 text-[1.275rem] text-[#b09bdb]">
+        <div>{started}</div>
+        <div className="text-right uppercase text-[#9E9E9E]">Willow House</div>
+      </div>
 
-      <div className="mt-3 flex items-center gap-4">
-        <div className="h-[0.7rem] w-[70%] overflow-hidden rounded-[var(--ui-radius)] bg-[#eadffd]">
+      <div className="mt-2 flex items-center gap-1">
+        <div className="h-[0.7rem] w-[78%] overflow-hidden rounded-[var(--ui-radius)] bg-[#eadffd]">
           <div className="h-full rounded-[var(--ui-radius)] bg-[linear-gradient(90deg,#ddd3fb_0%,#b49cf5_35%,#6f4bb8_68%,#6f4bb8_100%)]" style={{ width: `${progress}%` }} />
         </div>
-        <div className="ml-auto flex items-center gap-2 text-right">
+        <div className="ml-auto flex items-center gap-1 text-right">
           <span className="text-[1.2rem] font-semibold text-[#c4b2f4]">{daysLeft.replace(' days', 'd')}</span>
-          <img src="/egg/media/icons/1-hatching.png" alt="" className="h-[2.85rem] w-[2.85rem] object-contain" />
         </div>
       </div>
 
       <hr className="mt-3 border-0 border-t border-slate-200" />
 
-      <div className="mt-4 grid grid-cols-3 gap-3 text-[1rem] text-[#c4b2f4]">
+      <div className="mt-4 grid grid-cols-3 gap-3 text-[1.74rem] text-[#6f4bb8]">
         <div className="flex items-center justify-center gap-2">
-          <span className="text-[2rem] leading-none">🐣</span>
-          <span>{hatched} hatched</span>
+          <img src="/egg/media/icons/ico-chick.png?v=20260404b" alt="" className="h-[2.6rem] w-[2.6rem] object-contain" />
+          <span className="font-bold">{hatched}</span>
         </div>
         <div className="flex items-center justify-center gap-2">
-          <span className="text-[2rem] leading-none">🥚</span>
-          <span>{brewing} brewing</span>
+          <img src="/egg/media/icons/ico-egg.png?v=20260404c" alt="" className="h-[2.6rem] w-[2.6rem] object-contain" />
+          <span className="font-bold">{brewing}</span>
         </div>
         <div className="flex items-center justify-center gap-2">
-          <span className="text-[2rem] leading-none">💀</span>
-          <span>{perishedCount} perished</span>
+          <img src="/egg/media/icons/ico-perishX.png" alt="" className="h-[2.6rem] w-[2.6rem] object-contain" />
+          <span className="font-bold">{perishedCount}</span>
         </div>
       </div>
     </ShellCard>
@@ -1202,7 +1201,7 @@ function HenCard({
         <hr className="mt-[0.35rem] border-0 border-t border-slate-200" />
         <div className="mt-[0.35rem] flex items-center justify-between gap-2 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
           <div className="flex items-center gap-2">
-            <img src={compactMode === 'coop' ? '/egg/media/icons/1-hatching.png' : '/egg/media/icons/1-egg.png'} alt="" className="h-[1.99rem] w-auto object-contain" />
+            <img src={compactMode === 'coop' ? '/egg/media/icons/ico-chick.png' : '/egg/media/icons/ico-egg.png'} alt="" className="h-[1.99rem] w-auto object-contain" />
             <span>x {eggs}</span>
           </div>
           <img src="/egg/media/icons/ico-edit.png" alt="" className="h-[1.99rem] w-auto object-contain" />
@@ -1443,8 +1442,8 @@ function BottomNavMock({ menuOpen, setMenuOpen, closeSettingsNav, openChicksModa
   };
 
   const speedDialItems = [
-    { label: 'Eggs', icon: '/egg/media/icons/1-egg.png', action: 'eggs' },
-    { label: 'Chicks', icon: '/egg/media/icons/1-hatching.png', action: 'chicks' },
+    { label: 'Eggs', icon: '/egg/media/icons/ico-egg.png', action: 'eggs' },
+    { label: 'Chicks', icon: '/egg/media/icons/ico-chick.png', action: 'chicks' },
     { label: 'Meds', icon: '/egg/media/icons/meds.png', action: 'meds' },
     { label: 'Expense', icon: '/egg/media/icons/expense-icon.png', action: 'expense' },
   ];
@@ -2598,7 +2597,7 @@ export default function ComponentsShowcase() {
 
           <div className="grid gap-6">
             <div><ComponentLabel name="ChickCards" /></div>
-            <div className="grid gap-6 rounded-[1.25rem] bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)] p-3">
+            <div className="grid gap-6">
               <ChickCard count="7" started="19 Mar 2026" status="Failed" progress={58} daysLeft="9 days" hatched="5" brewing="2" temperature="20.00°C" onEdit={() => setEditChicksModalOpen(true)} onDelete={() => setDeleteConfirmOpen(true)} />
               <ChickCard count="12" started="08 Apr 2026" status="Incubating" progress={72} daysLeft="4 days" hatched="8" brewing="4" temperature="20.50°C" onEdit={() => setEditChicksModalOpen(true)} onDelete={() => setDeleteConfirmOpen(true)} />
               <ChickCard count="4" started="02 Apr 2026" status="Complete" progress={100} daysLeft="0 days" hatched="3" brewing="0" temperature="19.80°C" onEdit={() => setEditChicksModalOpen(true)} onDelete={() => setDeleteConfirmOpen(true)} />
