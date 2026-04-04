@@ -1056,7 +1056,7 @@ function EditCoopDraft() {
   );
 }
 
-function ChickCard({ count, started, status, progress, daysLeft, hatched, brewing, temperature, onEdit, onDelete }: { count: string; started: string; status: string; progress: number; daysLeft: string; hatched: string; brewing: string; temperature: string; onEdit?: () => void; onDelete?: () => void }) {
+function ChickCard({ count, started, status, progress, daysLeft, hatched, brewing, temperature, onEdit, onDelete, coopName = 'Willow House' }: { count: string; started: string; status: string; progress: number; daysLeft: string; hatched: string; brewing: string; temperature: string; onEdit?: () => void; onDelete?: () => void; coopName?: string }) {
   const totalEggs = Number(count);
   const hatchedCount = Number(hatched);
   const brewingCount = Number(brewing);
@@ -1073,7 +1073,7 @@ function ChickCard({ count, started, status, progress, daysLeft, hatched, brewin
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <button type="button" className="flex items-center justify-center bg-transparent text-[#6f4bb8]" onClick={onEdit}>
+          <button type="button" className="flex items-center justify-center bg-transparent text-[#6f4bb8] disabled:opacity-35 disabled:cursor-default" onClick={onEdit} disabled={!onEdit}>
             <img src="/egg/media/icons/ico-eggclutch-edit.png?v=20260404b" alt="" className="h-[3.6rem] w-auto object-contain" />
           </button>
         </div>
@@ -1082,7 +1082,7 @@ function ChickCard({ count, started, status, progress, daysLeft, hatched, brewin
       <hr className="mt-2 border-0 border-t border-slate-200" />
       <div className="mt-2 grid grid-cols-2 gap-3 text-[1.275rem] text-[#b09bdb]">
         <div>{started}</div>
-        <div className="text-right uppercase text-[#9E9E9E]">Willow House</div>
+        <div className="text-right uppercase text-[#9E9E9E]">{coopName}</div>
       </div>
 
       <div className="mt-2 flex items-center gap-1">
@@ -2318,21 +2318,23 @@ export default function ComponentsShowcase() {
 
             <div className="mt-5 space-y-4">
               <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-4 shadow-sm">
-                <div className="mb-3 text-[0.9rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Chicks Hatched</div>
+                <div className="mb-3 text-[1.215rem] font-medium leading-tight text-[#9E9E9E]">Click the Eggs to Update</div>
                 <div className="grid grid-cols-5 gap-3">
                   {eggStates.map((state, index) => (
                     <button
                       key={index}
                       type="button"
-                      className={`flex h-[3.2rem] w-full items-center justify-center rounded-[var(--ui-radius)] border shadow-sm ${state === 1 ? 'border-[#d9c9fb] bg-[#eefbf3]' : state === 2 ? 'border-[#f5c2cf] bg-[#fff1f4]' : 'border-[#e7ddfb] bg-white'}`}
+                      className="flex h-[4.4rem] w-full items-center justify-center bg-transparent p-0 shadow-none"
                       onClick={() => setEggStates((prev) => prev.map((value, i) => i === index ? (value + 1) % 3 : value))}
                     >
-                      <span className="text-[1.5rem]">{state === 1 ? '🐣' : state === 2 ? '💀' : '🥚'}</span>
+                      <img src={state === 1 ? '/egg/media/icons/ico-chick.png?v=20260404b' : state === 2 ? '/egg/media/icons/ico-perishX.png' : '/egg/media/icons/ico-egg.png?v=20260404c'} alt="" className="h-[3.2rem] w-[3.2rem] object-contain" />
                     </button>
                   ))}
                 </div>
-                <div className="mt-3 text-center text-[0.98rem] text-[#c4b2f4]">
-                  {eggStates.filter((v) => v === 1).length} hatched • {eggStates.filter((v) => v === 2).length} perished • {eggStates.filter((v) => v === 0).length} still brewing
+                <div className="mt-3 flex items-center justify-center gap-4 text-center text-[1.215rem] leading-tight text-[#6f4bb8]">
+                  <span><span className="text-[1.458rem] font-bold">{eggStates.filter((v) => v === 1).length}</span> <span className="font-normal">hatched</span></span>
+                  <span><span className="text-[1.458rem] font-bold">{eggStates.filter((v) => v === 0).length}</span> <span className="font-normal">brewing</span></span>
+                  <span><span className="text-[1.458rem] font-bold">{eggStates.filter((v) => v === 2).length}</span> <span className="font-normal">perished</span></span>
                 </div>
               </div>
 
@@ -2598,28 +2600,11 @@ export default function ComponentsShowcase() {
           <div className="grid gap-6">
             <div><ComponentLabel name="ChickCards" /></div>
             <div className="grid gap-6">
-              <ChickCard count="7" started="19 Mar 2026" status="Failed" progress={58} daysLeft="9 days" hatched="5" brewing="2" temperature="20.00°C" onEdit={() => setEditChicksModalOpen(true)} onDelete={() => setDeleteConfirmOpen(true)} />
+              <ChickCard count="9" started="04 Apr 2026" status="Default" progress={0} daysLeft="21 days" hatched="0" brewing="9" temperature="20.00°C" coopName="" onEdit={() => setEditChicksModalOpen(true)} onDelete={() => setDeleteConfirmOpen(true)} />
               <ChickCard count="12" started="08 Apr 2026" status="Incubating" progress={72} daysLeft="4 days" hatched="8" brewing="4" temperature="20.50°C" onEdit={() => setEditChicksModalOpen(true)} onDelete={() => setDeleteConfirmOpen(true)} />
-              <ChickCard count="4" started="02 Apr 2026" status="Complete" progress={100} daysLeft="0 days" hatched="3" brewing="0" temperature="19.80°C" onEdit={() => setEditChicksModalOpen(true)} onDelete={() => setDeleteConfirmOpen(true)} />
+              <ChickCard count="4" started="02 Apr 2026" status="Complete" progress={100} daysLeft="0 days" hatched="3" brewing="0" temperature="19.80°C" onEdit={undefined} onDelete={() => setDeleteConfirmOpen(true)} />
             </div>
           </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-            <div className="sm:col-span-2 lg:col-span-2"><ComponentLabel name="MiniStatCard" /></div>
-            <div>
-              <MiniStatCard label="Best coop today" value="Willow House" accent="bg-emerald-400" />
-            </div>
-            <div>
-              <MiniStatCard label="Average per hen" value="0.83 eggs" accent="bg-pink-400" />
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 grid gap-6 md:grid-cols-3">
-          <div className="md:col-span-3"><ComponentLabel name="MetricCard" /></div>
-          <div><MetricCard title="Collected today" value="18" subtitle="2 more than yesterday" tone="purple" translucent /></div>
-          <div><MetricCard title="Weekly total" value="94" subtitle="Strong week so far" tone="pink" /></div>
-          <div><MetricCard title="Sales this week" value="£42" subtitle="Fake money, real vibes" tone="gold" /></div>
         </div>
       </div>
       <BottomNavMock menuOpen={bottomNavOpen} setMenuOpen={setBottomNavOpen} closeSettingsNav={() => setSettingsOpen(false)} openChicksModal={() => setChicksModalOpen(true)} openEggsModal={() => setEggsModalOpen(true)} openMedsModal={() => setMedsModalOpen(true)} openExpenseModal={() => setExpenseModalOpen(true)} />
