@@ -912,7 +912,7 @@ function HomeContent() {
           backgroundSize: 'auto 100%',
         }}
       >
-        <div className="text-[1.7rem] font-bold text-[#494949] text-center">
+        <div className="text-[1.7rem] font-bold text-[#616161] text-center">
           Divider Text
         </div>
       </div>

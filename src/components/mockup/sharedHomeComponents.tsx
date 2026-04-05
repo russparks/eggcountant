@@ -190,7 +190,7 @@ export function PunFactCard({ mode = 'pun', text }: { mode?: 'pun' | 'fact'; tex
   return (
     <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`overflow-hidden border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8]`}>
       <div className="grid grid-cols-[1fr_auto] gap-x-3 gap-y-2 items-start">
-        <div className="text-[1.6rem] font-normal italic leading-tight text-[#6f4bb8]">
+        <div className="text-[1.3rem] font-normal italic leading-tight text-[#6f4bb8]">
           “{text}”
         </div>
         <div className="flex flex-col shrink-0 gap-2 pt-1">

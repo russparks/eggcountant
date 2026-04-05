@@ -2377,7 +2377,7 @@ export default function ComponentsShowcase() {
                 backgroundSize: 'auto 100%',
               }}
             >
-              <div className="text-[2rem] font-bold text-[#494949] text-center">
+              <div className="text-[2rem] font-bold text-[#616161] text-center">
                 Divider Text
               </div>
             </div>

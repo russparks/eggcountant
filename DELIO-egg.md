@@ -402,6 +402,12 @@ Examples:
 - Context: Russ requested yet another redeploy after further changes.
 - Scope: latest current Eggcountant working tree deployed as-is.
 
+## Checkpoint deploy_180600
+- Type: deploy checkpoint
+- Created: 2026-04-05 18:06 BST
+- Context: Russ tested the new shorthand workflow after manually editing showcase and AppShell.
+- Scope: shorthand `d` triggered a deploy of the latest current Eggcountant working tree.
+
 ## Checkpoint backup_234024
 - Type: manual backup zip
 - Created: 2026-03-31 23:40 BST

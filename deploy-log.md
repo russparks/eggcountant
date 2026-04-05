@@ -8,6 +8,14 @@ Format:
 - User instruction: `<original edit/deploy request>`
 - Notes: `<what changed / what was deployed / rollback hints>`
 
+## deploy_180600
+- Request time: 2026-04-05 18:06:00 BST
+- User instruction: ok lets try it, i just made some tweaks to showcase and appshell so d
+- Notes: Shorthand `d` interpreted as deploy. Deployed the latest current Eggcountant state after manual edits to `ComponentsShowcase.tsx` and `AppShellPage.tsx`.
+
+- Result: deployed successfully
+
+
 ## deploy_175500
 - Request time: 2026-04-05 17:55:00 BST
 - User instruction: deploy again
@@ -3572,6 +3580,20 @@ Format:
 
 ## deploy_180024
 - Request time: 2026-04-05 18:00:24 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_180637
+- Request time: 2026-04-05 18:06:37 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_181138
+- Request time: 2026-04-05 18:11:38 BST
 - User instruction: manual deploy
 - Notes: deploy started
 
