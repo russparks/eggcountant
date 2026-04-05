@@ -234,6 +234,90 @@ Examples:
 - Context: Russ requested a divider and the HenCard section next.
 - Scope: `src/components/mockup/AppShellPage.tsx` Home view now includes an `hr` beneath the mini stat cards, followed by Willow, Dotty, Mabel, and the Egg-volution graphic.
 
+## Checkpoint deploy_112000
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:20 BST
+- Context: Russ requested the `RollingLayRateCard` after the HenCard block.
+- Scope: `src/components/mockup/AppShellPage.tsx` Home view now includes an additional `hr` and the showcase `RollingLayRateCard` below the HenCard section.
+
+## Checkpoint deploy_112300
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:23 BST
+- Context: Russ requested the WikiElements section next, with a reduced set of cards.
+- Scope: `src/components/mockup/AppShellPage.tsx` Home view now includes an `hr`, one pun card, three article cards, and one show-more button below the `RollingLayRateCard`.
+
+## Checkpoint deploy_112600
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:26 BST
+- Context: Russ wanted placeholder copy above the wiki cards.
+- Scope: `src/components/mockup/AppShellPage.tsx` Home view now includes centered purple H3 text saying `wiki text here` between the divider and the wiki section.
+
+## Checkpoint deploy_113300
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:33 BST
+- Context: Russ switched back to `ComponentsShowcase.tsx` tweaks and requested a new FillEffects sample card.
+- Scope: `src/components/mockup/ComponentsShowcase.tsx` now includes an extra FillEffects card using the supplied SVG tiled background.
+
+## Checkpoint deploy_114100
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:41 BST
+- Context: Russ manually altered the showcase file and asked for a deploy.
+- Scope: latest local `src/components/mockup/ComponentsShowcase.tsx` state deployed as-is.
+
+## Checkpoint deploy_114400
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:44 BST
+- Context: Russ corrected the SVG fill background after the earlier showcase edit.
+- Scope: `src/components/mockup/ComponentsShowcase.tsx` `svg-g` card now uses the corrected 56x28 tiled SVG background.
+
+## Checkpoint deploy_115600
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:56 BST
+- Context: Russ wanted to verify shared-component cascading with a MiniStatCardHalf typography change.
+- Scope: `src/components/mockup/sharedHomeComponents.tsx` now increases the MiniStatCardHalf title/value sizing for both showcase and Home.
+
+## Checkpoint deploy_115800
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:58 BST
+- Context: Russ continued the cascade test by changing the MiniStatCardHalf background treatment.
+- Scope: `src/components/mockup/sharedHomeComponents.tsx` now gives MiniStatCardHalf the light-g gradient on both showcase and Home.
+
+## Checkpoint deploy_120100
+- Type: deploy checkpoint
+- Created: 2026-04-05 12:01 BST
+- Context: Russ spotted that the shared MiniStatCardHalf changes were only affecting Home, not the showcase.
+- Scope: `src/components/mockup/ComponentsShowcase.tsx` no longer contains a duplicate MiniStatCardHalf definition, so it now uses the shared component too.
+
+## Checkpoint deploy_120300
+- Type: deploy checkpoint
+- Created: 2026-04-05 12:03 BST
+- Context: Russ continued testing shared cascade behavior with a ProfitLossCard style change.
+- Scope: `src/components/mockup/sharedHomeComponents.tsx` now gives ProfitLossCard the light-g gradient and reduced top inner padding on both showcase and Home.
+
+## Checkpoint deploy_120700
+- Type: deploy checkpoint
+- Created: 2026-04-05 12:07 BST
+- Context: Russ wanted the showcase shell itself brought into line while structural cleanup was in progress.
+- Scope: `src/components/mockup/ComponentsShowcase.tsx` now uses the updated live-style header treatment, logo/settings presentation, and matching page background.
+
+## Checkpoint deploy_121200
+- Type: deploy checkpoint
+- Created: 2026-04-05 12:12 BST
+- Context: Russ switched back to Home page assembly and wanted the page title hidden temporarily.
+- Scope: `src/components/mockup/AppShellPage.tsx` Home view no longer renders the title block for now.
+
+## Checkpoint deploy_121600
+- Type: deploy checkpoint
+- Created: 2026-04-05 12:16 BST
+- Context: Russ requested a weekly version of RollingLayRateCard while shared components were in place.
+- Scope: `src/components/mockup/sharedHomeComponents.tsx` RollingLayRateCard now shows 7 bars, weekday labels, a new title, and a highlighted final bar across showcase and Home.
+
+## Checkpoint deploy_122000
+- Type: deploy checkpoint
+- Created: 2026-04-05 12:20 BST
+- Context: Russ refined that weekly chart immediately after seeing it.
+- Scope: `src/components/mockup/sharedHomeComponents.tsx` RollingLayRateCard now places the egg count inside each bar, enlarges the weekday label, and adds ellipsis plus extra title/chart spacing.
+
 ## Checkpoint backup_234024
 - Type: manual backup zip
 - Created: 2026-03-31 23:40 BST

@@ -5,6 +5,7 @@ import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
 import navIconFlock from '../../../media/nav-icons/lm-flock.png';
 import navIconSales from '../../../media/nav-icons/lm-sales.png';
 import { SURFACE_GRADIENT } from '../../constants';
+import { ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard } from './sharedHomeComponents';
 
 const surfaceGradient = SURFACE_GRADIENT;
 
@@ -871,114 +872,10 @@ function PhotoMiniModal({ title, onClose, onSave, photoZoom, setPhotoZoom, photo
   );
 }
 
-function ProfitLossCard() {
-  const profit = 13.25;
-  const loss = 6.8;
-  const net = profit - loss;
-  const netPositive = net >= 0;
-
-  return (
-    <div className={`mt-6 rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3 shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-      <div className="rounded-[var(--ui-radius)] border border-transparent bg-white/0 px-4 py-4 shadow-none">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <div className={`m-0 text-[1.35rem] font-bold leading-tight ${netPositive ? 'text-emerald-500' : 'text-rose-500'}`}>Cluck Statement</div>
-            <div className={`mt-1 text-[2.25rem] font-bold ${netPositive ? 'text-emerald-500' : 'text-rose-500'}`}>
-              {netPositive ? '+' : '-'}£{Math.abs(net).toFixed(2)}
-            </div>
-          </div>
-          <img
-            data-component="ProfitLossCardNetIcon"
-            src={netPositive ? '/egg/media/icons/sales-green.png' : '/egg/media/icons/sales-red.png'}
-            alt=""
-            className="h-21 w-auto object-contain"
-          />
-        </div>
-      </div>
-
-      <div className="mt-1 flex items-center justify-between gap-0 px-5">
-        <div className="ml-[30px] flex-1">
-          <div className="text-[1.2675rem] font-bold leading-none text-[#9E9E9E]">+£13.25</div>
-          <div className="mt-[5px] hidden text-[0.9rem] uppercase leading-none text-[#9E9E9E]">IN</div>
-        </div>
-        <div className="mr-[30px] flex-1 text-right">
-          <div className="text-[1.2675rem] font-bold leading-none text-[#9E9E9E]">-£6.80</div>
-          <div className="mt-[5px] hidden text-[0.9rem] uppercase leading-none text-[#9E9E9E]">OUT</div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MiniStatCardHalf({
-  title,
-  value,
-  icon,
-  align,
-}: {
-  title: string;
-  value: string;
-  icon: string;
-  align: 'left' | 'right';
-}) {
-  const isLeft = align === 'left';
-
-  return (
-    <div className={`rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3 shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-      <div className={isLeft ? 'text-left' : 'text-right'}>
-        <div className="m-0 text-[1rem] uppercase text-[#6f4bb8]">{title}</div>
-      </div>
-      <div className={`mt-1.5 flex items-center ${isLeft ? 'flex-row-reverse justify-between' : 'justify-between'}`}>
-        <img src={icon} alt="" className="h-[3.4rem] w-auto max-w-[34%] object-contain" />
-        <div className={`text-[2.72rem] font-bold text-[#6f4bb8] ${isLeft ? 'ml-3' : 'mr-3'}`}>{value}</div>
-      </div>
-    </div>
-  );
-}
-
-function HenCard({
-  name,
-  coop,
-  eggs,
-  medal,
-  progress,
-  nameColor,
-}: {
-  name: string;
-  coop: string;
-  eggs: string;
-  medal: string;
-  progress: number;
-  nameColor: string;
-}) {
-  return (
-    <div className={`rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)] p-3 shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
-      <div className="flex items-center justify-center gap-3 text-center">
-        <div className="min-w-0 flex-1">
-          <div className="m-0 w-full text-center font-black italic leading-none tracking-tight" style={{ color: nameColor, fontSize: `${Math.max(0.88, 1.36 - Math.max(0, name.length - 10) * 0.045)}rem` }}>{name}</div>
-        </div>
-      </div>
-      <hr className="mt-2 border-0 border-t border-slate-200" />
-      <div className="mt-[0.15rem] flex items-center justify-center gap-3 text-center">
-        <div className="text-[1.03rem] font-medium leading-tight text-[#9E9E9E]">{coop}</div>
-      </div>
-      <div className="mt-2 flex items-center justify-between gap-3 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
-        <div className="flex items-center gap-2">
-          <img src={medal} alt="" className="h-[1.4365rem] w-auto object-contain" />
-          <span>x {eggs}</span>
-        </div>
-        <div className="text-[1.1271rem] font-bold leading-none" style={{ color: nameColor }}>{progress}%</div>
-      </div>
-    </div>
-  );
-}
-
 function HomeContent() {
   return (
     <div className="w-full">
-      <h2 data-component="PageTitleText" className="text-[2rem] font-black italic leading-[0.98] tracking-tight text-[#6f4bb8] sm:text-[2.2rem]">
-        This week, <span className="text-[#6f4bb8]">in a <span><span data-component="PageTitleStrikeWord" className="opacity-50 line-through">nut</span>shell...</span></span>
-      </h2>
+      {/* Home page title hidden for now */}
       <ProfitLossCard />
       <div className="mt-6 grid grid-cols-2 gap-4">
         <div>
@@ -991,15 +888,39 @@ function HomeContent() {
       <hr className="mt-6 border-0 border-t border-slate-200" />
       <div className="mt-6 grid gap-4">
         <div className="grid grid-cols-2 gap-4">
-          <div><HenCard name="Willow" coop="Willow House" eggs="24" medal="/egg/media/icons/gold.png" progress={66} nameColor="#FFCC01" /></div>
-          <div><HenCard name="Dotty" coop="Speckled Coop" eggs="19" medal="/egg/media/icons/silver.png" progress={51} nameColor="#999999" /></div>
+          <div><HenCard name="Willow" coop="Willow House" eggs="24" note="66% Egg Bossing" medal="/egg/media/icons/gold.png" progress={66} nameColor="#FFCC01" /></div>
+          <div><HenCard name="Dotty" coop="Speckled Coop" eggs="19" note="51% Egg Bossing" medal="/egg/media/icons/silver.png" progress={51} nameColor="#999999" /></div>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <div><HenCard name="Mabel" coop="Back Garden Coop" eggs="16" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#CC6602" /></div>
+          <div><HenCard name="Mabel" coop="Back Garden Coop" eggs="16" note="46% Egg Bossing" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#CC6602" /></div>
           <div className="flex items-start justify-center pt-1">
             <img src="/egg/media/icons/egg-volution.png" alt="Egg-volution" className="h-[6.48rem] w-auto object-contain" />
           </div>
         </div>
+      </div>
+      <hr className="mt-6 border-0 border-t border-slate-200" />
+      <div className="mt-6">
+        <RollingLayRateCard />
+      </div>
+      <hr className="mt-6 border-0 border-t border-slate-200" />
+      <div className="mt-6 text-center text-[1.5rem] font-bold text-[#6f4bb8]">
+        wiki text here
+      </div>
+      <div className="mt-6 grid gap-4">
+        <PunFactCard mode="pun" text="My flock's project management style? Scrum… and peck." />
+        <WikiItemCard
+          title="Egg marketing standards"
+          body="Explains egg marketing rules for producers, including when registration/stamping may apply and what information must be shown when selling direct or at markets."
+        />
+        <WikiItemCard
+          title="Keeping hens laying smoothly"
+          body="A quick guide to daylight balance, feed quality, and reducing stress so laying stays steady through the week."
+        />
+        <WikiItemCard
+          title="Coop hygiene basics"
+          body="Simple reminders for bedding, ventilation, and cleaning rhythms that help keep the flock comfortable and productive."
+        />
+        <WikiShowMoreCard />
       </div>
     </div>
   );
