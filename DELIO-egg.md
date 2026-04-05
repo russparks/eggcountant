@@ -437,3 +437,126 @@ Examples:
 - Remote deploy target remains `/egg/` for now.
 - Next repo target Russ is creating: `russparks/eggcountant`.
 
+
+## deploy_183732
+- Shared CalendarCard moved into sharedHomeComponents.tsx and wired into ComponentsShowcase + AppShell calendar page.
+
+## deploy_184445
+- Correct deploy target is /domains/axislabs.co.uk/public_html/egg serving https://www.axislabs.co.uk/egg/. Ignore /the-eggcountant for this project going forward.
+
+## deploy_185334
+- Calendar page updated to show two MiniStatCardHalf cards under the calendar and a shared WeeklySummaryCard underneath.
+
+## deploy_190128
+- Deployed latest local AppShell edits to the /egg target.
+
+## deploy_191936
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_192301
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_192438
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_192910
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_193427
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_194017
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_194818
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_195604
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_200203
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_200432
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_200750
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_200933
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_201520
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_202128
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_204627
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_214313
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_214522
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_214948
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_215238
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_215904
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_220358
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_220746
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_221542
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_223907
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_224635
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_225815
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_230336
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_230634
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_231436
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_231738
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_232035
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_232628
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_233553
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_234710
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_234902
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_235344
+- Deployed all pending local edits to the /egg target on request.
+
+## deploy_000143
+- Forced full /egg deploy including media to push refreshed ico-fried-egg asset.
