@@ -8,6 +8,68 @@ Format:
 - User instruction: `<original edit/deploy request>`
 - Notes: `<what changed / what was deployed / rollback hints>`
 
+## deploy_135200
+- Request time: 2026-04-05 13:52:00 BST
+- User instruction: redeploy the showcase page
+- Notes: Re-deployed the current showcase/app state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_134500
+- Request time: 2026-04-05 13:45:00 BST
+- User instruction: 1. reduce the purple by 50%
+2. add the henlife-logo-800 inside the card, to the left
+3. add the ico-settings-top icon to the right
+- Notes: Updated the new FillEffects SVG+gradient demo card to halve the purple overlay strength and place `henlife-logo-800` on the left with `ico-settings-top` on the right.
+
+- Result: deployed successfully
+
+
+## deploy_132800
+- Request time: 2026-04-05 13:28:00 BST
+- User instruction: here is the svg ... for this demo create a new card in filleffects on the showcase page, under svg-g
+- Notes: Added a new FillEffects demo card beneath `svg-g` in `ComponentsShowcase.tsx` that layers the provided SVG pattern with a reduced-opacity dark-g style gradient overlay.
+
+- Result: deployed successfully
+
+
+## deploy_131700
+- Request time: 2026-04-05 13:17:00 BST
+- User instruction: i made more changes, deploy
+- Notes: Re-deployed the latest current Eggcountant state after additional manual edits.
+
+- Result: deployed successfully
+
+
+## deploy_131600
+- Request time: 2026-04-05 13:16:00 BST
+- User instruction: again
+- Notes: Re-deployed the latest current Eggcountant state as requested after further manual edits.
+
+- Result: deployed successfully
+
+
+## deploy_130700
+- Request time: 2026-04-05 13:07:00 BST
+- User instruction: appshell edited, deploy
+- Notes: Deployed the latest user-edited `AppShellPage.tsx` state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_123000
+- Request time: 2026-04-05 12:30:00 BST
+- User instruction: on the HenCard section
+
+1. increase gap underneath coop name
+2. the trophy is a little too big for the text, reduce it by 15%
+3. make the % text the same size as the x XX text
+- Notes: Updated the shared `HenCard` spacing and metadata row so the gap below the coop name is larger, the trophy icon is reduced by about 15%, and the percentage text matches the egg-count text size.
+
+- Result: deployed successfully
+
+
 ## deploy_122000
 - Request time: 2026-04-05 12:20:00 BST
 - User instruction: great:
@@ -3349,6 +3411,55 @@ Format:
 
 ## deploy_122104
 - Request time: 2026-04-05 12:21:04 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_123040
+- Request time: 2026-04-05 12:30:40 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_130821
+- Request time: 2026-04-05 13:08:21 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_131626
+- Request time: 2026-04-05 13:16:26 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_131817
+- Request time: 2026-04-05 13:18:17 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_133002
+- Request time: 2026-04-05 13:30:02 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_134627
+- Request time: 2026-04-05 13:46:27 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_135306
+- Request time: 2026-04-05 13:53:06 BST
 - User instruction: manual deploy
 - Notes: deploy started
 

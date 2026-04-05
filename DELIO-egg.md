@@ -318,6 +318,48 @@ Examples:
 - Context: Russ refined that weekly chart immediately after seeing it.
 - Scope: `src/components/mockup/sharedHomeComponents.tsx` RollingLayRateCard now places the egg count inside each bar, enlarges the weekday label, and adds ellipsis plus extra title/chart spacing.
 
+## Checkpoint deploy_123000
+- Type: deploy checkpoint
+- Created: 2026-04-05 12:30 BST
+- Context: Russ moved on to HenCard polish after pushing the branch.
+- Scope: `src/components/mockup/sharedHomeComponents.tsx` now gives HenCard more gap below the coop name, a smaller medal/trophy icon, and percentage text sized to match the egg-count row.
+
+## Checkpoint deploy_130700
+- Type: deploy checkpoint
+- Created: 2026-04-05 13:07 BST
+- Context: Russ manually edited `AppShellPage.tsx` and asked for a deploy.
+- Scope: latest local `src/components/mockup/AppShellPage.tsx` state deployed as-is.
+
+## Checkpoint deploy_131600
+- Type: deploy checkpoint
+- Created: 2026-04-05 13:16 BST
+- Context: Russ requested another immediate redeploy after more manual changes.
+- Scope: latest current Eggcountant working tree deployed as-is.
+
+## Checkpoint deploy_131700
+- Type: deploy checkpoint
+- Created: 2026-04-05 13:17 BST
+- Context: Russ made further manual changes immediately after the prior redeploy.
+- Scope: latest current Eggcountant working tree deployed as-is.
+
+## Checkpoint deploy_132800
+- Type: deploy checkpoint
+- Created: 2026-04-05 13:28 BST
+- Context: Russ wanted to test a gradient overlay layered on top of an SVG pattern in the FillEffects showcase.
+- Scope: `src/components/mockup/ComponentsShowcase.tsx` now includes a new FillEffects demo card beneath `svg-g` using the supplied SVG plus a reduced-opacity dark-g style overlay.
+
+## Checkpoint deploy_134500
+- Type: deploy checkpoint
+- Created: 2026-04-05 13:45 BST
+- Context: Russ refined that new FillEffects demo card.
+- Scope: `src/components/mockup/ComponentsShowcase.tsx` now uses a softer overlay on the SVG demo card and includes `henlife-logo-800` on the left plus `ico-settings-top` on the right.
+
+## Checkpoint deploy_135200
+- Type: deploy checkpoint
+- Created: 2026-04-05 13:52 BST
+- Context: Russ asked for a straight redeploy of the showcase/app state.
+- Scope: latest current Eggcountant working tree deployed as-is.
+
 ## Checkpoint backup_234024
 - Type: manual backup zip
 - Created: 2026-03-31 23:40 BST

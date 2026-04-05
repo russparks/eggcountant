@@ -144,12 +144,12 @@ export function HenCard({
       <div className="mt-[0.15rem] flex items-center justify-center gap-3 text-center">
         <div className="text-[1.03rem] font-medium leading-tight text-[#9E9E9E]">{coop}</div>
       </div>
-      <div className="mt-2 flex items-center justify-between gap-3 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
+      <div className="mt-3 flex items-center justify-between gap-3 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
         <div className="flex items-center gap-2">
-          <img src={medal} alt="" className="h-[1.4365rem] w-auto object-contain" />
+          <img src={medal} alt="" className="h-[1.221rem] w-auto object-contain" />
           <span>x {eggs}</span>
         </div>
-        <div className="text-[1.1271rem] font-bold leading-none" style={{ color: nameColor }}>{progress}%</div>
+        <div className="text-[1.326rem] font-bold leading-none" style={{ color: nameColor }}>{progress}%</div>
       </div>
     </ShellCard>
   );

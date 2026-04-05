@@ -903,10 +903,10 @@ function HomeContent() {
         <RollingLayRateCard />
       </div>
       <hr className="mt-6 border-0 border-t border-slate-200" />
-      <div className="mt-6 text-center text-[1.5rem] font-bold text-[#6f4bb8]">
-        wiki text here
+      <div className="mt-2 text-center text-[1.5rem] font-bold text-[#6f4bb8]">
+        Facts, Fun, Knowledge...
       </div>
-      <div className="mt-6 grid gap-4">
+      <div className="mt-4 grid gap-4">
         <PunFactCard mode="pun" text="My flock's project management style? Scrum… and peck." />
         <WikiItemCard
           title="Egg marketing standards"
@@ -921,6 +921,9 @@ function HomeContent() {
           body="Simple reminders for bedding, ventilation, and cleaning rhythms that help keep the flock comfortable and productive."
         />
         <WikiShowMoreCard />
+        <div className="flex items-start justify-center pt-4 px-6">
+          <img src="/egg/media/icons/ico-egg-to-hen.png" alt="Hen Life" className="h-[4.48rem] w-auto object-contain" />
+        </div>
       </div>
     </div>
   );
