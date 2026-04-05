@@ -8,6 +8,301 @@ Format:
 - User instruction: `<original edit/deploy request>`
 - Notes: `<what changed / what was deployed / rollback hints>`
 
+## deploy_175500
+- Request time: 2026-04-05 17:55:00 BST
+- User instruction: deploy again
+- Notes: Re-deployed the latest current Eggcountant state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_174700
+- Request time: 2026-04-05 17:47:00 BST
+- User instruction: ok, i think i have it. deploy
+- Notes: Deployed the latest current Eggcountant state after Russ's latest manual edits.
+
+- Result: deployed successfully
+
+
+## deploy_174400
+- Request time: 2026-04-05 17:44:00 BST
+- User instruction: redeploy
+- Notes: Re-deployed the latest current Eggcountant state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_173700
+- Request time: 2026-04-05 17:37:00 BST
+- User instruction: redeploy
+- Notes: Re-deployed the latest current Eggcountant state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_144900
+- Request time: 2026-04-05 14:49:00 BST
+- User instruction: redeploy
+- Notes: Re-deployed the latest current Eggcountant state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_140400
+- Request time: 2026-04-05 14:04:00 BST
+- User instruction: redeploy
+- Notes: Re-deployed the latest current Eggcountant state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_135800
+- Request time: 2026-04-05 13:58:00 BST
+- User instruction: create another filleffect card and make the background the ico-egg-divider.png image, also, i've made edits to the appshell - then deploy
+- Notes: Added another FillEffects demo card in `ComponentsShowcase.tsx` using `ico-egg-divider.png` as the background image, then deployed while preserving Russ's latest manual `AppShellPage.tsx` edits.
+
+- Result: deployed successfully
+
+
+## deploy_135200
+- Request time: 2026-04-05 13:52:00 BST
+- User instruction: redeploy the showcase page
+- Notes: Re-deployed the current showcase/app state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_134500
+- Request time: 2026-04-05 13:45:00 BST
+- User instruction: 1. reduce the purple by 50%
+2. add the henlife-logo-800 inside the card, to the left
+3. add the ico-settings-top icon to the right
+- Notes: Updated the new FillEffects SVG+gradient demo card to halve the purple overlay strength and place `henlife-logo-800` on the left with `ico-settings-top` on the right.
+
+- Result: deployed successfully
+
+
+## deploy_132800
+- Request time: 2026-04-05 13:28:00 BST
+- User instruction: here is the svg ... for this demo create a new card in filleffects on the showcase page, under svg-g
+- Notes: Added a new FillEffects demo card beneath `svg-g` in `ComponentsShowcase.tsx` that layers the provided SVG pattern with a reduced-opacity dark-g style gradient overlay.
+
+- Result: deployed successfully
+
+
+## deploy_131700
+- Request time: 2026-04-05 13:17:00 BST
+- User instruction: i made more changes, deploy
+- Notes: Re-deployed the latest current Eggcountant state after additional manual edits.
+
+- Result: deployed successfully
+
+
+## deploy_131600
+- Request time: 2026-04-05 13:16:00 BST
+- User instruction: again
+- Notes: Re-deployed the latest current Eggcountant state as requested after further manual edits.
+
+- Result: deployed successfully
+
+
+## deploy_130700
+- Request time: 2026-04-05 13:07:00 BST
+- User instruction: appshell edited, deploy
+- Notes: Deployed the latest user-edited `AppShellPage.tsx` state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_123000
+- Request time: 2026-04-05 12:30:00 BST
+- User instruction: on the HenCard section
+
+1. increase gap underneath coop name
+2. the trophy is a little too big for the text, reduce it by 15%
+3. make the % text the same size as the x XX text
+- Notes: Updated the shared `HenCard` spacing and metadata row so the gap below the coop name is larger, the trophy icon is reduced by about 15%, and the percentage text matches the egg-count text size.
+
+- Result: deployed successfully
+
+
+## deploy_122000
+- Request time: 2026-04-05 12:20:00 BST
+- User instruction: great:
+
+1. can the egg value text be inside the bar, at the top, bigger and bolder
+2. after the egg value is moved, make the day letter the same size
+3. add ... after the title and increase the gap between title and chart slightly
+- Notes: Updated the shared `RollingLayRateCard` so the egg count sits inside each bar at the top, the weekday label matches that stronger sizing, and the title now includes ellipsis with extra spacing above the chart.
+
+- Result: deployed successfully
+
+
+## deploy_121600
+- Request time: 2026-04-05 12:16:00 BST
+- User instruction: ok, showcase pageRollingLayRateCard
+
+1. change the title to say 'This Week in Eggs' 
+2. show a graph of 7 values rather than 14
+3. under the bar value, add the day of the week in format M, T, W... etc
+4. reduce the opacity of the first 6 bars, so the 7th (today bar) stands out a little
+- Notes: Updated the shared `RollingLayRateCard` to a 7-day weekly chart with the new title, weekday labels, and reduced opacity on the first six bars so the final bar stands out.
+
+- Result: deployed successfully
+
+
+## deploy_121200
+- Request time: 2026-04-05 12:12:00 BST
+- User instruction: ok, back on the home page, hide the page title for now
+- Notes: Hid the Home page title block in `AppShellPage.tsx` while leaving the rest of the page structure intact.
+
+- Result: deployed successfully
+
+
+## deploy_120700
+- Request time: 2026-04-05 12:07:00 BST
+- User instruction: while were sorting structure, can you apply the proper header and footer sections to the showcase file
+- Notes: Updated the `ComponentsShowcase.tsx` header/footer shell styling to match the live app structure, including the newer header treatment, logo, settings icon treatment, and page background.
+
+- Result: deployed successfully
+
+
+## deploy_120300
+- Request time: 2026-04-05 12:03:00 BST
+- User instruction: ok lets try another one, reduce the top padding on the ProfitLossCard by half and apply the light-g grad here too
+- Notes: Updated the shared `ProfitLossCard` to use the light-g gradient and reduced its top inner padding by roughly half, so the change cascades to both showcase and Home.
+
+- Result: deployed successfully
+
+
+## deploy_120100
+- Request time: 2026-04-05 12:01:00 BST
+- User instruction: ok, weirdly, both of these last two changes have affected the home page (right on screenshot) where the components are shown, but not on the actual showcase page (left on screenshot)
+- Notes: Fixed `ComponentsShowcase.tsx` still shadowing the shared `MiniStatCardHalf` import with its own local duplicate definition, so shared changes now cascade there too.
+
+- Result: deployed successfully
+
+
+## deploy_115800
+- Request time: 2026-04-05 11:58:00 BST
+- User instruction: change the grad on that same cards to the light-g
+- Notes: Updated the shared `MiniStatCardHalf` component to use the light-g gradient background, so the change cascades to both the showcase and Home page.
+
+- Result: deployed successfully
+
+
+## deploy_115600
+- Request time: 2026-04-05 11:56:00 BST
+- User instruction: increase the font size by aroun d 20% on the MiniStatCardHalf cards
+- Notes: Increased the shared `MiniStatCardHalf` title and value font sizes in `sharedHomeComponents.tsx`, so the change cascades to both the showcase and Home page.
+
+- Result: deployed successfully
+
+
+## deploy_114400
+- Request time: 2026-04-05 11:44:00 BST
+- User instruction: ok, i fucked that up, can you make the svg-g background this please
+- Notes: Updated the `svg-g` FillEffects card in `ComponentsShowcase.tsx` to use the corrected 56x28 SVG tiled background provided by Russ.
+
+- Result: deployed successfully
+
+
+## deploy_114100
+- Request time: 2026-04-05 11:41:00 BST
+- User instruction: i altered the showcase file, deploy
+- Notes: Deployed the latest user-edited `ComponentsShowcase.tsx` state without additional agent-side content changes. During deploy, fixed one unterminated SVG background string in the FillEffects card so the file could build successfully.
+
+- Result: deployed successfully
+
+
+## deploy_113300
+- Request time: 2026-04-05 11:33:00 BST
+- User instruction: add a new card in the filleffects section, and give it this svg background
+- Notes: Added a new `FillEffects` sample card in `ComponentsShowcase.tsx` using the supplied SVG data-URL background on a `#f4f2fa` base.
+
+- Result: deployed successfully
+
+
+## deploy_112600
+- Request time: 2026-04-05 11:26:00 BST
+- User instruction: above the wiki section, but below the hr you just placed, add some placeholder centred text in H3 purple saying 'wiki text here'
+- Notes: Added centered purple H3 placeholder text reading `wiki text here` between the divider and the wiki card block on Home.
+
+- Result: deployed successfully
+
+
+## deploy_112300
+- Request time: 2026-04-05 11:23:00 BST
+- User instruction: add a hr then place the WikiElements section, 1 pun card, 3 article cards, 1 show more button
+- Notes: Added a divider below the `RollingLayRateCard`, then built the requested wiki block on Home with 1 pun card, 3 article cards, and a show-more button.
+
+- Result: deployed successfully
+
+
+## deploy_112000
+- Request time: 2026-04-05 11:20:00 BST
+- User instruction: add a hr and then place the RollingLayRateCard
+- Notes: Added a horizontal divider below the HenCard section, then moved the showcase `RollingLayRateCard` onto the Home page.
+
+- Result: deployed successfully
+
+
+## deploy_111600
+- Request time: 2026-04-05 11:16:00 BST
+- User instruction: add a hr, then place the HenCard section (3 hencards and the eggvolution icon)
+- Notes: Added a horizontal divider beneath the mini stat cards, then moved the showcase HenCard section with Willow, Dotty, Mabel, and the Egg-volution icon onto the Home page.
+
+- Result: deployed successfully
+
+
+## deploy_111400
+- Request time: 2026-04-05 11:14:00 BST
+- User instruction: actually, put it back at the top, but change the size to H2
+- Notes: Moved the Home page title back above the `ProfitLossCard` and reduced it to a smaller H2-style size.
+
+- Result: deployed successfully
+
+
+## deploy_111200
+- Request time: 2026-04-05 11:12:00 BST
+- User instruction: move the page title underneath the ProfitLossCard
+- Notes: Reordered the Home page so the `This week, in a nutshell...` title now sits below the `ProfitLossCard`.
+
+- Result: deployed successfully
+
+
+## deploy_111000
+- Request time: 2026-04-05 11:10:00 BST
+- User instruction: ok, slight issue - the cards are deployed but the icons have vanished, from both the showcase and home pages
+- Notes: Fixed the deploy script so it also applies readable permissions inside `/media/icons`, which was causing card icons to disappear after FTP deploys.
+
+- Result: deployed successfully
+
+
+## deploy_110703
+- Request time: 2026-04-05 11:07:03 BST
+- User instruction: great, now the two cards in MiniStatCardHalf
+- Notes: Moved both `MiniStatCardHalf` cards from `ComponentsShowcase` onto the main Home page beneath the `ProfitLossCard`.
+
+- Result: deployed successfully
+
+
+## deploy_110521
+- Request time: 2026-04-05 11:05:21 BST
+- User instruction: great, now the ProfitLossCard please
+- Notes: Moved the `ProfitLossCard` from `ComponentsShowcase` onto the main Home page directly beneath the `This week, in a nutshell...` title.
+
+- Result: deployed successfully
+
+
+## deploy_110426
+- Request time: 2026-04-05 11:04:26 BST
+- User instruction: deploy
+- Notes: Deployed the Home page title migration so the main Home page now uses the exact `This week, in a nutshell...` title styling from `ComponentsShowcase`.
+
+- Result: deployed successfully
+
+
 ## deploy_105354
 - Request time: 2026-04-05 10:53:54 BST
 - User instruction: deploy
@@ -3011,6 +3306,272 @@ Format:
 
 ## deploy_105438
 - Request time: 2026-04-05 10:54:38 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110445
+- Request time: 2026-04-05 11:04:45 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110647
+- Request time: 2026-04-05 11:06:47 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110857
+- Request time: 2026-04-05 11:08:57 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111122
+- Request time: 2026-04-05 11:11:22 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111325
+- Request time: 2026-04-05 11:13:25 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111519
+- Request time: 2026-04-05 11:15:19 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111806
+- Request time: 2026-04-05 11:18:06 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_112134
+- Request time: 2026-04-05 11:21:34 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_112457
+- Request time: 2026-04-05 11:24:57 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_112715
+- Request time: 2026-04-05 11:27:15 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_113358
+- Request time: 2026-04-05 11:33:58 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_114311
+- Request time: 2026-04-05 11:43:11 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_114539
+- Request time: 2026-04-05 11:45:39 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_115224
+- Request time: 2026-04-05 11:52:24 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_115728
+- Request time: 2026-04-05 11:57:28 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_115939
+- Request time: 2026-04-05 11:59:39 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_120211
+- Request time: 2026-04-05 12:02:11 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_120338
+- Request time: 2026-04-05 12:03:38 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_120559
+- Request time: 2026-04-05 12:05:59 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_120939
+- Request time: 2026-04-05 12:09:39 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_121233
+- Request time: 2026-04-05 12:12:33 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_121712
+- Request time: 2026-04-05 12:17:12 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_122104
+- Request time: 2026-04-05 12:21:04 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_123040
+- Request time: 2026-04-05 12:30:40 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_130821
+- Request time: 2026-04-05 13:08:21 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_131626
+- Request time: 2026-04-05 13:16:26 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_131817
+- Request time: 2026-04-05 13:18:17 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_133002
+- Request time: 2026-04-05 13:30:02 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_134627
+- Request time: 2026-04-05 13:46:27 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_135306
+- Request time: 2026-04-05 13:53:06 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_140021
+- Request time: 2026-04-05 14:00:21 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_140507
+- Request time: 2026-04-05 14:05:07 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_144942
+- Request time: 2026-04-05 14:49:42 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_173808
+- Request time: 2026-04-05 17:38:08 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_174456
+- Request time: 2026-04-05 17:44:56 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_174746
+- Request time: 2026-04-05 17:47:46 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_175555
+- Request time: 2026-04-05 17:55:55 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_180024
+- Request time: 2026-04-05 18:00:24 BST
 - User instruction: manual deploy
 - Notes: deploy started
 

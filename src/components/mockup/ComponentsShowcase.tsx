@@ -16,6 +16,7 @@ import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
 import navIconFlock from '../../../media/nav-icons/lm-flock.png';
 import navIconSales from '../../../media/nav-icons/lm-sales.png';
 import { SURFACE_GRADIENT } from '../../constants';
+import { ShellCard, ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard } from './sharedHomeComponents';
 
 const surfaceGradient = SURFACE_GRADIENT;
 
@@ -25,11 +26,6 @@ const formatDisplayDate = (value: string) => {
   if (!year || !month || !day) return value;
   return `${day}/${month}/${year.slice(-2)}`;
 };
-
-function ShellCard({ children, className = '', surfaceGradient = SURFACE_GRADIENT }: { children: React.ReactNode; className?: string; surfaceGradient?: string }) {
-  const resolvedClassName = className.replaceAll(SURFACE_GRADIENT, surfaceGradient);
-  return <div className={`rounded-[var(--ui-radius)] bg-white shadow-[0_10px_30px_rgba(47,31,77,0.08)] border border-white/60 ${resolvedClassName}`}>{children}</div>;
-}
 
 function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAccountModal, openLogoutConfirm }: { hidden: boolean; settingsOpen: boolean; setSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>; closeBottomNav: () => void; openAccountModal: () => void; openLogoutConfirm: () => void }) {
   const settingsItems = [
@@ -47,11 +43,11 @@ function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAcc
           onClick={() => setSettingsOpen(false)}
         />
       ) : null}
-      <header className={`sticky top-0 z-50 border-b-[1.2px] border-slate-200 bg-white/95 backdrop-blur-sm transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
+      <header className={`sticky top-0 z-50 border-b-[1.2px] border-slate-200 bg-cover bg-center bg-no-repeat bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#A58DD9_100%)] drop-shadow-[0_14px_24px_rgba(111,75,184,0.3)] backdrop-blur-sm transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <img
             data-component="HeaderLogo"
-            src="/egg/media/eggcountant-logo.png"
+            src="/egg/media/icons/henlife-logo-800.png"
             alt="Eggcountant"
             className="h-[3.6rem] w-auto sm:h-[4.3125rem]"
           />
@@ -88,7 +84,7 @@ function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAcc
               data-component="HeaderSettingsButton"
               type="button"
               aria-label="Settings"
-              className="flex h-[3.74rem] w-[3.74rem] items-center justify-center rounded-[var(--ui-radius)] bg-white transition hover:bg-slate-50"
+              className="flex h-[3.74rem] w-[3.74rem] items-center justify-end rounded-[var(--ui-radius)] bg-transparent transition hover:bg-transparent"
               onClick={() => {
                 closeBottomNav();
                 setSettingsOpen((open) => !open);
@@ -96,9 +92,9 @@ function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAcc
             >
               <img
                 data-component="HeaderSettingsIcon"
-                src="/egg/media/icons/top-settings.png"
+                src="/egg/media/icons/ico-settings-top.png"
                 alt=""
-                className="h-[5.076rem] w-[5.076rem] object-contain"
+                className="h-[3.4rem] w-auto object-contain"
               />
             </button>
           </div>
@@ -347,95 +343,6 @@ function WeeklySummaryCard({ trend = '+12%', positive = true, headline = <>Your 
         <div className="clear-both" />
       </div>
     </ShellCard>
-  );
-}
-
-function ProfitLossCard() {
-  const profit = 13.25;
-  const loss = 6.8;
-  const net = profit - loss;
-  const netPositive = net >= 0;
-
-  return (
-    <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
-      <div className="rounded-[var(--ui-radius)] bg-white/0 px-4 py-4 shadow-none border border-transparent">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <div className={`m-0 text-[1.35rem] font-bold leading-tight ${netPositive ? 'text-emerald-500' : 'text-rose-500'}`}>Cluck Statement</div>
-            <div className={`mt-1 text-[2.25rem] font-bold ${netPositive ? 'text-emerald-500' : 'text-rose-500'}`}>
-              {netPositive ? '+' : '-'}£{Math.abs(net).toFixed(2)}
-            </div>
-          </div>
-          <img
-            data-component="ProfitLossCardNetIcon"
-            src={netPositive ? '/egg/media/icons/sales-green.png' : '/egg/media/icons/sales-red.png'}
-            alt=""
-            className="h-21 w-auto object-contain"
-          />
-        </div>
-      </div>
-
-      <div className="mt-1 flex items-center justify-between gap-0 px-5">
-        <div className="flex-1 ml-[30px]">
-          <div className="text-[1.2675rem] font-bold leading-none text-[#9E9E9E]">+£13.25</div>
-          <div className="hidden mt-[5px] text-[0.9rem] uppercase leading-none text-[#9E9E9E]">IN</div>
-        </div>
-        <div className="flex-1 mr-[30px] text-right">
-          <div className="text-[1.2675rem] font-bold leading-none text-[#9E9E9E]">-£6.80</div>
-          <div className="hidden mt-[5px] text-[0.9rem] uppercase leading-none text-[#9E9E9E]">OUT</div>
-        </div>
-      </div>
-    </ShellCard>
-  );
-}
-
-function PunFactCard({ mode = 'pun', text }: { mode?: 'pun' | 'fact'; text: string }) {
-  const isPun = mode === 'pun';
-
-  return (
-    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`overflow-hidden border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8]`}>
-      <div className="grid grid-cols-[1fr_auto] gap-x-3 gap-y-2 items-start">
-        <div className="text-[1.6rem] font-normal italic leading-tight text-[#6f4bb8]">
-          “{text}”
-        </div>
-        <div className="flex flex-col shrink-0 gap-2 pt-1">
-          <button
-            type="button"
-            className={`min-w-[3.6rem] rounded-[var(--ui-radius)] px-[0.62rem] py-[0.36rem] text-[0.72rem] font-semibold uppercase tracking-wide shadow-sm ${isPun ? 'bg-[#ece7f8] text-[#b7afcc]' : 'bg-[#6f4bb8] text-white'}`}
-          >
-            Pun
-          </button>
-          <button
-            type="button"
-            className={`min-w-[3.6rem] rounded-[var(--ui-radius)] px-[0.62rem] py-[0.36rem] text-[0.72rem] font-semibold uppercase tracking-wide shadow-sm ${!isPun ? 'bg-[#ece7f8] text-[#b7afcc]' : 'bg-[#6f4bb8] text-white'}`}
-          >
-            Fact
-          </button>
-        </div>
-      </div>
-    </ShellCard>
-  );
-}
-
-function WikiItemCard() {
-  return (
-    <a href="#" target="_blank" rel="noreferrer" className="block">
-      <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`overflow-hidden border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8]`}>
-        <div className="text-[1.35rem] font-bold text-[#6f4bb8]">Egg marketing standards</div>
-        <div className="mt-[0.45rem] w-full text-[1.12rem] font-normal leading-tight text-[#6f4bb8]">
-          Explains egg marketing rules for producers, including when registration/stamping may apply and what information must be shown when selling direct or at markets.
-        </div>
-        <div className="mt-3 text-right text-[1.215rem] font-medium leading-tight text-[#9E9E9E]">Open article →</div>
-      </ShellCard>
-    </a>
-  );
-}
-
-function WikiShowMoreCard() {
-  return (
-    <a href="#" target="_blank" rel="noreferrer" className="block rounded-[var(--ui-radius)] bg-[#6f4bb8] p-3 text-center text-white shadow-[0_10px_24px_rgba(47,31,77,0.10)]">
-      <div className="text-[1rem] font-bold text-white">Show more (45 remaining)</div>
-    </a>
   );
 }
 
@@ -1124,114 +1031,6 @@ function MiniStatCard({ label, value, accent }: { label: string; value: string; 
   );
 }
 
-function MiniStatCardHalf({
-  title,
-  value,
-  icon,
-  align,
-}: {
-  title: string;
-  value: string;
-  icon: string;
-  align: 'left' | 'right';
-}) {
-  const isLeft = align === 'left';
-
-  return (
-    <ShellCard className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
-      <div className={isLeft ? 'text-left' : 'text-right'}>
-        <div className="m-0 text-[1rem] uppercase text-[#6f4bb8]">{title}</div>
-      </div>
-      <div className={`mt-1.5 flex items-center ${isLeft ? 'justify-between flex-row-reverse' : 'justify-between'}`}>
-        <img src={icon} alt="" className="h-[3.4rem] w-auto max-w-[34%] object-contain" />
-        <div className={`text-[2.72rem] font-bold text-[#6f4bb8] ${isLeft ? 'ml-3' : 'mr-3'}`}>{value}</div>
-      </div>
-    </ShellCard>
-  );
-}
-
-function HenCard({
-  name,
-  coop,
-  eggs,
-  note,
-  medal,
-  progress,
-  nameColor,
-  compact = false,
-  profileImage,
-  profileBadge,
-  compactMode = 'hen',
-}: {
-  name: string;
-  coop: string;
-  eggs: string;
-  note: string;
-  medal: string;
-  progress: number;
-  nameColor: string;
-  compact?: boolean;
-  profileImage?: string;
-  profileBadge?: 'gold' | 'silver' | 'bronze';
-  compactMode?: 'hen' | 'coop';
-}) {
-  if (compact) {
-    return (
-      <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
-        <div className="flex min-h-[3.4rem] w-full items-center justify-center overflow-hidden">
-          <div className="m-0 line-clamp-2 w-full text-center text-[1.55rem] font-bold leading-none text-[#6f4bb8]">{name}</div>
-        </div>
-        <div className="relative mt-3 flex justify-center">
-          {profileImage ? (
-            <img src={profileImage} alt="" className="w-[92%] rounded-[var(--ui-radius)] object-contain drop-shadow-[0_8px_12px_rgba(47,31,77,0.12)]" />
-          ) : null}
-          {profileBadge ? (
-            <img
-              src={`/egg/media/icons/${profileBadge}-over.png`}
-              alt=""
-              className="absolute bottom-0 left-[75%] h-[2.3025rem] w-auto -translate-x-1/2 object-contain"
-            />
-          ) : null}
-        </div>
-        <hr className="mt-3 border-0 border-t border-slate-200" />
-        {compactMode === 'hen' ? (
-          <div className="mt-[0.05rem] text-center text-[1.14rem] text-[#c4b2f4]">AGE: {note.replace('AGE: ', '')}</div>
-        ) : null}
-        <div className="mt-[0.05rem] text-center text-[0.9rem] uppercase text-[#9E9E9E]">{compactMode === 'coop' ? note : coop}</div>
-        <hr className="mt-[0.35rem] border-0 border-t border-slate-200" />
-        <div className="mt-[0.35rem] flex items-center justify-between gap-2 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
-          <div className="flex items-center gap-2">
-            <img src={compactMode === 'coop' ? '/egg/media/icons/ico-chick.png' : '/egg/media/icons/ico-egg.png'} alt="" className="h-[1.99rem] w-auto object-contain" />
-            <span>x {eggs}</span>
-          </div>
-          <img src="/egg/media/icons/ico-edit.png" alt="" className="h-[1.99rem] w-auto object-contain" />
-        </div>
-      </ShellCard>
-    );
-  }
-
-  return (
-    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
-      <div className="flex items-center justify-center gap-3 text-center">
-        <div className="min-w-0 flex-1">
-          <div className="m-0 w-full text-center font-black italic leading-none tracking-tight" style={{ color: nameColor, fontSize: `${Math.max(0.88, 1.36 - Math.max(0, name.length - 10) * 0.045)}rem` }}>{name}</div>
-        </div>
-      </div>
-      <hr className="mt-2 border-0 border-t border-slate-200" />
-      <div className="mt-[0.15rem] flex items-center justify-center gap-3 text-center">
-        <div className="text-[1.03rem] font-medium leading-tight text-[#9E9E9E]">{coop}</div>
-      </div>
-      <div className="mt-2 flex items-center justify-between gap-3 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
-        <div className="flex items-center gap-2">
-          <img src={medal} alt="" className="h-[1.4365rem] w-auto object-contain" />
-          <span>x {eggs}</span>
-        </div>
-        <div className="text-[1.1271rem] font-bold leading-none" style={{ color: nameColor }}>{progress}%</div>
-      </div>
-    </ShellCard>
-  );
-}
-
 function ProfitExpenseCard({
   name,
   value,
@@ -1267,26 +1066,6 @@ function ProfitHeroCard() {
         <div data-component="ProfitHeroCardValue" className="mt-3 text-[2.2rem] font-bold tracking-tight text-emerald-500">
           +£13.25
         </div>
-      </div>
-    </ShellCard>
-  );
-}
-
-function RollingLayRateCard() {
-  const bars = [8, 10, 7, 11, 9, 6, 10, 8, 7, 11, 9, 10, 6, 8];
-
-  return (
-    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
-      <div>
-        <div className="m-0 text-[1.2rem] font-bold uppercase text-[#6f4bb8]">Rollin' 14 Days Lays</div>
-      </div>
-      <div className="mt-2 flex h-44 items-end gap-2">
-        {bars.map((bar, i) => (
-          <div key={`lay-${i}`} className="flex flex-1 flex-col items-center gap-1">
-            <div className="flex w-full items-end justify-center rounded-t-[var(--ui-radius)] bg-gradient-to-b from-[#6f4bb8] to-transparent" style={{ height: `${bar * 12}px` }} />
-            <span className="text-xs font-medium text-slate-400">{bar}</span>
-          </div>
-        ))}
       </div>
     </ShellCard>
   );
@@ -1636,7 +1415,7 @@ export default function ComponentsShowcase() {
   }, [anyModalOpen]);
 
   return (
-    <div className="min-h-screen bg-[#f3edff] text-slate-900">
+    <div className="min-h-screen bg-[#f6f1ff] text-slate-900">
       <Header hidden={headerHidden} settingsOpen={settingsOpen} setSettingsOpen={setSettingsOpen} closeBottomNav={() => setBottomNavOpen(false)} openAccountModal={() => setAccountModalOpen(true)} openLogoutConfirm={() => setLogoutConfirmOpen(true)} />
       {headerHidden ? (
         <button
@@ -2577,6 +2356,31 @@ export default function ComponentsShowcase() {
             <div><div className={`relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3`}><div className="text-[1rem] font-bold text-[#6f4bb8]">dark-g</div></div></div>
             <div><div className="relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)] p-3"><div className="text-[1rem] font-bold text-[#6f4bb8]">light-g</div></div></div>
             <div><div className="relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-3"><div className="text-[1rem] font-bold text-[#6f4bb8]">white-g</div></div></div>
+            <div>
+              <div
+                className="relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] p-3"
+                style={{
+                  backgroundColor: '#f3eefc',
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 28' width='56' height='28'%3E%3Cpath fill='%23b6a3e1' fill-opacity='0.4' d='M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-5.6 0-10.65 2.3-14.28 6h-2.7c4.04-4.89 10.15-8 16.98-8zm-39.03 8h-2.69C10.65 24.3 5.6 22 0 22v-2c6.83 0 12.94 3.11 16.97 8zm15.01-.4a28.09 28.09 0 0 1 2.8-3.86 8 8 0 0 0-13.55 0c1.03 1.2 1.97 2.5 2.79 3.86a4 4 0 0 1 7.96 0zm14.29-11.86c1.3-.48 2.63-.87 4-1.15a25.99 25.99 0 0 0-44.55 0c1.38.28 2.72.67 4.01 1.15a21.98 21.98 0 0 1 36.54 0zm-5.43 2.71c1.13-.72 2.3-1.37 3.54-1.93a19.98 19.98 0 0 0-32.76 0c1.23.56 2.41 1.2 3.54 1.93a15.98 15.98 0 0 1 25.68 0zm-4.67 3.78c.94-.95 1.96-1.83 3.03-2.63a13.98 13.98 0 0 0-22.4 0c1.07.8 2.09 1.68 3.03 2.63a9.99 9.99 0 0 1 16.34 0z'%3E%3C/path%3E%3C/svg%3E")`,
+                }}
+              >
+                <div className="text-[1rem] font-bold text-[#6f4bb8]">svg-g</div>
+              </div>
+            </div>
+            <div
+              className="mt-4 relative flex min-h-[3.75rem] w-full items-center justify-center overflow-hidden p-1"
+              style={{
+                backgroundColor: 'transparent',
+                backgroundImage: `url("/egg/media/icons/ico-egg-divider-faded.png")`,
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'auto 100%',
+              }}
+            >
+              <div className="text-[2rem] font-bold text-[#494949] text-center">
+                Divider Text
+              </div>
+            </div>
           </div>
 
           <div className="grid gap-6">

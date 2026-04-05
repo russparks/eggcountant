@@ -5,6 +5,7 @@ import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
 import navIconFlock from '../../../media/nav-icons/lm-flock.png';
 import navIconSales from '../../../media/nav-icons/lm-sales.png';
 import { SURFACE_GRADIENT } from '../../constants';
+import { ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard } from './sharedHomeComponents';
 
 const surfaceGradient = SURFACE_GRADIENT;
 
@@ -874,9 +875,66 @@ function PhotoMiniModal({ title, onClose, onSave, photoZoom, setPhotoZoom, photo
 function HomeContent() {
   return (
     <div className="w-full">
-      <h1 className="text-[2.55rem] font-black italic leading-[0.94] tracking-tight text-[#6f4bb8] sm:text-[2.8rem]">
-        Home
-      </h1>
+      {/* Home page title hidden for now */}
+      <ProfitLossCard />
+      <div className="mt-6 grid grid-cols-2 gap-4">
+        <div>
+          <MiniStatCardHalf title="Yokes to Go" value="12" icon="/egg/media/icons/ico-fried-egg.png" align="left" />
+        </div>
+        <div>
+          <MiniStatCardHalf title="Buns to Cook" value="6" icon="/egg/media/icons/ico-chick.png" align="right" />
+        </div>
+      </div>
+      <hr className="mt-6 border-0 border-t border-slate-200" />
+      <div className="mt-6 grid gap-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div><HenCard name="Willow" coop="Willow House" eggs="24" note="66% Egg Bossing" medal="/egg/media/icons/gold.png" progress={66} nameColor="#FFCC01" /></div>
+          <div><HenCard name="Dotty" coop="Speckled Coop" eggs="19" note="51% Egg Bossing" medal="/egg/media/icons/silver.png" progress={51} nameColor="#999999" /></div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div><HenCard name="Mabel" coop="Back Garden Coop" eggs="16" note="46% Egg Bossing" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#CC6602" /></div>
+          <div className="flex items-start justify-center pt-1">
+            <img src="/egg/media/icons/egg-volution.png" alt="Egg-volution" className="h-[6.48rem] w-auto object-contain" />
+          </div>
+        </div>
+      </div>
+      <hr className="mt-6 border-0 border-t border-slate-200" />
+      <div className="mt-6">
+        <RollingLayRateCard />
+      </div>
+      <div
+        className="mt-4 relative flex min-h-[3.75rem] w-full items-center justify-center overflow-hidden p-1"
+        style={{
+          backgroundColor: 'transparent',
+          backgroundImage: `url("/egg/media/icons/ico-egg-divider-faded.png")`,
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'auto 100%',
+        }}
+      >
+        <div className="text-[1.7rem] font-bold text-[#494949] text-center">
+          Divider Text
+        </div>
+      </div>
+      <div className="mt-4 grid gap-4 text-[1.1rem]">
+        <PunFactCard mode="pun" text="My flock's project management style? Scrum… and peck." />
+        <WikiItemCard
+          title="Egg marketing standards"
+          body="Explains egg marketing rules for producers, including when registration/stamping may apply and what information must be shown when selling direct or at markets."
+        />
+        <WikiItemCard
+          title="Keeping hens laying smoothly"
+          body="A quick guide to daylight balance, feed quality, and reducing stress so laying stays steady through the week."
+        />
+        <WikiItemCard
+          title="Coop hygiene basics"
+          body="Simple reminders for bedding, ventilation, and cleaning rhythms that help keep the flock comfortable and productive."
+        />
+        <WikiShowMoreCard />
+        <div className="flex items-start justify-center pt-4 px-6">
+          <img src="/egg/media/icons/ico-egg-to-hen.png" alt="Hen Life" className="h-[4.48rem] w-auto object-contain" />
+        </div>
+      </div>
     </div>
   );
 }
