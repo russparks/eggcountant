@@ -27,10 +27,10 @@ function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAcc
           onClick={() => setSettingsOpen(false)}
         />
       ) : null}
-      <header className={`sticky top-0 z-50 border-b-[1.2px] border-slate-200 bg-white/95 backdrop-blur-sm transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
+      <header className={`sticky top-0 z-50 border-b-[1.2px] border-slate-200 bg-cover bg-center bg-no-repeat bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#A58DD9_100%)] drop-shadow-[0_14px_24px_rgba(111,75,184,0.3)] backdrop-blur-sm transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <img
-            src="/egg/media/eggcountant-logo.png"
+            src="/egg/media/icons/henlife-logo-800.png"
             alt="Eggcountant"
             className="h-[3.6rem] w-auto sm:h-[4.3125rem]"
           />
@@ -66,16 +66,16 @@ function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAcc
             <button
               type="button"
               aria-label="Settings"
-              className="flex h-[3.74rem] w-[3.74rem] items-center justify-center rounded-[var(--ui-radius)] bg-white transition hover:bg-slate-50"
+              className="flex h-[3.74rem] w-[3.74rem] items-center justify-end rounded-[var(--ui-radius)] bg-transparent transition hover:bg-transparent"
               onClick={() => {
                 closeBottomNav();
                 setSettingsOpen((open) => !open);
               }}
             >
               <img
-                src="/egg/media/icons/top-settings.png"
+                src="/egg/media/icons/ico-settings-top.png"
                 alt=""
-                className="h-[5.076rem] w-[5.076rem] object-contain"
+                className="h-[3.4rem] w-auto object-contain"
               />
             </button>
           </div>

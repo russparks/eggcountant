@@ -191,6 +191,13 @@ Examples:
 ## Backup destination rule
 - Future project backup zips should go into `/Users/russparks/Desktop/Egg BUs/` instead of directly on the Desktop.
 
+## Checkpoint deploy_105354
+- Type: deploy checkpoint
+- Created: 2026-04-05 10:53 BST
+- Context: Russ requested `deploy` right after the header logo reference was changed from `henlife-logo.png` to `henlife-logo-800.png`.
+- Scope: `src/components/mockup/AppShellPage.tsx` now points at `/egg/media/icons/henlife-logo-800.png`.
+- Backup archive: `/Users/russparks/Desktop/deploy_105354.zip`
+
 ## Checkpoint backup_234024
 - Type: manual backup zip
 - Created: 2026-03-31 23:40 BST

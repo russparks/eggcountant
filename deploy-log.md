@@ -8,6 +8,14 @@ Format:
 - User instruction: `<original edit/deploy request>`
 - Notes: `<what changed / what was deployed / rollback hints>`
 
+## deploy_105354
+- Request time: 2026-04-05 10:53:54 BST
+- User instruction: deploy
+- Notes: Deploy requested immediately after replacing the header logo image reference with `henlife-logo-800.png` in `src/components/mockup/AppShellPage.tsx`.
+
+- Result: deployed successfully
+
+
 ## deploy_210100
 - Request time: 2026-03-30 21:01:00 BST
 - User instruction: 1. the sales and expense font that is currently at 1.47rem, i need it to be about 15% larger
@@ -2870,6 +2878,139 @@ Format:
 
 ## deploy_230403
 - Request time: 2026-04-04 23:04:03 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_234842
+- Request time: 2026-04-04 23:48:42 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_001513
+- Request time: 2026-04-05 00:15:13 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_002949
+- Request time: 2026-04-05 00:29:49 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_003752
+- Request time: 2026-04-05 00:37:52 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_003929
+- Request time: 2026-04-05 00:39:29 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_004247
+- Request time: 2026-04-05 00:42:47 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_005300
+- Request time: 2026-04-05 00:53:00 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_005711
+- Request time: 2026-04-05 00:57:11 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_005917
+- Request time: 2026-04-05 00:59:17 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_010114
+- Request time: 2026-04-05 01:01:14 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_010400
+- Request time: 2026-04-05 01:04:00 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_010651
+- Request time: 2026-04-05 01:06:51 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_012434
+- Request time: 2026-04-05 01:24:34 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_012537
+- Request time: 2026-04-05 01:25:37 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_014109
+- Request time: 2026-04-05 01:41:09 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_014953
+- Request time: 2026-04-05 01:49:53 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_015541
+- Request time: 2026-04-05 01:55:41 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_022218
+- Request time: 2026-04-05 02:22:18 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_105438
+- Request time: 2026-04-05 10:54:38 BST
 - User instruction: manual deploy
 - Notes: deploy started
 
