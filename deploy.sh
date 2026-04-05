@@ -74,6 +74,8 @@ cd ${REMOTE}/api
 glob chmod 644 *
 cd ${REMOTE}/media
 glob chmod 644 *
+cd ${REMOTE}/media/icons
+glob chmod 644 *
 bye
 LFTP
 

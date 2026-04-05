@@ -198,6 +198,42 @@ Examples:
 - Scope: `src/components/mockup/AppShellPage.tsx` now points at `/egg/media/icons/henlife-logo-800.png`.
 - Backup archive: `/Users/russparks/Desktop/deploy_105354.zip`
 
+## Checkpoint deploy_110426
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:04 BST
+- Context: Russ requested `deploy` after moving the exact `This week, in a nutshell...` title from the components showcase onto the Home page.
+- Scope: `src/components/mockup/AppShellPage.tsx` Home view title now matches the showcase formatting.
+
+## Checkpoint deploy_110521
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:05 BST
+- Context: Russ requested the `ProfitLossCard` on Home after the page title migration.
+- Scope: `src/components/mockup/AppShellPage.tsx` Home view now includes the showcase `ProfitLossCard` directly under the title.
+
+## Checkpoint deploy_110703
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:07 BST
+- Context: Russ requested the two `MiniStatCardHalf` cards after the `ProfitLossCard` move.
+- Scope: `src/components/mockup/AppShellPage.tsx` Home view now includes the `Yokes to Go` and `Buns to Cook` cards below the `ProfitLossCard`.
+
+## Checkpoint deploy_111200
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:12 BST
+- Context: Russ requested the page title to move underneath the `ProfitLossCard`.
+- Scope: `src/components/mockup/AppShellPage.tsx` Home view order changed to `ProfitLossCard` → page title → two `MiniStatCardHalf` cards.
+
+## Checkpoint deploy_111400
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:14 BST
+- Context: Russ reverted that layout change and asked for the title back at the top, but smaller.
+- Scope: `src/components/mockup/AppShellPage.tsx` Home view order is back to title → `ProfitLossCard` → two `MiniStatCardHalf` cards, with the title reduced to H2-style sizing.
+
+## Checkpoint deploy_111600
+- Type: deploy checkpoint
+- Created: 2026-04-05 11:16 BST
+- Context: Russ requested a divider and the HenCard section next.
+- Scope: `src/components/mockup/AppShellPage.tsx` Home view now includes an `hr` beneath the mini stat cards, followed by Willow, Dotty, Mabel, and the Egg-volution graphic.
+
 ## Checkpoint backup_234024
 - Type: manual backup zip
 - Created: 2026-03-31 23:40 BST

@@ -8,6 +8,62 @@ Format:
 - User instruction: `<original edit/deploy request>`
 - Notes: `<what changed / what was deployed / rollback hints>`
 
+## deploy_111600
+- Request time: 2026-04-05 11:16:00 BST
+- User instruction: add a hr, then place the HenCard section (3 hencards and the eggvolution icon)
+- Notes: Added a horizontal divider beneath the mini stat cards, then moved the showcase HenCard section with Willow, Dotty, Mabel, and the Egg-volution icon onto the Home page.
+
+- Result: deployed successfully
+
+
+## deploy_111400
+- Request time: 2026-04-05 11:14:00 BST
+- User instruction: actually, put it back at the top, but change the size to H2
+- Notes: Moved the Home page title back above the `ProfitLossCard` and reduced it to a smaller H2-style size.
+
+- Result: deployed successfully
+
+
+## deploy_111200
+- Request time: 2026-04-05 11:12:00 BST
+- User instruction: move the page title underneath the ProfitLossCard
+- Notes: Reordered the Home page so the `This week, in a nutshell...` title now sits below the `ProfitLossCard`.
+
+- Result: deployed successfully
+
+
+## deploy_111000
+- Request time: 2026-04-05 11:10:00 BST
+- User instruction: ok, slight issue - the cards are deployed but the icons have vanished, from both the showcase and home pages
+- Notes: Fixed the deploy script so it also applies readable permissions inside `/media/icons`, which was causing card icons to disappear after FTP deploys.
+
+- Result: deployed successfully
+
+
+## deploy_110703
+- Request time: 2026-04-05 11:07:03 BST
+- User instruction: great, now the two cards in MiniStatCardHalf
+- Notes: Moved both `MiniStatCardHalf` cards from `ComponentsShowcase` onto the main Home page beneath the `ProfitLossCard`.
+
+- Result: deployed successfully
+
+
+## deploy_110521
+- Request time: 2026-04-05 11:05:21 BST
+- User instruction: great, now the ProfitLossCard please
+- Notes: Moved the `ProfitLossCard` from `ComponentsShowcase` onto the main Home page directly beneath the `This week, in a nutshell...` title.
+
+- Result: deployed successfully
+
+
+## deploy_110426
+- Request time: 2026-04-05 11:04:26 BST
+- User instruction: deploy
+- Notes: Deployed the Home page title migration so the main Home page now uses the exact `This week, in a nutshell...` title styling from `ComponentsShowcase`.
+
+- Result: deployed successfully
+
+
 ## deploy_105354
 - Request time: 2026-04-05 10:53:54 BST
 - User instruction: deploy
@@ -3011,6 +3067,55 @@ Format:
 
 ## deploy_105438
 - Request time: 2026-04-05 10:54:38 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110445
+- Request time: 2026-04-05 11:04:45 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110647
+- Request time: 2026-04-05 11:06:47 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_110857
+- Request time: 2026-04-05 11:08:57 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111122
+- Request time: 2026-04-05 11:11:22 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111325
+- Request time: 2026-04-05 11:13:25 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111519
+- Request time: 2026-04-05 11:15:19 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_111806
+- Request time: 2026-04-05 11:18:06 BST
 - User instruction: manual deploy
 - Notes: deploy started
 
