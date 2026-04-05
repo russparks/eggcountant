@@ -902,11 +902,21 @@ function HomeContent() {
       <div className="mt-6">
         <RollingLayRateCard />
       </div>
-      <hr className="mt-6 border-0 border-t border-slate-200" />
-      <div className="mt-2 text-center text-[1.5rem] font-bold text-[#6f4bb8]">
-        Facts, Fun, Knowledge...
+      <div
+        className="mt-4 relative flex min-h-[3.75rem] w-full items-center justify-center overflow-hidden p-1"
+        style={{
+          backgroundColor: 'transparent',
+          backgroundImage: `url("/egg/media/icons/ico-egg-divider-faded.png")`,
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'auto 100%',
+        }}
+      >
+        <div className="text-[1.7rem] font-bold text-[#494949] text-center">
+          Divider Text
+        </div>
       </div>
-      <div className="mt-4 grid gap-4">
+      <div className="mt-4 grid gap-4 text-[1.1rem]">
         <PunFactCard mode="pun" text="My flock's project management style? Scrum… and peck." />
         <WikiItemCard
           title="Egg marketing standards"

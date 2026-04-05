@@ -360,6 +360,48 @@ Examples:
 - Context: Russ asked for a straight redeploy of the showcase/app state.
 - Scope: latest current Eggcountant working tree deployed as-is.
 
+## Checkpoint deploy_135800
+- Type: deploy checkpoint
+- Created: 2026-04-05 13:58 BST
+- Context: Russ wanted another FillEffects background demo while also making manual AppShell changes.
+- Scope: `src/components/mockup/ComponentsShowcase.tsx` now includes a new FillEffects card using `ico-egg-divider.png`, and the latest local AppShell state was deployed alongside it.
+
+## Checkpoint deploy_140400
+- Type: deploy checkpoint
+- Created: 2026-04-05 14:04 BST
+- Context: Russ asked for another straight redeploy.
+- Scope: latest current Eggcountant working tree deployed as-is.
+
+## Checkpoint deploy_144900
+- Type: deploy checkpoint
+- Created: 2026-04-05 14:49 BST
+- Context: Russ asked for another straight redeploy later in the afternoon.
+- Scope: latest current Eggcountant working tree deployed as-is.
+
+## Checkpoint deploy_173700
+- Type: deploy checkpoint
+- Created: 2026-04-05 17:37 BST
+- Context: Russ asked for another redeploy later the same day.
+- Scope: latest current Eggcountant working tree deployed as-is.
+
+## Checkpoint deploy_174400
+- Type: deploy checkpoint
+- Created: 2026-04-05 17:44 BST
+- Context: Russ requested another straight redeploy after asking styling questions.
+- Scope: latest current Eggcountant working tree deployed as-is.
+
+## Checkpoint deploy_174700
+- Type: deploy checkpoint
+- Created: 2026-04-05 17:47 BST
+- Context: Russ believed the latest round of manual edits was ready.
+- Scope: latest current Eggcountant working tree deployed as-is.
+
+## Checkpoint deploy_175500
+- Type: deploy checkpoint
+- Created: 2026-04-05 17:55 BST
+- Context: Russ requested yet another redeploy after further changes.
+- Scope: latest current Eggcountant working tree deployed as-is.
+
 ## Checkpoint backup_234024
 - Type: manual backup zip
 - Created: 2026-03-31 23:40 BST

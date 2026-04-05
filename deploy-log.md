@@ -8,6 +8,62 @@ Format:
 - User instruction: `<original edit/deploy request>`
 - Notes: `<what changed / what was deployed / rollback hints>`
 
+## deploy_175500
+- Request time: 2026-04-05 17:55:00 BST
+- User instruction: deploy again
+- Notes: Re-deployed the latest current Eggcountant state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_174700
+- Request time: 2026-04-05 17:47:00 BST
+- User instruction: ok, i think i have it. deploy
+- Notes: Deployed the latest current Eggcountant state after Russ's latest manual edits.
+
+- Result: deployed successfully
+
+
+## deploy_174400
+- Request time: 2026-04-05 17:44:00 BST
+- User instruction: redeploy
+- Notes: Re-deployed the latest current Eggcountant state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_173700
+- Request time: 2026-04-05 17:37:00 BST
+- User instruction: redeploy
+- Notes: Re-deployed the latest current Eggcountant state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_144900
+- Request time: 2026-04-05 14:49:00 BST
+- User instruction: redeploy
+- Notes: Re-deployed the latest current Eggcountant state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_140400
+- Request time: 2026-04-05 14:04:00 BST
+- User instruction: redeploy
+- Notes: Re-deployed the latest current Eggcountant state as requested.
+
+- Result: deployed successfully
+
+
+## deploy_135800
+- Request time: 2026-04-05 13:58:00 BST
+- User instruction: create another filleffect card and make the background the ico-egg-divider.png image, also, i've made edits to the appshell - then deploy
+- Notes: Added another FillEffects demo card in `ComponentsShowcase.tsx` using `ico-egg-divider.png` as the background image, then deployed while preserving Russ's latest manual `AppShellPage.tsx` edits.
+
+- Result: deployed successfully
+
+
 ## deploy_135200
 - Request time: 2026-04-05 13:52:00 BST
 - User instruction: redeploy the showcase page
@@ -3460,6 +3516,62 @@ Format:
 
 ## deploy_135306
 - Request time: 2026-04-05 13:53:06 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_140021
+- Request time: 2026-04-05 14:00:21 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_140507
+- Request time: 2026-04-05 14:05:07 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_144942
+- Request time: 2026-04-05 14:49:42 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_173808
+- Request time: 2026-04-05 17:38:08 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_174456
+- Request time: 2026-04-05 17:44:56 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_174746
+- Request time: 2026-04-05 17:47:46 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_175555
+- Request time: 2026-04-05 17:55:55 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_180024
+- Request time: 2026-04-05 18:00:24 BST
 - User instruction: manual deploy
 - Notes: deploy started
 
