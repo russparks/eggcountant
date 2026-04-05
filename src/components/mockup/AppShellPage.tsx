@@ -5,7 +5,7 @@ import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
 import navIconFlock from '../../../media/nav-icons/lm-flock.png';
 import navIconSales from '../../../media/nav-icons/lm-sales.png';
 import { SURFACE_GRADIENT } from '../../constants';
-import { ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard } from './sharedHomeComponents';
+import { ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard, CalendarCard, CalendarSummarySection, EggToHenFooter } from './sharedHomeComponents';
 
 const surfaceGradient = SURFACE_GRADIENT;
 
@@ -912,7 +912,7 @@ function HomeContent() {
           backgroundSize: 'auto 100%',
         }}
       >
-        <div className="text-[1.7rem] font-bold text-[#494949] text-center">
+        <div className="text-[1.7rem] font-bold text-[#616161] text-center">
           Divider Text
         </div>
       </div>
@@ -931,9 +931,7 @@ function HomeContent() {
           body="Simple reminders for bedding, ventilation, and cleaning rhythms that help keep the flock comfortable and productive."
         />
         <WikiShowMoreCard />
-        <div className="flex items-start justify-center pt-4 px-6">
-          <img src="/egg/media/icons/ico-egg-to-hen.png" alt="Hen Life" className="h-[4.48rem] w-auto object-contain" />
-        </div>
+        <EggToHenFooter />
       </div>
     </div>
   );
@@ -943,7 +941,7 @@ function PlaceholderContent({ title }: { title: string }) {
   return (
     <div className="w-full">
       <h1 className="text-[2.55rem] font-black italic leading-[0.94] tracking-tight text-[#6f4bb8] sm:text-[2.8rem]">
-        {title}
+        {/*title*/}
       </h1>
     </div>
   );
@@ -1018,7 +1016,9 @@ export default function AppShellPage({ title, active }: { title: string; active:
       {activeModal === 'expense' ? <AddExpenseModal onClose={() => setActiveModal('none')} /> : null}
 
       <main className="mx-auto flex min-h-[calc(100vh-11rem)] max-w-6xl items-start px-4 pt-5 pb-40 sm:px-6 lg:px-8">
-        {active === 'home' ? <HomeContent /> : <PlaceholderContent title={title} />}
+        {active === 'home' ? <HomeContent /> : active === 'calendar' ? <div className="w-full">
+
+          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : <PlaceholderContent title={title} />}
       </main>
 
       <BottomNav active={active} menuOpen={bottomNavOpen} setMenuOpen={setBottomNavOpen} closeSettingsNav={() => setSettingsOpen(false)} openChicksModal={() => setActiveModal('chicks')} openEggsModal={() => setActiveModal('eggs')} openMedsModal={() => setActiveModal('meds')} openExpenseModal={() => setActiveModal('expense')} />

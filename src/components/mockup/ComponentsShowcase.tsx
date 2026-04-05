@@ -16,7 +16,7 @@ import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
 import navIconFlock from '../../../media/nav-icons/lm-flock.png';
 import navIconSales from '../../../media/nav-icons/lm-sales.png';
 import { SURFACE_GRADIENT } from '../../constants';
-import { ShellCard, ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard } from './sharedHomeComponents';
+import { ShellCard, ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard, CalendarCard, WeeklySummaryCard } from './sharedHomeComponents';
 
 const surfaceGradient = SURFACE_GRADIENT;
 
@@ -327,21 +327,6 @@ function MetricCard({ title, value, subtitle, tone = 'purple', translucent = fal
       <div className="mt-4 text-sm font-medium text-slate-500">{title}</div>
       <div className="mt-1 text-3xl font-bold tracking-tight text-slate-900">{value}</div>
       <div className="mt-1 text-sm text-slate-500">{subtitle}</div>
-    </ShellCard>
-  );
-}
-
-function WeeklySummaryCard({ trend = '+12%', positive = true, headline = <>Your girls laid <span className="font-bold">94</span> eggs and earned you <span className="font-bold">£13.25</span> in profit!</>, subtext = positive ? 'Willow continues to show egg-stra effort, if she had a hand she\'d deserve a high-five...' : 'Mabel might still claw it back with some egg-streme hustle, if she has it in her...' }: { trend?: string; positive?: boolean; headline?: React.ReactNode; subtext?: React.ReactNode }) {
-  return (
-    <ShellCard className={`overflow-hidden border border-[#d9c9fb] ${surfaceGradient} p-3 text-[#6f4bb8]`}>
-      <div className="relative min-h-[120px]">
-        <div data-component="WeeklySummaryCardTrendPill" className="relative float-right ml-2 mb-2 flex h-[5.4rem] w-[7.5rem] items-center justify-center overflow-hidden rounded-[var(--ui-radius)] bg-white/0 px-3 py-3 text-center shadow-none backdrop-blur-none">
-          <div data-component="WeeklySummaryCardTrendValue" className={`relative text-[1.9rem] font-bold leading-none ${positive ? 'text-emerald-500' : 'text-rose-500'} sm:text-[2.05rem]`}>{trend}</div>
-        </div>
-        <h2 data-component="WeeklySummaryCardHeadline" className="text-[1.6rem] font-normal leading-tight text-[#6f4bb8]">{headline}</h2>
-        <p data-component="WeeklySummaryCardSubtext" className="mt-2 max-w-[42rem] text-[1.215rem] font-medium leading-tight text-[#9E9E9E]">{subtext}</p>
-        <div className="clear-both" />
-      </div>
     </ShellCard>
   );
 }
@@ -1067,147 +1052,6 @@ function ProfitHeroCard() {
           +£13.25
         </div>
       </div>
-    </ShellCard>
-  );
-}
-
-function CalendarCard() {
-  const weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-  const today = new Date();
-  const [displayMonth, setDisplayMonth] = useState(today.getMonth());
-  const [displayYear, setDisplayYear] = useState(today.getFullYear());
-  const [selectedDay, setSelectedDay] = useState(today.getDate());
-  const [activeFilter, setActiveFilter] = useState<'Eggs' | 'Chicks' | 'Sales' | 'Expenses'>('Eggs');
-  const todayMonth = today.getMonth();
-  const todayYear = today.getFullYear();
-
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-  const firstOfMonth = new Date(displayYear, displayMonth, 1);
-  const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
-  const startOffset = (firstOfMonth.getDay() + 6) % 7;
-  const totalSlots = Math.ceil((startOffset + daysInMonth) / 7) * 7;
-  const slots = Array.from({ length: totalSlots }, (_, index) => {
-    const day = index - startOffset + 1;
-    return day > 0 && day <= daysInMonth ? day : null;
-  });
-  const weeks = Array.from({ length: totalSlots / 7 }, (_, weekIndex) => slots.slice(weekIndex * 7, weekIndex * 7 + 7));
-  const fakeMonthData = Array.from({ length: daysInMonth }, (_, index) => {
-    const day = index + 1;
-    if (day > today.getDate()) {
-      return { eggs: 0, chicks: 0, sales: 0, expenses: 0 };
-    }
-    return {
-      eggs: 4 + ((day * 3) % 9),
-      chicks: 1 + (day % 3),
-      sales: Number((8 + ((day * 2.7) % 14)).toFixed(0)),
-      expenses: Number((2 + ((day * 1.9) % 8)).toFixed(0)),
-    };
-  });
-  const selectedMetrics = fakeMonthData[Math.max(0, selectedDay - 1)] || fakeMonthData[today.getDate() - 1] || fakeMonthData[0];
-  const summaryLabel = activeFilter === 'Eggs' ? 'Eggs' : activeFilter === 'Chicks' ? 'Chicks' : activeFilter === 'Sales' ? 'Sales' : 'Expenses';
-
-  return (
-    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
-      <div className="flex items-center justify-between gap-3">
-        <button
-          type="button"
-          className="rounded-[var(--ui-radius)] bg-white/80 px-3 py-2 text-[1rem] font-bold text-[#6f4bb8] shadow-sm"
-          onClick={() => {
-            setDisplayMonth((current) => {
-              if (current === 0) {
-                setDisplayYear((year) => year - 1);
-                return 11;
-              }
-              return current - 1;
-            });
-          }}
-        >&lt;</button>
-        <div className="m-0 text-[1.56rem] font-bold uppercase text-[#6f4bb8]">{monthNames[displayMonth]}</div>
-        <button
-          type="button"
-          className="rounded-[var(--ui-radius)] bg-white/80 px-3 py-2 text-[1rem] font-bold text-[#6f4bb8] shadow-sm"
-          onClick={() => {
-            setDisplayMonth((current) => {
-              if (current === 11) {
-                setDisplayYear((year) => year + 1);
-                return 0;
-              }
-              return current + 1;
-            });
-          }}
-        >&gt;</button>
-      </div>
-
-
-      <div className="mt-4 grid grid-cols-7 gap-2 text-center text-[0.8rem] font-semibold uppercase text-[#c4b2f4]">
-        {weekdays.map((day) => (
-          <div key={day}>{day}</div>
-        ))}
-      </div>
-      <div className="mt-2 space-y-2">
-        {weeks.map((week, weekIndex) => (
-          <div key={weekIndex} className="grid grid-cols-7 gap-2">
-            {week.map((cell, cellIndex) => {
-              if (cell === null) return <div key={cellIndex} className="h-[4.2rem]" />;
-
-              const day = cell;
-              const isToday = displayYear === todayYear && displayMonth === todayMonth && day === today.getDate();
-              const isSelected = day === selectedDay && displayMonth === todayMonth && displayYear === todayYear;
-              const hasEntry = displayMonth === todayMonth && displayYear === todayYear && day <= today.getDate();
-
-              return (
-                <button
-                  key={cellIndex}
-                  type="button"
-                  onClick={() => setSelectedDay(day)}
-                  className={[
-                    'h-[4.2rem] rounded-[var(--ui-radius)] px-2 py-1 flex flex-col items-center transition-colors',
-                    isSelected
-                      ? 'border-2 border-[#6f4bb8] bg-[#6f4bb8] text-white shadow-[0_10px_24px_rgba(124,58,237,0.28)]'
-                      : isToday
-                        ? 'border-2 border-[#876BC2] bg-white text-[#6f4bb8]'
-                        : hasEntry
-                          ? 'border border-[#ece3ff] bg-white/90 text-[#c4b2f4]'
-                          : 'border border-[#ece3ff] bg-white/90 text-[#c4b2f4]',
-                  ].join(' ')}
-                >
-                  <div className={`w-full text-center text-[1.09rem] font-medium leading-none ${isSelected ? 'text-white/90' : isToday ? 'text-[#6f4bb8]' : 'text-[#9E9E9E]'}`}>{day}</div>
-                  <div className="flex flex-1 items-center justify-center">
-                    {hasEntry ? (
-                      <div className={`text-[1.55rem] font-bold leading-none ${isSelected ? 'text-white' : 'text-[#6f4bb8]'}`}>{fakeMonthData[day - 1].eggs}</div>
-                    ) : null}
-                    {isSelected ? <div className="sr-only">Selected</div> : null}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-3 text-center text-[1.6rem] font-black leading-none text-[#6f4bb8]">
-        {selectedDay}{selectedDay % 10 === 1 && selectedDay !== 11 ? 'st' : selectedDay % 10 === 2 && selectedDay !== 12 ? 'nd' : selectedDay % 10 === 3 && selectedDay !== 13 ? 'rd' : 'th'}
-        <span className="ml-2 text-[1.4rem] italic text-[#9E9E9E]">{monthNames[displayMonth]}, {String(displayYear).slice(-2)}</span>
-      </div>
-
-      <hr className="my-4 border-0 border-t border-[#e7ddfb]" />
-
-      <div className="mt-2 grid grid-cols-[15%_35%_15%_35%] gap-0">
-        <div className="rounded-[var(--ui-radius)] bg-transparent px-1 py-2">
-          <img src="/egg/media/icons/ico-fried-egg.png" alt="" className="h-[2.8rem] w-auto object-contain" />
-        </div>
-        <div className="rounded-[var(--ui-radius)] bg-transparent px-6 py-3">
-          <div className="text-[2.4rem] font-bold leading-none text-[#6f4bb8]">{selectedMetrics.eggs}</div>
-        </div>
-        <div className="rounded-[var(--ui-radius)] bg-transparent px-1 py-2">
-          <img src="/egg/media/icons/ico-chick.png" alt="" className="h-[2.8rem] w-auto object-contain" />
-        </div>
-        <div className="rounded-[var(--ui-radius)] bg-transparent px-6 py-3">
-          <div className="text-[2.4rem] font-bold leading-none text-[#6f4bb8]">{selectedMetrics.chicks}</div>
-        </div>
-      </div>
-
     </ShellCard>
   );
 }
@@ -2352,6 +2196,40 @@ export default function ComponentsShowcase() {
           </div>
 
           <div className="grid gap-6">
+            <div><ComponentLabel name="TransparentPlaceholders" /></div>
+            <div className="grid gap-4">
+              <div className="w-full bg-transparent px-4 py-4 text-center">
+                <div className="text-[1.6rem] font-bold leading-tight text-[#6f4bb8]">XX</div>
+                <div className="mt-1 text-[1.215rem] font-medium leading-tight text-[#6f4bb8]">XX</div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="w-full bg-transparent px-4 py-4 text-center">
+                  <div className="text-[1.6rem] font-bold leading-tight text-[#6f4bb8]">XX</div>
+                  <div className="mt-1 text-[1.215rem] font-medium leading-tight text-[#6f4bb8]">XX</div>
+                </div>
+                <div className="w-full bg-transparent px-4 py-4 text-center">
+                  <div className="text-[1.6rem] font-bold leading-tight text-[#6f4bb8]">XX</div>
+                  <div className="mt-1 text-[1.215rem] font-medium leading-tight text-[#6f4bb8]">XX</div>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="w-full bg-transparent px-4 py-4 text-center">
+                  <div className="text-[1.6rem] font-bold leading-tight text-[#6f4bb8]">XX</div>
+                  <div className="mt-1 text-[1.215rem] font-medium leading-tight text-[#6f4bb8]">XX</div>
+                </div>
+                <div className="w-full bg-transparent px-4 py-4 text-center">
+                  <div className="text-[1.6rem] font-bold leading-tight text-[#6f4bb8]">XX</div>
+                  <div className="mt-1 text-[1.215rem] font-medium leading-tight text-[#6f4bb8]">XX</div>
+                </div>
+                <div className="w-full bg-transparent px-4 py-4 text-center">
+                  <div className="text-[1.6rem] font-bold leading-tight text-[#6f4bb8]">XX</div>
+                  <div className="mt-1 text-[1.215rem] font-medium leading-tight text-[#6f4bb8]">XX</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-6">
             <div><ComponentLabel name="FillEffects" /></div>
             <div><div className={`relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-3`}><div className="text-[1rem] font-bold text-[#6f4bb8]">dark-g</div></div></div>
             <div><div className="relative min-h-[3.75rem] w-full overflow-hidden rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)] p-3"><div className="text-[1rem] font-bold text-[#6f4bb8]">light-g</div></div></div>
@@ -2377,7 +2255,7 @@ export default function ComponentsShowcase() {
                 backgroundSize: 'auto 100%',
               }}
             >
-              <div className="text-[2rem] font-bold text-[#494949] text-center">
+              <div className="text-[2rem] text-[#616161] text-center">
                 Divider Text
               </div>
             </div>

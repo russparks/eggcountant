@@ -8,6 +8,14 @@ Format:
 - User instruction: `<original edit/deploy request>`
 - Notes: `<what changed / what was deployed / rollback hints>`
 
+## deploy_180600
+- Request time: 2026-04-05 18:06:00 BST
+- User instruction: ok lets try it, i just made some tweaks to showcase and appshell so d
+- Notes: Shorthand `d` interpreted as deploy. Deployed the latest current Eggcountant state after manual edits to `ComponentsShowcase.tsx` and `AppShellPage.tsx`.
+
+- Result: deployed successfully
+
+
 ## deploy_175500
 - Request time: 2026-04-05 17:55:00 BST
 - User instruction: deploy again
@@ -3577,3 +3585,222 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_180637
+- Request time: 2026-04-05 18:06:37 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_181138
+- Request time: 2026-04-05 18:11:38 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+
+## deploy_183732
+- Time: 2026-04-05T18:37:32.636710
+- Instruction: Move CalendarCard to sharedHomeComponents.tsx, import into AppShell and showcase, then deploy.
+- Status: build ready for deploy
+
+## deploy_184445
+- Time: 2026-04-05T18:44:45.759115
+- Instruction: Deploy egg build to /egg target and stop using /the-eggcountant references.
+- Status: building for /egg deploy
+
+## deploy_185334
+- Time: 2026-04-05T18:53:34.633084
+- Instruction: On /calendar, place two MiniStatCardHalf cards below the calendar and WeeklySummaryCard below them, then deploy to /egg.
+- Status: building for /egg deploy
+
+## deploy_190128
+- Time: 2026-04-05T19:01:28.226259
+- Instruction: Deploy latest AppShell edits to /egg.
+- Status: building for /egg deploy
+
+## deploy_191936
+- Time: 2026-04-05T19:19:36.376312
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_192301
+- Time: 2026-04-05T19:23:01.611030
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_192438
+- Time: 2026-04-05T19:24:38.556160
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_192910
+- Time: 2026-04-05T19:29:10.638548
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_193427
+- Time: 2026-04-05T19:34:27.375967
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_194017
+- Time: 2026-04-05T19:40:17.504033
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_194818
+- Time: 2026-04-05T19:48:18.258174
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_195604
+- Time: 2026-04-05T19:56:04.122967
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_200203
+- Time: 2026-04-05T20:02:03.657816
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_200432
+- Time: 2026-04-05T20:04:32.995790
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_200750
+- Time: 2026-04-05T20:07:50.744731
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_200933
+- Time: 2026-04-05T20:09:33.139135
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_201520
+- Time: 2026-04-05T20:15:20.450691
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_202128
+- Time: 2026-04-05T20:21:28.126645
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_204627
+- Time: 2026-04-05T20:46:27.563656
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_214313
+- Time: 2026-04-05T21:43:13.319847
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_214522
+- Time: 2026-04-05T21:45:22.433356
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_214948
+- Time: 2026-04-05T21:49:48.085292
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_215238
+- Time: 2026-04-05T21:52:38.127906
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_215904
+- Time: 2026-04-05T21:59:04.007327
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_220358
+- Time: 2026-04-05T22:03:58.746579
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_220746
+- Time: 2026-04-05T22:07:46.290079
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_221542
+- Time: 2026-04-05T22:15:42.725865
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_223907
+- Time: 2026-04-05T22:39:07.411525
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_224635
+- Time: 2026-04-05T22:46:35.757977
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_225815
+- Time: 2026-04-05T22:58:15.821187
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_230336
+- Time: 2026-04-05T23:03:36.547492
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_230634
+- Time: 2026-04-05T23:06:34.714747
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_231436
+- Time: 2026-04-05T23:14:36.283611
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_231738
+- Time: 2026-04-05T23:17:38.385690
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_232035
+- Time: 2026-04-05T23:20:35.079779
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_232628
+- Time: 2026-04-05T23:26:28.370937
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_233553
+- Time: 2026-04-05T23:35:53.399239
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_234710
+- Time: 2026-04-05T23:47:10.532647
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_234902
+- Time: 2026-04-05T23:49:02.313361
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_235344
+- Time: 2026-04-05T23:53:44.545399
+- Instruction: Deploy all latest local edits to /egg.
+- Status: building for /egg deploy
+
+## deploy_000143
+- Time: 2026-04-06T00:01:43.390272
+- Instruction: Force deploy latest local changes and media to /egg.
+- Status: force building and redeploying /egg + media
