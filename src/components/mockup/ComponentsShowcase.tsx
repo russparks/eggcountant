@@ -956,7 +956,7 @@ function ChickCard({ count, started, status, progress, daysLeft, hatched, brewin
   const complete = brewingCount === 0;
 
   return (
-    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#e4dafb] ${surfaceGradient} p-5 text-[#6f4bb8] shadow-[0_10px_30px_rgba(47,31,77,0.08)] ${complete ? 'opacity-70' : ''}`}>
+    <ShellCard  className={`border border-[#e4dafb] ${surfaceGradient} p-5 text-[#6f4bb8] shadow-[0_10px_30px_rgba(47,31,77,0.08)] ${complete ? 'opacity-70' : ''}`}>
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-1">
           <img src="/egg/media/icons/ico-egg.png?v=20260404c" alt="" className="h-[3.6rem] w-[3.6rem] object-contain" />
@@ -2135,7 +2135,7 @@ export default function ComponentsShowcase() {
             <CalendarCard />
           </div>
 
-          <div><ComponentLabel name="LocationProgressCard" /><ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
+          <div><ComponentLabel name="LocationProgressCard" /><ShellCard  className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
             <div>
               <div className="m-0 text-[1.2rem] font-bold uppercase text-[#6f4bb8]">It's not a competition...but...</div>
             </div>

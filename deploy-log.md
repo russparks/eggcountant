@@ -3804,3 +3804,77 @@ Format:
 - Time: 2026-04-06T00:01:43.390272
 - Instruction: Force deploy latest local changes and media to /egg.
 - Status: force building and redeploying /egg + media
+
+## deploy_001753
+- Time: 2026-04-06T00:17:53.452273
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_002314
+- Time: 2026-04-06T00:23:14.512480
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_002951
+- Time: 2026-04-06T00:29:51.383480
+- Instruction: Deploy all latest local edits to /egg.
+- Status: building for /egg deploy
+
+## deploy_010308
+- Time: 2026-04-06T01:03:08.345814
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_010710
+- Time: 2026-04-06T01:07:10.037058
+- Instruction: Deploy fix for showcase old chick cards and add image greyscaling.
+- Status: building for /egg deploy
+
+## deploy_011023
+- Time: 2026-04-06T01:10:23.473016
+- Instruction: Fix ChickCard edit button wireup.
+- Status: building for /egg deploy
+
+## deploy_011857
+- Time: 2026-04-06T01:18:57.022915
+- Instruction: Deploy fix for EditChicksModal on Flock page.
+- Status: building for /egg deploy
+
+## deploy_011955
+- Time: 2026-04-06T01:19:55.840035
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_013627
+- Time: 2026-04-06T01:36:27.162316
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_014118
+- Time: 2026-04-06T01:41:18.537136
+- Instruction: Fix missing import of HenCardsSection in showcase.
+- Status: building for /egg deploy
+
+## deploy_014555
+- Time: 2026-04-06T01:45:55.190549
+- Instruction: Deploy latest local changes to /egg.
+- Status: building for /egg deploy
+
+## deploy_015715
+- Time: 2026-04-06T01:57:15.594035
+- Instruction: Deploy fix for EditHenModal.
+- Status: building for /egg deploy
+## deploy_080747
+- Request time: 2026-04-06 08:07:47 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_081102
+- Request time: 2026-04-06 08:11:02 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+

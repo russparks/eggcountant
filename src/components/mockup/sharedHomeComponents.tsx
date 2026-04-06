@@ -96,7 +96,89 @@ export function MiniStatCardHalf({
   );
 }
 
+export function ChickCard({ count, started, status, progress, daysLeft, hatched, brewing, temperature, onEdit, onDelete, coopName = 'Willow House' }: { count: string; started: string; status: string; progress: number; daysLeft: string; hatched: string; brewing: string; temperature: string; onEdit?: () => void; onDelete?: () => void; coopName?: string }) {
+  const totalEggs = Number(count);
+  const hatchedCount = Number(hatched);
+  const brewingCount = Number(brewing);
+  const perishedCount = Math.max(totalEggs - hatchedCount - brewingCount, 0);
+  const complete = brewingCount === 0;
+  const mutedText = complete ? 'text-[#c7bddf]' : 'text-[#6f4bb8]';
+  const mutedMeta = complete ? 'text-[#d6cdea]' : 'text-[#b09bdb]';
+  const mutedSecondary = complete ? 'text-[#cfc6e3]' : 'text-[#9E9E9E]';
+
+  return (
+    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#e4dafb] ${surfaceGradient} p-5 text-[#6f4bb8] shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-1">
+          <img src="/egg/media/icons/ico-egg.png?v=20260404c" alt="" className={`h-[3.6rem] w-[3.6rem] object-contain ${complete ? 'opacity-50 grayscale' : ''}`} />
+          <div className="min-w-0">
+            <div className={`text-[2.76rem] font-black leading-none ${mutedText}`}>{hatchedCount}</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-1">
+          <button type="button" className={`flex items-center justify-center bg-transparent text-[#6f4bb8] disabled:cursor-default ${complete ? 'opacity-35 grayscale' : ''}`} onClick={onEdit} disabled={!onEdit}>
+            <img src="/egg/media/icons/ico-eggclutch-edit.png?v=20260404b" alt="" className="h-[3.6rem] w-auto object-contain" />
+          </button>
+        </div>
+      </div>
+
+      <hr className="mt-2 border-0 border-t border-slate-200" />
+      <div className={`mt-2 grid grid-cols-2 gap-3 text-[1.275rem] ${mutedMeta}`}>
+        <div>{started}</div>
+        <div className={`text-right uppercase ${mutedSecondary}`}>{coopName}</div>
+      </div>
+
+      <div className="mt-2 flex items-center gap-1">
+        <div className={`h-[0.7rem] w-[78%] overflow-hidden rounded-[var(--ui-radius)] ${complete ? 'bg-slate-100' : 'bg-[#eadffd]'}`}>
+          <div className={`h-full rounded-[var(--ui-radius)] ${complete ? 'bg-slate-300' : 'bg-[linear-gradient(90deg,#ddd3fb_0%,#b49cf5_35%,#6f4bb8_68%,#6f4bb8_100%)]'}`} style={{ width: `${progress}%` }} />
+        </div>
+        <div className="ml-auto flex items-center gap-1 text-right">
+          <span className={`text-[1.2rem] font-semibold ${complete ? 'text-[#d6cdea]' : 'text-[#c4b2f4]'}`}>{daysLeft.replace(' days', 'd')}</span>
+        </div>
+      </div>
+
+      <hr className="mt-3 border-0 border-t border-slate-200" />
+
+      <div className={`mt-4 grid grid-cols-3 gap-3 text-[1.74rem] ${mutedText}`}>
+        <div className="flex items-center justify-center gap-2">
+          <img src="/egg/media/icons/ico-chick.png?v=20260404b" alt="" className={`h-[2.6rem] w-[2.6rem] object-contain ${complete ? 'opacity-50 grayscale' : ''}`} />
+          <span className="font-bold">{hatched}</span>
+        </div>
+        <div className="flex items-center justify-center gap-2">
+          <img src="/egg/media/icons/ico-egg.png?v=20260404c" alt="" className={`h-[2.6rem] w-[2.6rem] object-contain ${complete ? 'opacity-50 grayscale' : ''}`} />
+          <span className="font-bold">{brewing}</span>
+        </div>
+        <div className="flex items-center justify-center gap-2">
+          <img src="/egg/media/icons/ico-perishX.png" alt="" className={`h-[2.6rem] w-[2.6rem] object-contain ${complete ? 'opacity-50 grayscale' : ''}`} />
+          <span className="font-bold">{perishedCount}</span>
+        </div>
+      </div>
+    </ShellCard>
+  );
+}
+
+export function ChickCardsSection({ onEditCard, onDeleteCard }: { onEditCard?: () => void; onDeleteCard?: () => void }) {
+  return (
+    <div className="grid gap-4">
+      <ChickCard count="13" started="27 Mar 2026" status="Default" progress={0} daysLeft="21 days" hatched="0" brewing="13" temperature="20.00°C" coopName="" onEdit={onEditCard} onDelete={onDeleteCard} />
+      <ChickCard count="8" started="19 Mar 2026" status="Incubating" progress={88} daysLeft="1 days" hatched="5" brewing="1" temperature="20.50°C" onEdit={onEditCard} onDelete={onDeleteCard} />
+      <ChickCard count="7" started="01 Mar 2026" status="Complete" progress={100} daysLeft="0 days" hatched="4" brewing="0" temperature="19.80°C" onEdit={onEditCard} onDelete={onDeleteCard} />
+    </div>
+  );
+}
+
+export function HenCardsSection({ onEditCard }: { onEditCard?: () => void }) {
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      <HenCard name="Willow" coop="Willow House" eggs="24" note="AGE: 2" medal="/egg/media/icons/gold.png" progress={66} nameColor="#FFCC01" compact profileImage="/egg/media/hens/hen-1.png" profileBadge="gold" onEdit={onEditCard} />
+      <HenCard name="Dotty" coop="Speckled Coop" eggs="19" note="AGE: 1" medal="/egg/media/icons/silver.png" progress={51} nameColor="#999999" compact profileImage="/egg/media/hens/hen-2.png" profileBadge="silver" onEdit={onEditCard} />
+      <HenCard name="Mabel" coop="Back Garden Coop" eggs="16" note="AGE: 3" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#CC6602" compact profileImage="/egg/media/hens/hen-3.png" profileBadge="bronze" onEdit={onEditCard} />
+    </div>
+  );
+}
+
 export function HenCard({
+  onEdit,
   name,
   coop,
   eggs,
@@ -120,6 +202,7 @@ export function HenCard({
   profileImage?: string;
   profileBadge?: 'gold' | 'silver' | 'bronze';
   compactMode?: 'hen' | 'coop';
+  onEdit?: () => void;
 }) {
   if (compact) {
     return (
@@ -150,7 +233,7 @@ export function HenCard({
             <img src={compactMode === 'coop' ? '/egg/media/icons/ico-chick.png' : '/egg/media/icons/ico-egg.png'} alt="" className="h-[1.99rem] w-auto object-contain" />
             <span>x {eggs}</span>
           </div>
-          <img src="/egg/media/icons/ico-edit.png" alt="" className="h-[1.99rem] w-auto object-contain" />
+          <button type="button" onClick={onEdit} className="bg-transparent p-0"><img src="/egg/media/icons/ico-edit.png" alt="" className="h-[1.99rem] w-auto object-contain" /></button>
         </div>
       </ShellCard>
     );

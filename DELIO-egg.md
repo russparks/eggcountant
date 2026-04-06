@@ -560,3 +560,39 @@ Examples:
 
 ## deploy_000143
 - Forced full /egg deploy including media to push refreshed ico-fried-egg asset.
+
+## deploy_001753
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_002314
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_002951
+- Deployed all pending local edits to the /egg target on request.
+
+## deploy_010308
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_010710
+- Fixed Showcase page to use shared ChickCardsSection and added greyscale styling to completed cards.
+
+## deploy_011023
+- Fixed the missing edit/delete actions on ChickCard components that were lost during the shared extraction.
+
+## deploy_011857
+- Extracted EditChicksModal and wired it into AppShellPage so the Flock page chick cards open the correct edit interface instead of Add Chicks.
+
+## deploy_011955
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_013627
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_014118
+- Fixed missing HenCardsSection import in ComponentsShowcase that broke the /components route.
+
+## deploy_014555
+- Deployed latest working tree to the /egg target on request.
+
+## deploy_015715
+- Extracted EditHenModal and successfully wired it into AppShellPage for the Flock tab without breaking the build.
