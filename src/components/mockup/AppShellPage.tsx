@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronUp } from 'lucide-react';
 import navIconHome from '../../../media/nav-icons/lm-home.png';
 import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
 import navIconFlock from '../../../media/nav-icons/lm-flock.png';
 import navIconSales from '../../../media/nav-icons/lm-sales.png';
 import { SURFACE_GRADIENT } from '../../constants';
-import { ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard, CalendarCard, CalendarSummarySection, EggToHenFooter } from './sharedHomeComponents';
+import { ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard, CalendarCard, CalendarSummarySection, EggToHenFooter, ChickCardsSection, HenCardsSection, CoopCardsSection, AddHenModal, AddCoopModal, EditHenModal, EditCoopModal } from './sharedHomeComponents';
+import { AddChicksModal, AddEggsModal, AddMedsModal, AddExpenseModal, PhotoMiniModal, EditChicksModal } from './ComponentsShowcase';
 
 const surfaceGradient = SURFACE_GRADIENT;
 
 type PageKey = 'home' | 'calendar' | 'flock' | 'sales' | 'blank';
-type ModalKey = 'none' | 'account' | 'logout' | 'eggs' | 'chicks' | 'meds' | 'expense';
+type ModalKey = 'none' | 'account' | 'logout' | 'eggs' | 'chicks' | 'hen' | 'coop' | 'editHen' | 'editCoop' | 'meds' | 'expense' | 'editChicks';
 
 function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAccountModal, openLogoutConfirm }: { hidden: boolean; settingsOpen: boolean; setSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>; closeBottomNav: () => void; openAccountModal: () => void; openLogoutConfirm: () => void }) {
   const settingsItems = [
@@ -32,7 +33,7 @@ function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAcc
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <img
             src="/egg/media/icons/henlife-logo-800.png"
-            alt="Eggcountant"
+            alt="Hen Life"
             className="h-[3.6rem] w-auto sm:h-[4.3125rem]"
           />
           <div className="relative">
@@ -356,6 +357,91 @@ function SimpleModal({ title, description, onClose }: { title: string; descripti
         </div>
       </div>
     </div>
+  );
+}
+
+
+export function EditChicksModal({ onClose }: { onClose: () => void }) {
+  const [eggStates, setEggStates] = useState<number[]>([1, 1, 1, 1, 1, 2, 0, 0, 0]);
+  const [editPhotoAdded, setEditPhotoAdded] = useState(true);
+  const [editPhotoMiniModalOpen, setEditPhotoMiniModalOpen] = useState(false);
+  const [editNoteOpen, setEditNoteOpen] = useState(false);
+  const [editNoteAdded, setEditNoteAdded] = useState('Strong shells, one late hatchling, keep an eye on humidity.');
+  const [photoZoom, setPhotoZoom] = useState(1);
+  const [photoOffset, setPhotoOffset] = useState(0);
+
+  return (
+    <>
+      <div className="fixed inset-0 z-[70] flex items-end justify-center bg-[#2b124f]/28 p-2 backdrop-blur-[2px] sm:items-center sm:p-4">
+        <div className={`max-h-[92vh] w-full max-w-[36rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)] p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)] animate-[fadeSlideUp_220ms_ease-out]`}>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Edit Chicks</div>
+            </div>
+            <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={onClose}>×</button>
+          </div>
+
+          <div className="mt-5 space-y-4">
+            <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-4 shadow-sm">
+              <div className="mb-3 text-[1.215rem] font-medium leading-tight text-[#9E9E9E]">Click the Eggs to Update</div>
+              <div className="grid grid-cols-5 gap-3">
+                {eggStates.map((state, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className="flex h-[4.4rem] w-full items-center justify-center bg-transparent p-0 shadow-none"
+                    onClick={() => setEggStates((prev) => prev.map((value, i) => i === index ? (value + 1) % 3 : value))}
+                  >
+                    <img src={state === 1 ? '/egg/media/icons/ico-chick.png?v=20260404b' : state === 2 ? '/egg/media/icons/ico-perishX.png' : '/egg/media/icons/ico-egg.png?v=20260404c'} alt="" className="h-[3.2rem] w-[3.2rem] object-contain" />
+                  </button>
+                ))}
+              </div>
+              <div className="mt-3 flex items-center justify-center gap-4 text-center text-[1.215rem] leading-tight text-[#6f4bb8]">
+                <span><span className="text-[1.458rem] font-bold">{eggStates.filter((v) => v === 1).length}</span> <span className="font-normal">hatched</span></span>
+                <span><span className="text-[1.458rem] font-bold">{eggStates.filter((v) => v === 0).length}</span> <span className="font-normal">brewing</span></span>
+                <span><span className="text-[1.458rem] font-bold">{eggStates.filter((v) => v === 2).length}</span> <span className="font-normal">perished</span></span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 items-start">
+              <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-4 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Photo</div>
+                <div className="mt-3 flex justify-center">
+                  <button type="button" className="flex h-[7.5rem] w-[7.5rem] items-center justify-center rounded-full border border-dashed border-[#d9c9fb] bg-[#f8f5ff] text-center text-[0.95rem] font-semibold text-[#c4b2f4]" onClick={() => setEditPhotoMiniModalOpen(true)}>
+                    {editPhotoAdded ? 'Tap to edit photo' : 'Tap to add photo'}
+                  </button>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setEditNoteOpen(true)}>{editNoteAdded ? 'Edit notes' : 'Notes'}</button>
+                {editNoteAdded ? (
+                  <div className="w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[0.98rem] text-[#c4b2f4] shadow-sm">{editNoteAdded}</div>
+                ) : null}
+              </div>
+            </div>
+
+            {editNoteOpen ? (
+              <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Notes</div>
+                <textarea value={editNoteAdded} onChange={(e) => setEditNoteAdded(e.target.value)} placeholder="Type notes..." rows={3} className="mt-2 min-h-[3.5rem] w-full resize-none overflow-hidden bg-transparent text-[1rem] text-[#6f4bb8] outline-none" />
+                <div className="mt-3 flex justify-end gap-2">
+                  <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setEditNoteOpen(false)}>Done</button>
+                </div>
+              </div>
+            ) : null}
+
+            <div className="grid grid-cols-2 gap-3">
+              <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#f7c6d1] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#d14d6f] shadow-sm" onClick={onClose}>Remove Clutch</button>
+
+              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={onClose}>Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {editPhotoMiniModalOpen ? (
+        <PhotoMiniModal title="Edit photo" circle onClose={() => setEditPhotoMiniModalOpen(false)} onSave={() => { setEditPhotoAdded(true); setEditPhotoMiniModalOpen(false); }} photoZoom={photoZoom} setPhotoZoom={setPhotoZoom} photoOffset={photoOffset} setPhotoOffset={setPhotoOffset} previewLabel="Photo preview" />
+      ) : null}
+    </>
   );
 }
 
@@ -937,6 +1023,81 @@ function HomeContent() {
   );
 }
 
+function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard, onEditCoopCard, onAddChickCard, onAddHenCard, onAddCoopCard }: { onEditChickCard: () => void; onDeleteChickCard: () => void; onEditHenCard: () => void; onEditCoopCard: () => void; onAddChickCard: () => void; onAddHenCard: () => void; onAddCoopCard: () => void }) {
+  const [activeTab, setActiveTab] = useState<'chicks' | 'hens' | 'coops'>('chicks');
+
+  return (
+    <div className="w-full">
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={() => setActiveTab('chicks')}
+          className={`flex-[3] flex flex-col items-center justify-center gap-0 rounded-[var(--ui-radius)] px-3 py-2 text-center text-[2rem] font-semibold shadow-sm ${activeTab === 'chicks' ? 'bg-[#c4b2f4] text-white' : 'border border-[#d9c9fb] bg-white text-[#c4b2f4]'}`}
+        >
+
+          <img src="/egg/media/icons/ico-chick.png" alt="" className={`h-[3.4rem] w-auto object-contain`} />
+          <span></span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('hens')}
+          className={`flex-[3] flex flex-col items-center justify-center gap-0 rounded-[var(--ui-radius)] px-3 py-2 text-center text-[2rem]  font-semibold shadow-sm ${activeTab === 'hens' ? 'bg-[#c4b2f4] text-white' : 'border border-[#d9c9fb] bg-white text-[#c4b2f4]'}`}
+        >
+
+          <img src="/egg/media/icons/ico-hen.png" alt="" className={`h-[3.4rem] w-auto object-contain`} />
+          <span></span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('coops')}
+          className={`flex-[3] flex flex-col items-center justify-center gap-0 rounded-[var(--ui-radius)] px-3 py-2 text-center text-[2rem] font-semibold shadow-sm ${activeTab === 'coops' ? 'bg-[#c4b2f4] text-white' : 'border border-[#d9c9fb] bg-white text-[#c4b2f4]'}`}
+        >
+
+          <img src="/egg/media/icons/ico-coop.png" alt="" className={`h-[3.4rem] w-auto object-contain`} />
+          <span></span>
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            if (activeTab === 'chicks') onAddChickCard();
+            if (activeTab === 'hens') onAddHenCard();
+            if (activeTab === 'coops') onAddCoopCard();
+          }}
+          className={`flex-[1] flex flex-col items-center justify-center gap-0 rounded-[var(--ui-radius)] px-3 py-2 text-center text-[2rem] font-semibold `}
+        >
+
+          <img src="/egg/media/icons/ico-plus.png" alt="" className={`h-[3rem] w-auto object-contain`} />
+          <span></span>
+        </button>
+        {/*<button
+          type="button"
+          className="flex-[1] rounded-[var(--ui-radius)] bg-[#6f4bb8] px-2 py-3 text-center text-[1rem] font-semibold text-white shadow-sm"
+        >
+          +
+        </button>*/}
+      </div>
+
+      <hr className="mt-4 border-0 border-t border-[#e7ddfb]" />
+
+      <div className="mt-4">
+        <div className={activeTab === 'chicks' ? 'block' : 'hidden'}>
+          <ChickCardsSection onEditCard={onEditChickCard} onDeleteCard={onDeleteChickCard} />
+        </div>
+        <div className={activeTab === 'hens' ? 'block' : 'hidden'}>
+          <HenCardsSection onEditCard={onEditHenCard} />
+        </div>
+        <div className={activeTab === 'coops' ? 'block' : 'hidden'}>
+          <CoopCardsSection onEditCard={onEditCoopCard} />
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <EggToHenFooter />
+      </div>
+    </div>
+  );
+}
+
 function PlaceholderContent({ title }: { title: string }) {
   return (
     <div className="w-full">
@@ -1012,13 +1173,18 @@ export default function AppShellPage({ title, active }: { title: string; active:
       {activeModal === 'logout' ? <ConfirmModal title="Log out?" description="Are you sure you want to log out of your account?" confirmLabel="Log out" onClose={() => setActiveModal('none')} onConfirm={() => setActiveModal('none')} /> : null}
       {activeModal === 'eggs' ? <AddEggsModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'chicks' ? <AddChicksModal onClose={() => setActiveModal('none')} /> : null}
+      {activeModal === 'hen' ? <AddHenModal onClose={() => setActiveModal('none')} /> : null}
+      {activeModal === 'coop' ? <AddCoopModal onClose={() => setActiveModal('none')} /> : null}
+      {activeModal === 'editHen' ? <EditHenModal onClose={() => setActiveModal('none')} /> : null}
+      {activeModal === 'editCoop' ? <EditCoopModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'meds' ? <AddMedsModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'expense' ? <AddExpenseModal onClose={() => setActiveModal('none')} /> : null}
+      {activeModal === 'editChicks' ? <EditChicksModal onClose={() => setActiveModal('none')} /> : null}
 
       <main className="mx-auto flex min-h-[calc(100vh-11rem)] max-w-6xl items-start px-4 pt-5 pb-40 sm:px-6 lg:px-8">
         {active === 'home' ? <HomeContent /> : active === 'calendar' ? <div className="w-full">
 
-          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : <PlaceholderContent title={title} />}
+          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : active === 'flock' ? <FlockContent onEditChickCard={() => setActiveModal('editChicks')} onDeleteChickCard={() => { }} onEditHenCard={() => setActiveModal('editHen')} onEditCoopCard={() => setActiveModal('editCoop')} onAddChickCard={() => setActiveModal('chicks')} onAddHenCard={() => setActiveModal('hen')} onAddCoopCard={() => setActiveModal('coop')} /> : <PlaceholderContent title={title} />}
       </main>
 
       <BottomNav active={active} menuOpen={bottomNavOpen} setMenuOpen={setBottomNavOpen} closeSettingsNav={() => setSettingsOpen(false)} openChicksModal={() => setActiveModal('chicks')} openEggsModal={() => setActiveModal('eggs')} openMedsModal={() => setActiveModal('meds')} openExpenseModal={() => setActiveModal('expense')} />
