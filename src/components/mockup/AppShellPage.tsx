@@ -1098,6 +1098,146 @@ function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard, onEdi
   );
 }
 
+function SalesContent() {
+  const typeFilters = ['All', 'Eggs', 'Chicks', 'Chicken', 'Feed', 'Equipment', 'Expenses'];
+  const dateFilters = ['1W', '2W', '1M', 'Custom'];
+  const statusFilters = ['All', 'Paid', 'Due', 'Overdue'];
+  const [activeTypeFilter, setActiveTypeFilter] = useState('All');
+  const [activeDateFilter, setActiveDateFilter] = useState('1M');
+  const [activeStatusFilter, setActiveStatusFilter] = useState('All');
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 20;
+
+  const records = [
+    { date: '06 Apr 2026', type: 'Eggs', item: 'Mixed dozen', party: 'Farm Gate', qty: '12', total: 4.8, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
+    { date: '05 Apr 2026', type: 'Chicks', item: 'Lavender chicks', party: 'J. Porter', qty: '4', total: 22, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-chick.png' },
+    { date: '04 Apr 2026', type: 'Feed', item: 'Half bag layers pellets', party: 'Neighbour', qty: '1', total: 6.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '03 Apr 2026', type: 'Eggs', item: 'Tray of 30', party: 'Market stall', qty: '30', total: 10.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
+    { date: '02 Apr 2026', type: 'Chicken', item: 'Point-of-lay pullet', party: 'A. Green', qty: '1', total: 18, status: 'Due', direction: 'sale', icon: '/egg/media/icons/ico-hen.png' },
+    { date: '01 Apr 2026', type: 'Equipment', item: 'Spare drinker', party: 'Allotment mate', qty: '1', total: 7, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '31 Mar 2026', type: 'Eggs', item: '6 white eggs', party: 'Honesty box', qty: '6', total: 2.2, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
+    { date: '30 Mar 2026', type: 'Expenses', item: 'Wood shavings bale', party: 'Country Store', qty: '2', total: -13.8, status: 'Paid', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '29 Mar 2026', type: 'Expenses', item: 'Fence repair staples', party: 'Tool Shed', qty: '1', total: -8.45, status: 'Paid', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '28 Mar 2026', type: 'Expenses', item: 'Mineral grit tub', party: 'Feed Merchant', qty: '1', total: -6.95, status: 'Due', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '27 Mar 2026', type: 'Expenses', item: 'Nest box liner pack', party: 'Village shop', qty: '2', total: -9.5, status: 'Overdue', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '26 Mar 2026', type: 'Expenses', item: 'Disinfectant refill', party: 'Agri Supplies', qty: '1', total: -11.2, status: 'Paid', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '25 Mar 2026', type: 'Eggs', item: 'Brown dozen', party: 'Bakery lane', qty: '12', total: 4.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
+    { date: '24 Mar 2026', type: 'Chicken', item: 'Rescue hen adoption', party: 'L. Marsh', qty: '1', total: 16, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-hen.png' },
+    { date: '23 Mar 2026', type: 'Chicks', item: 'Barn mix chicks', party: 'School visit', qty: '6', total: 24, status: 'Due', direction: 'sale', icon: '/egg/media/icons/ico-chick.png' },
+    { date: '22 Mar 2026', type: 'Equipment', item: 'Spare feeder', party: 'P. Vale', qty: '1', total: 8.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '21 Mar 2026', type: 'Expenses', item: 'Wheelbarrow repair bolts', party: 'Fixings Direct', qty: '1', total: -5.2, status: 'Paid', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '20 Mar 2026', type: 'Eggs', item: 'Cafe breakfast tray', party: 'Oak Cafe', qty: '24', total: 8.8, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
+    { date: '19 Mar 2026', type: 'Feed', item: 'Scratch grain split', party: 'R. Moss', qty: '1', total: 5.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '18 Mar 2026', type: 'Expenses', item: 'Red mite powder', party: 'Farm Chem', qty: '1', total: -14.1, status: 'Overdue', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '17 Mar 2026', type: 'Eggs', item: 'Honesty shelf refill', party: 'Village shelf', qty: '18', total: 6.3, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
+    { date: '16 Mar 2026', type: 'Chicken', item: 'Trio reservation', party: 'D. Kent', qty: '3', total: 42, status: 'Due', direction: 'sale', icon: '/egg/media/icons/ico-hen.png' },
+    { date: '15 Mar 2026', type: 'Expenses', item: 'Brooder bulb', party: 'Agri Supplies', qty: '2', total: -12.6, status: 'Paid', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '14 Mar 2026', type: 'Chicks', item: 'Cream legbar chicks', party: 'T. Ellis', qty: '5', total: 27.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-chick.png' },
+    { date: '13 Mar 2026', type: 'Equipment', item: 'Used crate bundle', party: 'Yard sale', qty: '3', total: 15, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '12 Mar 2026', type: 'Expenses', item: 'Coop latch set', party: 'Ironmongers', qty: '1', total: -7.9, status: 'Due', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
+    { date: '11 Mar 2026', type: 'Eggs', item: 'Family pack', party: 'N. Clarke', qty: '15', total: 5.4, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
+  ];
+
+  const filteredRecords = records.filter((record) => {
+    const typeMatch = activeTypeFilter === 'All' ? true : record.type === activeTypeFilter;
+    const statusMatch = activeStatusFilter === 'All' ? true : record.status === activeStatusFilter;
+    return typeMatch && statusMatch;
+  });
+
+  const totalPages = Math.max(1, Math.ceil(filteredRecords.length / recordsPerPage));
+  const pagedRecords = filteredRecords.slice((currentPage - 1) * recordsPerPage, currentPage * recordsPerPage);
+  const allTimeNet = records.reduce((sum, record) => sum + record.total, 0);
+
+  return (
+    <div className="w-full">
+      <div className="flex items-stretch gap-3">
+        <div className="flex-1 rounded-[1.25rem] bg-[#8f78c8] px-4 py-4 text-white shadow-[0_10px_24px_rgba(47,31,77,0.12)]">
+          <div className="text-[0.82rem] font-bold uppercase tracking-[0.18em] text-white/70">All time</div>
+          <div className="mt-2 text-[2rem] font-black leading-none">£{allTimeNet.toFixed(2)}</div>
+        </div>
+        <button type="button" className="flex-1 rounded-[1.25rem] bg-[#6f4bb8] px-4 py-4 text-left text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] transition hover:bg-[#603ca8]">
+          <div className="text-[1.45rem] font-black leading-none">New Sale</div>
+        </button>
+      </div>
+
+      <div className="mt-5 grid grid-cols-3 gap-3">
+        <label className="rounded-[1rem] border border-[#ddd1fa] bg-white px-4 py-3 shadow-sm">
+          <div className="text-[0.76rem] font-bold uppercase tracking-[0.16em] text-[#9c8abf]">Type</div>
+          <select value={activeTypeFilter} onChange={(e) => { setActiveTypeFilter(e.target.value); setCurrentPage(1); }} className="mt-2 w-full bg-transparent text-[1.02rem] font-semibold text-[#6f4bb8] outline-none">
+            {typeFilters.map((filter) => <option key={filter}>{filter}</option>)}
+          </select>
+        </label>
+        <label className="rounded-[1rem] border border-[#ddd1fa] bg-white px-4 py-3 shadow-sm">
+          <div className="text-[0.76rem] font-bold uppercase tracking-[0.16em] text-[#9c8abf]">Date</div>
+          <select value={activeDateFilter} onChange={(e) => setActiveDateFilter(e.target.value)} className="mt-2 w-full bg-transparent text-[1.02rem] font-semibold text-[#6f4bb8] outline-none">
+            {dateFilters.map((filter) => <option key={filter}>{filter}</option>)}
+          </select>
+        </label>
+        <label className="rounded-[1rem] border border-[#ddd1fa] bg-white px-4 py-3 shadow-sm">
+          <div className="text-[0.76rem] font-bold uppercase tracking-[0.16em] text-[#9c8abf]">Status</div>
+          <select value={activeStatusFilter} onChange={(e) => { setActiveStatusFilter(e.target.value); setCurrentPage(1); }} className="mt-2 w-full bg-transparent text-[1.02rem] font-semibold text-[#6f4bb8] outline-none">
+            {statusFilters.map((filter) => <option key={filter}>{filter}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <hr className="mt-5 border-0 border-t border-[#e7ddfb]" />
+
+      <div className="mt-5 overflow-hidden rounded-[1.4rem] border border-[#e7ddfb] bg-white/90 shadow-[0_10px_24px_rgba(47,31,77,0.06)]">
+        <div className="hidden grid-cols-[1fr_0.95fr_1.8fr_1.1fr_0.55fr_0.8fr_0.8fr] gap-3 border-b border-[#eee6ff] bg-[#f8f4ff] px-4 py-3 text-[0.9rem] font-bold uppercase tracking-[0.12em] text-[#9c8abf] sm:grid">
+          <div>Date</div>
+          <div>Type</div>
+          <div>Record</div>
+          <div>Contact</div>
+          <div>Qty</div>
+          <div>Value</div>
+          <div>Status</div>
+        </div>
+
+        <div className="divide-y divide-[#f0e8ff]">
+          {pagedRecords.map((record, index) => (
+            <div key={`${record.date}-${record.item}-${index}`} className="px-4 py-4 sm:grid sm:grid-cols-[1fr_0.95fr_1.8fr_1.1fr_0.55fr_0.8fr_0.8fr] sm:items-center sm:gap-3 sm:px-4 sm:py-4">
+              <div className="flex items-start justify-between gap-3 sm:block">
+                <div className="flex items-start gap-3">
+                  <img src={record.icon} alt="" className="h-[2rem] w-[2rem] object-contain sm:hidden" />
+                  <div>
+                    <div className="text-[1.14rem] font-bold text-[#6f4bb8] sm:hidden">{record.item}</div>
+                    <div className="mt-1 text-[1rem] text-[#9c8abf] sm:hidden">{record.date} · {record.party}</div>
+                  </div>
+                </div>
+                <div className={`rounded-full px-3 py-1 text-[0.82rem] font-bold uppercase tracking-[0.12em] sm:hidden ${record.status === 'Paid' ? 'bg-[#e9f8ef] text-[#2c8b57]' : record.status === 'Due' ? 'bg-[#fff1df] text-[#bf7a1a]' : 'bg-[#ffe3e3] text-[#c05454]'}`}>{record.status}</div>
+              </div>
+
+              <div className="mt-3 hidden text-[1rem] font-semibold text-[#7c68a7] sm:block">{record.date}</div>
+              <div className="mt-3 inline-flex rounded-full bg-[#f3edff] px-3 py-1 text-[0.96rem] font-bold text-[#6f4bb8] sm:mt-0 sm:bg-transparent sm:px-0 sm:py-0 sm:text-[1rem]">{record.type}</div>
+              <div className="mt-3 hidden items-center gap-3 sm:flex">
+                <img src={record.icon} alt="" className="h-[2rem] w-[2rem] object-contain" />
+                <span className="text-[1.08rem] font-bold text-[#6f4bb8]">{record.item}</span>
+              </div>
+              <div className="mt-3 text-[1rem] text-[#8f7db8] sm:mt-0">{record.party}</div>
+              <div className="mt-3 text-[1rem] font-semibold text-[#6f4bb8] sm:mt-0">x{record.qty}</div>
+              <div className={`mt-3 text-[1.14rem] font-black sm:mt-0 ${record.direction === 'expense' ? 'text-[#c05454]' : 'text-[#6f4bb8]'}`}>{record.total < 0 ? `-£${Math.abs(record.total).toFixed(2)}` : `£${record.total.toFixed(2)}`}</div>
+              <div className="mt-3 hidden sm:block">
+                <span className={`rounded-full px-3 py-1 text-[0.8rem] font-bold uppercase tracking-[0.12em] ${record.status === 'Paid' ? 'bg-[#e9f8ef] text-[#2c8b57]' : record.status === 'Due' ? 'bg-[#fff1df] text-[#bf7a1a]' : 'bg-[#ffe3e3] text-[#c05454]'}`}>{record.status}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {filteredRecords.length > recordsPerPage ? (
+        <div className="mt-4 flex items-center justify-between gap-3 rounded-[1rem] border border-[#e7ddfb] bg-white px-4 py-3 shadow-sm">
+          <div className="text-[0.96rem] font-semibold text-[#8f7db8]">Page {currentPage} of {totalPages}</div>
+          <div className="flex gap-2">
+            <button type="button" onClick={() => setCurrentPage((page) => Math.max(1, page - 1))} disabled={currentPage === 1} className="min-h-[44px] rounded-full border border-[#ddd1fa] bg-white px-4 py-2 text-[0.95rem] font-semibold text-[#6f4bb8] disabled:opacity-40">Prev</button>
+            <button type="button" onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))} disabled={currentPage === totalPages} className="min-h-[44px] rounded-full bg-[#6f4bb8] px-4 py-2 text-[0.95rem] font-semibold text-white disabled:opacity-40">Next</button>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function PlaceholderContent({ title }: { title: string }) {
   return (
     <div className="w-full">
@@ -1184,7 +1324,7 @@ export default function AppShellPage({ title, active }: { title: string; active:
       <main className="mx-auto flex min-h-[calc(100vh-11rem)] max-w-6xl items-start px-4 pt-5 pb-40 sm:px-6 lg:px-8">
         {active === 'home' ? <HomeContent /> : active === 'calendar' ? <div className="w-full">
 
-          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : active === 'flock' ? <FlockContent onEditChickCard={() => setActiveModal('editChicks')} onDeleteChickCard={() => { }} onEditHenCard={() => setActiveModal('editHen')} onEditCoopCard={() => setActiveModal('editCoop')} onAddChickCard={() => setActiveModal('chicks')} onAddHenCard={() => setActiveModal('hen')} onAddCoopCard={() => setActiveModal('coop')} /> : <PlaceholderContent title={title} />}
+          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : active === 'flock' ? <FlockContent onEditChickCard={() => setActiveModal('editChicks')} onDeleteChickCard={() => { }} onEditHenCard={() => setActiveModal('editHen')} onEditCoopCard={() => setActiveModal('editCoop')} onAddChickCard={() => setActiveModal('chicks')} onAddHenCard={() => setActiveModal('hen')} onAddCoopCard={() => setActiveModal('coop')} /> : active === 'sales' ? <SalesContent /> : <PlaceholderContent title={title} />}
       </main>
 
       <BottomNav active={active} menuOpen={bottomNavOpen} setMenuOpen={setBottomNavOpen} closeSettingsNav={() => setSettingsOpen(false)} openChicksModal={() => setActiveModal('chicks')} openEggsModal={() => setActiveModal('eggs')} openMedsModal={() => setActiveModal('meds')} openExpenseModal={() => setActiveModal('expense')} />
