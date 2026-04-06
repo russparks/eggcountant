@@ -102,17 +102,17 @@ export function ChickCard({ count, started, status, progress, daysLeft, hatched,
   const brewingCount = Number(brewing);
   const perishedCount = Math.max(totalEggs - hatchedCount - brewingCount, 0);
   const complete = brewingCount === 0;
-  const mutedText = complete ? 'text-[#c7bddf]' : 'text-[#6f4bb8]';
+  const mutedText = complete ? 'text-[#c7bddf]' : 'text-[#616161]';
   const mutedMeta = complete ? 'text-[#d6cdea]' : 'text-[#b09bdb]';
   const mutedSecondary = complete ? 'text-[#cfc6e3]' : 'text-[#9E9E9E]';
 
   return (
-    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#e4dafb] ${surfaceGradient} p-5 text-[#6f4bb8] shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
+    <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#A58DD9_100%)]" className={`border border-[#b2aacb] ${surfaceGradient} p-5 text-[#6f4bb8] shadow-[0_10px_30px_rgba(47,31,77,0.08)]`}>
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-1">
-          <img src="/egg/media/icons/ico-egg.png?v=20260404c" alt="" className={`h-[3.6rem] w-[3.6rem] object-contain ${complete ? 'opacity-50 grayscale' : ''}`} />
+          <img src="/egg/media/icons/ico-egg-narrow.png?" alt="" className={`h-[3.2rem] w-auto object-contain ${complete ? 'opacity-50 grayscale' : ''}`} />
           <div className="min-w-0">
-            <div className={`text-[2.76rem] font-black leading-none ${mutedText}`}>{hatchedCount}</div>
+            <div className={`px-2 text-[2.76rem] font-semibold leading-none ${complete ? 'text-[#c7bddf]' : 'text-[#6f4bb8]'}`}>{hatchedCount}</div>
           </div>
         </div>
         <div className="flex items-center gap-1">
@@ -123,7 +123,7 @@ export function ChickCard({ count, started, status, progress, daysLeft, hatched,
       </div>
 
       <hr className="mt-2 border-0 border-t border-slate-200" />
-      <div className={`mt-2 grid grid-cols-2 gap-3 text-[1.275rem] ${mutedMeta}`}>
+      <div className={`mt-1 grid grid-cols-2 gap-3 text-[1.275rem] ${mutedMeta}`}>
         <div>{started}</div>
         <div className={`text-right uppercase ${mutedSecondary}`}>{coopName}</div>
       </div>
@@ -133,19 +133,19 @@ export function ChickCard({ count, started, status, progress, daysLeft, hatched,
           <div className={`h-full rounded-[var(--ui-radius)] ${complete ? 'bg-slate-300' : 'bg-[linear-gradient(90deg,#ddd3fb_0%,#b49cf5_35%,#6f4bb8_68%,#6f4bb8_100%)]'}`} style={{ width: `${progress}%` }} />
         </div>
         <div className="ml-auto flex items-center gap-1 text-right">
-          <span className={`text-[1.2rem] font-semibold ${complete ? 'text-[#d6cdea]' : 'text-[#c4b2f4]'}`}>{daysLeft.replace(' days', 'd')}</span>
+          <span className={`text-[1.2rem] font-semibold ${complete ? 'text-[#c4b2f4]' : 'text-[#616161]'}`}>{daysLeft.replace(' days', 'd')}</span>
         </div>
       </div>
 
       <hr className="mt-3 border-0 border-t border-slate-200" />
 
       <div className={`mt-4 grid grid-cols-3 gap-3 text-[1.74rem] ${mutedText}`}>
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-2 bg-white">
           <img src="/egg/media/icons/ico-chick.png?v=20260404b" alt="" className={`h-[2.6rem] w-[2.6rem] object-contain ${complete ? 'opacity-50 grayscale' : ''}`} />
           <span className="font-bold">{hatched}</span>
         </div>
         <div className="flex items-center justify-center gap-2">
-          <img src="/egg/media/icons/ico-egg.png?v=20260404c" alt="" className={`h-[2.6rem] w-[2.6rem] object-contain ${complete ? 'opacity-50 grayscale' : ''}`} />
+          <img src="/egg/media/icons/ico-egg.png?v=20260404c" alt="" className={`h-[2.5rem] w-[2.5rem] object-contain ${complete ? 'opacity-50 grayscale' : ''}`} />
           <span className="font-bold">{brewing}</span>
         </div>
         <div className="flex items-center justify-center gap-2">
@@ -160,8 +160,8 @@ export function ChickCard({ count, started, status, progress, daysLeft, hatched,
 export function ChickCardsSection({ onEditCard, onDeleteCard }: { onEditCard?: () => void; onDeleteCard?: () => void }) {
   return (
     <div className="grid gap-4">
-      <ChickCard count="13" started="27 Mar 2026" status="Default" progress={0} daysLeft="21 days" hatched="0" brewing="13" temperature="20.00°C" coopName="" onEdit={onEditCard} onDelete={onDeleteCard} />
-      <ChickCard count="8" started="19 Mar 2026" status="Incubating" progress={88} daysLeft="1 days" hatched="5" brewing="1" temperature="20.50°C" onEdit={onEditCard} onDelete={onDeleteCard} />
+      <ChickCard count="13" started="27 Mar 2026" status="Incubating" progress={26} daysLeft="12 days" hatched="13" brewing="13" temperature="20.00°C" coopName="EGGSTEIN ISLAND" onEdit={onEditCard} onDelete={onDeleteCard} />
+      <ChickCard count="8" started="19 Mar 2026" status="Incubating" progress={88} daysLeft="3 days" hatched="8" brewing="1" temperature="20.50°C" onEdit={onEditCard} onDelete={onDeleteCard} />
       <ChickCard count="7" started="01 Mar 2026" status="Complete" progress={100} daysLeft="0 days" hatched="4" brewing="0" temperature="19.80°C" onEdit={onEditCard} onDelete={onDeleteCard} />
     </div>
   );
@@ -177,12 +177,12 @@ export function HenCardsSection({ onEditCard }: { onEditCard?: () => void }) {
   );
 }
 
-export function CoopCardsSection() {
+export function CoopCardsSection({ onEditCard }: { onEditCard?: () => void }) {
   return (
     <div className="grid grid-cols-2 gap-4">
-      <HenCard name="Willow House" coop="Willow House" eggs="38" note="North Field" medal="/egg/media/icons/gold.png" progress={66} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-1.png" profileBadge="gold" />
-      <HenCard name="Speckled Coop" coop="Speckled Coop" eggs="24" note="Back Orchard" medal="/egg/media/icons/silver.png" progress={51} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-2.png" profileBadge="silver" />
-      <HenCard name="Garden Roost" coop="Garden Roost" eggs="31" note="South Run" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-3.png" profileBadge="bronze" />
+      <HenCard name="Willow House" coop="Willow House" eggs="38" note="North Field" medal="/egg/media/icons/gold.png" progress={66} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-1.png" profileBadge="gold" onEdit={onEditCard} />
+      <HenCard name="Speckled Coop" coop="Speckled Coop" eggs="24" note="Back Orchard" medal="/egg/media/icons/silver.png" progress={51} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-2.png" profileBadge="silver" onEdit={onEditCard} />
+      <HenCard name="Garden Roost" coop="Garden Roost" eggs="31" note="South Run" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-3.png" profileBadge="bronze" onEdit={onEditCard} />
     </div>
   );
 }
@@ -327,6 +327,194 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
       </div>
 
       <HenBreedPicker open={breedModalOpen} onClose={() => setBreedModalOpen(false)} selectedBreed={selectedBreed} setSelectedBreed={setSelectedBreed} otherBreed={otherBreed} setOtherBreed={setOtherBreed} />
+    </>
+  );
+}
+
+export function AddCoopModal({ onClose }: { onClose: () => void }) {
+  const [addCoopName, setAddCoopName] = useState('');
+  const [addCoopLocation, setAddCoopLocation] = useState('Home');
+  const [addCoopPhotoAdded, setAddCoopPhotoAdded] = useState(false);
+  const [addCoopPhotoMiniModalOpen, setAddCoopPhotoMiniModalOpen] = useState(false);
+  const [addCoopNotesOpen, setAddCoopNotesOpen] = useState(false);
+  const [addCoopNotes, setAddCoopNotes] = useState('');
+  const [addCoopPhotoZoom, setAddCoopPhotoZoom] = useState(1);
+  const [addCoopPhotoOffset, setAddCoopPhotoOffset] = useState(0);
+
+  return (
+    <>
+      <div className="fixed inset-0 z-[74] flex items-end justify-center bg-[#2b124f]/28 p-2 backdrop-blur-[2px] sm:items-center sm:p-4">
+        <div className={`max-h-[92vh] w-full max-w-[36rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)] animate-[fadeSlideUp_220ms_ease-out]`}>
+          <div className="flex items-start justify-between gap-4">
+            <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Add Coop</div>
+            <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={onClose}>×</button>
+          </div>
+
+          <div className="mt-4 space-y-4">
+            <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm block">
+              <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Name</div>
+              <input type="text" value={addCoopName} onChange={(e) => setAddCoopName(e.target.value)} placeholder="Eggstein Island" className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
+            </label>
+
+            <div className="grid grid-cols-[1fr_auto] gap-3">
+              <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Location</div>
+                <select value={addCoopLocation} onChange={(e) => setAddCoopLocation(e.target.value)} className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none">
+                  <option>Home</option>
+                  <option>Allotment</option>
+                  <option>Other</option>
+                </select>
+              </label>
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setAddCoopNotesOpen((v) => !v)}>{addCoopNotes ? 'Edit notes' : 'Notes'}</button>
+            </div>
+
+            <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-[1rem] font-semibold text-[#6f4bb8]">{addCoopPhotoAdded ? 'Current photo' : 'No photo added yet'}</div>
+                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-4 py-3 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setAddCoopPhotoMiniModalOpen(true)}>{addCoopPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
+              </div>
+              {addCoopPhotoAdded ? <div className="mt-3 flex justify-center"><img src="/egg/media/coops/coop-1.png" alt="Coop" className="h-[8rem] w-full rounded-[1rem] border border-[#e7ddfb] object-cover" /></div> : null}
+            </div>
+
+            {addCoopNotesOpen ? (
+              <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Notes</div>
+                <textarea value={addCoopNotes} onChange={(e) => setAddCoopNotes(e.target.value)} placeholder="Type notes..." className="mt-2 min-h-[6rem] w-full resize-none bg-transparent text-[1rem] text-[#6f4bb8] outline-none" />
+              </div>
+            ) : null}
+
+            <div className="grid grid-cols-2 gap-3">
+              <button type="button" onClick={onClose} className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#6f4bb8] shadow-sm">Cancel</button>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {addCoopPhotoMiniModalOpen ? (
+        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
+            <div className="flex items-start justify-between gap-4">
+              <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Photograph coop</div>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setAddCoopPhotoMiniModalOpen(false)}>×</button>
+            </div>
+            <div className="mt-4 flex justify-center">
+              <div className="relative h-[11rem] w-full max-w-[14rem] overflow-hidden rounded-[1rem] border-2 border-[#e7ddfb] bg-[#f3edff]">
+                {addCoopPhotoAdded ? <img src="/egg/media/coops/coop-1.png" alt="Coop preview" className="absolute inset-0 h-full w-full object-cover" style={{ transform: `translateX(${addCoopPhotoOffset}px) scale(${addCoopPhotoZoom})` }} /> : <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#c4b2f4]" style={{ transform: `translateX(${addCoopPhotoOffset}px) scale(${addCoopPhotoZoom})` }}>Coop photo preview</div>}
+              </div>
+            </div>
+            <div className="mt-4 space-y-3">
+              <div>
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Zoom</div>
+                <input type="range" min="1" max="2" step="0.1" value={addCoopPhotoZoom} onChange={(e) => setAddCoopPhotoZoom(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
+              </div>
+              <div>
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Pan</div>
+                <input type="range" min="-30" max="30" step="1" value={addCoopPhotoOffset} onChange={(e) => setAddCoopPhotoOffset(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setAddCoopPhotoAdded(true)}>Upload</button>
+                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setAddCoopPhotoAdded(true)}>Take photo</button>
+              </div>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => { setAddCoopPhotoAdded(true); setAddCoopPhotoMiniModalOpen(false); }}>Save photo</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+export function EditCoopModal({ onClose }: { onClose: () => void }) {
+  const [coopName, setCoopName] = useState('Willow House');
+  const [coopLocation, setCoopLocation] = useState('Home');
+  const [coopPhotoAdded, setCoopPhotoAdded] = useState(true);
+  const [coopPhotoMiniModalOpen, setCoopPhotoMiniModalOpen] = useState(false);
+  const [coopNotesOpen, setCoopNotesOpen] = useState(false);
+  const [coopNotes, setCoopNotes] = useState('Main laying coop, cleaned twice weekly, south-facing run.');
+  const [coopPhotoZoom, setCoopPhotoZoom] = useState(1);
+  const [coopPhotoOffset, setCoopPhotoOffset] = useState(0);
+
+  return (
+    <>
+      <div className="fixed inset-0 z-[74] flex items-end justify-center bg-[#2b124f]/28 p-2 backdrop-blur-[2px] sm:items-center sm:p-4">
+        <div className={`max-h-[92vh] w-full max-w-[36rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)] animate-[fadeSlideUp_220ms_ease-out]`}>
+          <div className="flex items-start justify-between gap-4">
+            <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Edit Coop</div>
+            <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={onClose}>×</button>
+          </div>
+
+          <div className="mt-4 space-y-4">
+            <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm block">
+              <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Name</div>
+              <input type="text" value={coopName} onChange={(e) => setCoopName(e.target.value)} className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none" />
+            </label>
+
+            <div className="grid grid-cols-[1fr_auto] gap-3">
+              <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Location</div>
+                <select value={coopLocation} onChange={(e) => setCoopLocation(e.target.value)} className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none">
+                  <option>Home</option>
+                  <option>Allotment</option>
+                  <option>Other</option>
+                </select>
+              </label>
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setCoopNotesOpen((v) => !v)}>{coopNotes ? 'Edit notes' : 'Notes'}</button>
+            </div>
+
+            <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-[1rem] font-semibold text-[#6f4bb8]">{coopPhotoAdded ? 'Current photo' : 'No photo added yet'}</div>
+                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-4 py-3 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setCoopPhotoMiniModalOpen(true)}>{coopPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
+              </div>
+              {coopPhotoAdded ? <div className="mt-3 flex justify-center"><img src="/egg/media/coops/coop-1.png" alt="Coop" className="h-[8rem] w-full rounded-[1rem] border border-[#e7ddfb] object-cover" /></div> : null}
+            </div>
+
+            {coopNotesOpen ? (
+              <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Notes</div>
+                <textarea value={coopNotes} onChange={(e) => setCoopNotes(e.target.value)} placeholder="Type notes..." className="mt-2 min-h-[6rem] w-full resize-none bg-transparent text-[1rem] text-[#6f4bb8] outline-none" />
+              </div>
+            ) : null}
+
+            <div className="grid grid-cols-2 gap-3">
+              <button type="button" onClick={onClose} className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#6f4bb8] shadow-sm">Cancel</button>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {coopPhotoMiniModalOpen ? (
+        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
+            <div className="flex items-start justify-between gap-4">
+              <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Photograph coop</div>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setCoopPhotoMiniModalOpen(false)}>×</button>
+            </div>
+            <div className="mt-4 flex justify-center">
+              <div className="relative h-[11rem] w-full max-w-[14rem] overflow-hidden rounded-[1rem] border-2 border-[#e7ddfb] bg-[#f3edff]">
+                <img src="/egg/media/coops/coop-1.png" alt="Coop preview" className="absolute inset-0 h-full w-full object-cover" style={{ transform: `translateX(${coopPhotoOffset}px) scale(${coopPhotoZoom})` }} />
+              </div>
+            </div>
+            <div className="mt-4 space-y-3">
+              <div>
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Zoom</div>
+                <input type="range" min="1" max="2" step="0.1" value={coopPhotoZoom} onChange={(e) => setCoopPhotoZoom(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
+              </div>
+              <div>
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Pan</div>
+                <input type="range" min="-30" max="30" step="1" value={coopPhotoOffset} onChange={(e) => setCoopPhotoOffset(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setCoopPhotoAdded(true)}>Upload</button>
+                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setCoopPhotoAdded(true)}>Take photo</button>
+              </div>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => { setCoopPhotoAdded(true); setCoopPhotoMiniModalOpen(false); }}>Save photo</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }
@@ -517,7 +705,7 @@ export function HenCard({
             <img src={compactMode === 'coop' ? '/egg/media/icons/ico-chick.png' : '/egg/media/icons/ico-egg.png'} alt="" className="h-[1.99rem] w-auto object-contain" />
             <span>x {eggs}</span>
           </div>
-          <button type="button" onClick={onEdit} className="bg-transparent p-0"><img src="/egg/media/icons/ico-edit.png" alt="" className="h-[1.99rem] w-auto object-contain" /></button>
+          <button type="button" onClick={onEdit} className="bg-transparent p-0"><img src="/egg/media/icons/ico-edit-hand.png" alt="" className="h-[1.99rem] w-auto object-contain" /></button>
         </div>
       </ShellCard>
     );
