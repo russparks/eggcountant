@@ -177,6 +177,290 @@ export function HenCardsSection({ onEditCard }: { onEditCard?: () => void }) {
   );
 }
 
+export function CoopCardsSection() {
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      <HenCard name="Willow House" coop="Willow House" eggs="38" note="North Field" medal="/egg/media/icons/gold.png" progress={66} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-1.png" profileBadge="gold" />
+      <HenCard name="Speckled Coop" coop="Speckled Coop" eggs="24" note="Back Orchard" medal="/egg/media/icons/silver.png" progress={51} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-2.png" profileBadge="silver" />
+      <HenCard name="Garden Roost" coop="Garden Roost" eggs="31" note="South Run" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-3.png" profileBadge="bronze" />
+    </div>
+  );
+}
+
+function HenBreedPicker({
+  open,
+  onClose,
+  selectedBreed,
+  setSelectedBreed,
+  otherBreed,
+  setOtherBreed,
+}: {
+  open: boolean;
+  onClose: () => void;
+  selectedBreed: string;
+  setSelectedBreed: React.Dispatch<React.SetStateAction<string>>;
+  otherBreed: string;
+  setOtherBreed: React.Dispatch<React.SetStateAction<string>>;
+}) {
+  const breeds = [
+    'Black Rock',
+    'Goldline',
+    'Speckledy (Speckled Ranger)',
+    'Sussex',
+    'Rhode Island Red',
+    'Buff Orpington',
+    'Marans',
+    'Silkie',
+    'Cream Legbar',
+    'Wyandotte',
+    'Pekin Bantam',
+    'Other (enter breed)',
+  ];
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+      <div className={`max-h-[90vh] w-full max-w-[28rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
+        <div className="flex items-start justify-between gap-4">
+          <div className="text-[1.35rem] font-bold text-[#6f4bb8]">Breed</div>
+          <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={onClose}>×</button>
+        </div>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          {breeds.map((breed) => {
+            const active = selectedBreed === breed;
+            return (
+              <button
+                key={breed}
+                type="button"
+                className={`rounded-[var(--ui-radius)] border px-3 py-3 text-center shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#c4b2f4]'}`}
+                onClick={() => setSelectedBreed(breed)}
+              >
+                <div className="text-[1.5rem]">🐔</div>
+                <div className="mt-2 text-[0.88rem] font-semibold leading-tight">{breed}</div>
+              </button>
+            );
+          })}
+        </div>
+        {selectedBreed === 'Other (enter breed)' ? (
+          <input type="text" value={otherBreed} onChange={(e) => setOtherBreed(e.target.value)} placeholder="Enter breed" className="mt-4 w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white px-3 py-3 text-[0.98rem] text-[#6f4bb8] outline-none" />
+        ) : null}
+        <button type="button" className="mt-4 w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={onClose}>Done</button>
+      </div>
+    </div>
+  );
+}
+
+export function AddHenModal({ onClose }: { onClose: () => void }) {
+  const [breedModalOpen, setBreedModalOpen] = useState(false);
+  const [selectedBreed, setSelectedBreed] = useState('Black Rock');
+  const [otherBreed, setOtherBreed] = useState('');
+  const [henDob, setHenDob] = useState('2025-05-01');
+  const [henCoop, setHenCoop] = useState('Eggstein Island');
+  const [henPhotoAdded, setHenPhotoAdded] = useState(false);
+  const [henNotesOpen, setHenNotesOpen] = useState(false);
+  const [henNotes, setHenNotes] = useState('');
+
+  return (
+    <>
+      <div className="fixed inset-0 z-[74] flex items-end justify-center bg-[#2b124f]/28 p-2 backdrop-blur-[2px] sm:items-center sm:p-4">
+        <div className={`max-h-[92vh] w-full max-w-[36rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)] animate-[fadeSlideUp_220ms_ease-out]`}>
+          <div className="flex items-start justify-between gap-4">
+            <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Add Hen</div>
+            <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={onClose}>×</button>
+          </div>
+
+          <div className="mt-4 space-y-4">
+            <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm block">
+              <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Name</div>
+              <input type="text" placeholder="Henrietta" className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
+            </label>
+
+            <div className="grid grid-cols-2 gap-3">
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-left shadow-sm" onClick={() => setBreedModalOpen(true)}>
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Breed</div>
+                <div className="mt-2 flex items-center justify-between gap-3 text-[1rem] font-semibold text-[#6f4bb8]">
+                  <span className="truncate">{selectedBreed === 'Other (enter breed)' && otherBreed ? otherBreed : selectedBreed}</span>
+                  <span className="text-[#c4b2f4]">+</span>
+                </div>
+              </button>
+
+              <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">DoB (approx.)</div>
+                <input type="date" value={henDob} onChange={(e) => setHenDob(e.target.value)} className="mt-2 w-full bg-transparent text-[1.04rem] font-semibold text-[#6f4bb8] outline-none" />
+              </label>
+            </div>
+
+            <div className="grid grid-cols-[1fr_auto] gap-3">
+              <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Coop</div>
+                <select value={henCoop} onChange={(e) => setHenCoop(e.target.value)} className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none">
+                  <option>Eggstein Island</option>
+                  <option>Willow House</option>
+                  <option>Speckled Coop</option>
+                  <option>Back Garden Coop</option>
+                </select>
+              </label>
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setHenNotesOpen((v) => !v)}>{henNotes ? 'Edit notes' : 'Notes'}</button>
+            </div>
+
+            {henNotesOpen ? (
+              <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Notes</div>
+                <textarea value={henNotes} onChange={(e) => setHenNotes(e.target.value)} placeholder="Type notes..." className="mt-2 min-h-[6rem] w-full resize-none bg-transparent text-[1rem] text-[#6f4bb8] outline-none" />
+              </div>
+            ) : null}
+
+            <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-[1rem] font-semibold text-[#6f4bb8]">{henPhotoAdded ? 'Photo ready' : 'No photo added yet'}</div>
+                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setHenPhotoAdded(true)}>{henPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <button type="button" onClick={onClose} className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#6f4bb8] shadow-sm">Cancel</button>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Let's Cluckin' Go!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <HenBreedPicker open={breedModalOpen} onClose={() => setBreedModalOpen(false)} selectedBreed={selectedBreed} setSelectedBreed={setSelectedBreed} otherBreed={otherBreed} setOtherBreed={setOtherBreed} />
+    </>
+  );
+}
+
+export function EditHenModal({ onClose }: { onClose: () => void }) {
+  const [editBreedModalOpen, setEditBreedModalOpen] = useState(false);
+  const [editSelectedBreed, setEditSelectedBreed] = useState('Goldline');
+  const [editOtherBreed, setEditOtherBreed] = useState('');
+  const [editHenDob, setEditHenDob] = useState('2024-04-01');
+  const [editHenCoop, setEditHenCoop] = useState('Willow House');
+  const [editHenPhotoAdded, setEditHenPhotoAdded] = useState(true);
+  const [editHenPhotoMiniModalOpen, setEditHenPhotoMiniModalOpen] = useState(false);
+  const [editHenNotesOpen, setEditHenNotesOpen] = useState(false);
+  const [editHenNotes, setEditHenNotes] = useState('Top layer this spring, calm temperament, likes the left perch.');
+  const [editHenPhotoZoom, setEditHenPhotoZoom] = useState(1);
+  const [editHenPhotoOffset, setEditHenPhotoOffset] = useState(0);
+  const [henDepartureModalOpen, setHenDepartureModalOpen] = useState(false);
+
+  return (
+    <>
+      <div className="fixed inset-0 z-[74] flex items-end justify-center bg-[#2b124f]/28 p-2 backdrop-blur-[2px] sm:items-center sm:p-4">
+        <div className={`max-h-[92vh] w-full max-w-[36rem] overflow-y-auto rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)] animate-[fadeSlideUp_220ms_ease-out]`}>
+          <div className="flex items-start justify-between gap-4">
+            <div className="text-[2.05rem] font-black italic leading-none tracking-tight text-[#6f4bb8]">Edit Hen</div>
+            <button type="button" className="text-[2.2rem] leading-none text-[#c4b2f4]" onClick={onClose}>×</button>
+          </div>
+
+          <div className="mt-4 space-y-4">
+            <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm block">
+              <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Name</div>
+              <input type="text" value="Willow" readOnly className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none" />
+            </label>
+
+            <div className="grid grid-cols-2 gap-3">
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-left shadow-sm" onClick={() => setEditBreedModalOpen(true)}>
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Breed</div>
+                <div className="mt-2 flex items-center justify-between gap-3 text-[1rem] font-semibold text-[#6f4bb8]">
+                  <span className="truncate">{editSelectedBreed === 'Other (enter breed)' && editOtherBreed ? editOtherBreed : editSelectedBreed}</span>
+                  <span className="text-[#c4b2f4]">+</span>
+                </div>
+              </button>
+
+              <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">DoB (approx.)</div>
+                <input type="date" value={editHenDob} onChange={(e) => setEditHenDob(e.target.value)} className="mt-2 w-full bg-transparent text-[1.04rem] font-semibold text-[#6f4bb8] outline-none" />
+              </label>
+            </div>
+
+            <div className="grid grid-cols-[1fr_auto] gap-3">
+              <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Coop</div>
+                <select value={editHenCoop} onChange={(e) => setEditHenCoop(e.target.value)} className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none">
+                  <option>Eggstein Island</option>
+                  <option>Willow House</option>
+                  <option>Speckled Coop</option>
+                  <option>Back Garden Coop</option>
+                </select>
+              </label>
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setEditHenNotesOpen((v) => !v)}>{editHenNotes ? 'Edit notes' : 'Notes'}</button>
+            </div>
+
+            <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-[1rem] font-semibold text-[#6f4bb8]">{editHenPhotoAdded ? 'Photo ready' : 'No photo added yet'}</div>
+                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setEditHenPhotoMiniModalOpen(true)}>{editHenPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
+              </div>
+              {editHenPhotoAdded ? <div className="mt-3 flex justify-center"><img src="/egg/media/hens/hen-1.png" alt="Hen" className="h-[8rem] w-[8rem] rounded-full border-2 border-[#e7ddfb] object-cover" /></div> : null}
+            </div>
+
+            {editHenNotesOpen ? (
+              <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Notes</div>
+                <textarea value={editHenNotes} onChange={(e) => setEditHenNotes(e.target.value)} placeholder="Type notes..." className="mt-2 min-h-[6rem] w-full resize-none bg-transparent text-[1rem] text-[#6f4bb8] outline-none" />
+              </div>
+            ) : null}
+
+            <div className="grid grid-cols-2 gap-3">
+              <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#f3c6d2] bg-[#fff5f7] px-5 py-4 text-[1.05rem] font-semibold text-[#d14d6f] shadow-sm" onClick={() => setHenDepartureModalOpen(true)}>Sadly Departed</button>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <HenBreedPicker open={editBreedModalOpen} onClose={() => setEditBreedModalOpen(false)} selectedBreed={editSelectedBreed} setSelectedBreed={setEditSelectedBreed} otherBreed={editOtherBreed} setOtherBreed={setEditOtherBreed} />
+
+      {editHenPhotoMiniModalOpen ? (
+        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
+            <div className="flex items-start justify-between gap-4">
+              <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Edit photo</div>
+              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setEditHenPhotoMiniModalOpen(false)}>×</button>
+            </div>
+            <div className="mt-4 flex justify-center">
+              <div className="relative h-[11rem] w-[11rem] overflow-hidden rounded-full border-2 border-[#e7ddfb] bg-[#f3edff]">
+                <img src="/egg/media/hens/hen-1.png" alt="Hen preview" className="absolute inset-0 h-full w-full object-cover" style={{ transform: `translateX(${editHenPhotoOffset}px) scale(${editHenPhotoZoom})` }} />
+              </div>
+            </div>
+            <div className="mt-4 space-y-3">
+              <div>
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Zoom</div>
+                <input type="range" min="1" max="2" step="0.1" value={editHenPhotoZoom} onChange={(e) => setEditHenPhotoZoom(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
+              </div>
+              <div>
+                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Pan</div>
+                <input type="range" min="-30" max="30" step="1" value={editHenPhotoOffset} onChange={(e) => setEditHenPhotoOffset(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setEditHenPhotoAdded(true)}>Upload</button>
+                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setEditHenPhotoAdded(true)}>Take photo</button>
+              </div>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => { setEditHenPhotoAdded(true); setEditHenPhotoMiniModalOpen(false); }}>Save photo</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {henDepartureModalOpen ? (
+        <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className={`w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
+            <div className="text-[1.45rem] font-bold text-[#6f4bb8]">Mark Willow as departed?</div>
+            <div className="mt-2 text-[0.98rem] text-[#c4b2f4]">Choose how Willow left the flock. This keeps her records tidy without deleting her history.</div>
+            <div className="mt-4 grid gap-3">
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setHenDepartureModalOpen(false)}>Sold / Moved</button>
+              <button type="button" className="rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-4 py-3 text-[1rem] font-semibold text-[#d14d6f] shadow-sm" onClick={() => setHenDepartureModalOpen(false)}>Passed Away</button>
+              <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setHenDepartureModalOpen(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
+}
+
 export function HenCard({
   onEdit,
   name,

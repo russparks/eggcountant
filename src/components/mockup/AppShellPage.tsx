@@ -5,13 +5,13 @@ import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
 import navIconFlock from '../../../media/nav-icons/lm-flock.png';
 import navIconSales from '../../../media/nav-icons/lm-sales.png';
 import { SURFACE_GRADIENT } from '../../constants';
-import { ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard, CalendarCard, CalendarSummarySection, EggToHenFooter, ChickCardsSection, HenCardsSection } from './sharedHomeComponents';
-import { AddChicksModal, AddEggsModal, AddMedsModal, AddExpenseModal, PhotoMiniModal, EditChicksModal, EditHenModal } from './ComponentsShowcase'; // Temporarily reusing modals from showcase until fully extracted
+import { ProfitLossCard, MiniStatCardHalf, HenCard, RollingLayRateCard, PunFactCard, WikiItemCard, WikiShowMoreCard, CalendarCard, CalendarSummarySection, EggToHenFooter, ChickCardsSection, HenCardsSection, CoopCardsSection, AddHenModal, EditHenModal } from './sharedHomeComponents';
+import { AddChicksModal, AddEggsModal, AddMedsModal, AddExpenseModal, PhotoMiniModal, EditChicksModal } from './ComponentsShowcase';
 
 const surfaceGradient = SURFACE_GRADIENT;
 
 type PageKey = 'home' | 'calendar' | 'flock' | 'sales' | 'blank';
-type ModalKey = 'none' | 'account' | 'logout' | 'eggs' | 'chicks' | 'meds' | 'expense' | 'editChicks';
+type ModalKey = 'none' | 'account' | 'logout' | 'eggs' | 'chicks' | 'hen' | 'editHen' | 'meds' | 'expense' | 'editChicks';
 
 function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAccountModal, openLogoutConfirm }: { hidden: boolean; settingsOpen: boolean; setSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>; closeBottomNav: () => void; openAccountModal: () => void; openLogoutConfirm: () => void }) {
   const settingsItems = [
@@ -33,7 +33,7 @@ function Header({ hidden, settingsOpen, setSettingsOpen, closeBottomNav, openAcc
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <img
             src="/egg/media/icons/henlife-logo-800.png"
-            alt="Eggcountant"
+            alt="Hen Life"
             className="h-[3.6rem] w-auto sm:h-[4.3125rem]"
           />
           <div className="relative">
@@ -431,7 +431,8 @@ export function EditChicksModal({ onClose }: { onClose: () => void }) {
             ) : null}
 
             <div className="grid grid-cols-2 gap-3">
-              <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={onClose}>Cancel</button>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#f7c6d1] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#d14d6f] shadow-sm" onClick={onClose}>Remove Clutch</button>
+
               <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={onClose}>Update</button>
             </div>
           </div>
@@ -1022,7 +1023,7 @@ function HomeContent() {
   );
 }
 
-function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard }: { onEditChickCard: () => void; onDeleteChickCard: () => void; onEditHenCard: () => void }) {
+function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard, onAddChickCard, onAddHenCard, onAddCoopCard }: { onEditChickCard: () => void; onDeleteChickCard: () => void; onEditHenCard: () => void; onAddChickCard: () => void; onAddHenCard: () => void; onAddCoopCard: () => void }) {
   const [activeTab, setActiveTab] = useState<'chicks' | 'hens' | 'coops'>('chicks');
 
   return (
@@ -1031,39 +1032,54 @@ function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard }: { o
         <button
           type="button"
           onClick={() => setActiveTab('chicks')}
-          className={`flex-[3] flex flex-col items-center justify-center gap-1.5 rounded-[var(--ui-radius)] px-3 py-3 text-center text-[1.2rem] font-semibold shadow-sm ${activeTab === 'chicks' ? 'bg-[#6f4bb8] text-white' : 'border border-[#d9c9fb] bg-white text-[#c4b2f4]'}`}
+          className={`flex-[3] flex flex-col items-center justify-center gap-0 rounded-[var(--ui-radius)] px-3 py-2 text-center text-[2rem] font-semibold shadow-sm ${activeTab === 'chicks' ? 'bg-[#6f4bb8] text-white' : 'border border-[#d9c9fb] bg-white text-[#c4b2f4]'}`}
         >
 
-          <img src="/egg/media/icons/ico-fried-egg.png" alt="" className={`h-[2.2rem] w-auto object-contain ${activeTab === 'chicks' ? 'opacity-100 brightness-0 invert' : 'opacity-70'}`} />
-          <span>Chicks</span>
+          <img src="/egg/media/icons/ico-chick.png" alt="" className={`h-[3.4rem] w-auto object-contain`} />
+          <span></span>
         </button>
         <button
           type="button"
           onClick={() => setActiveTab('hens')}
-          className={`flex-[3] flex flex-col items-center justify-center gap-1.5 rounded-[var(--ui-radius)] px-3 py-3 text-center text-[1.2rem] font-semibold shadow-sm ${activeTab === 'hens' ? 'bg-[#6f4bb8] text-white' : 'border border-[#d9c9fb] bg-white text-[#c4b2f4]'}`}
+          className={`flex-[3] flex flex-col items-center justify-center gap-0 rounded-[var(--ui-radius)] px-3 py-2 text-center text-[2rem]  font-semibold shadow-sm ${activeTab === 'hens' ? 'bg-[#6f4bb8] text-white' : 'border border-[#d9c9fb] bg-white text-[#c4b2f4]'}`}
         >
 
-          <img src="/egg/media/icons/ico-fried-egg.png" alt="" className={`h-[2.2rem] w-auto object-contain ${activeTab === 'hens' ? 'opacity-100 brightness-0 invert' : 'opacity-70'}`} />
-          <span>Hens</span>
+          <img src="/egg/media/icons/ico-hen.png" alt="" className={`h-[3.4rem] w-auto object-contain`} />
+          <span></span>
         </button>
         <button
           type="button"
           onClick={() => setActiveTab('coops')}
-          className={`flex-[3] flex flex-col items-center justify-center gap-1.5 rounded-[var(--ui-radius)] px-3 py-3 text-center text-[1.2rem] font-semibold shadow-sm ${activeTab === 'coops' ? 'bg-[#6f4bb8] text-white' : 'border border-[#d9c9fb] bg-white text-[#c4b2f4]'}`}
+          className={`flex-[3] flex flex-col items-center justify-center gap-0 rounded-[var(--ui-radius)] px-3 py-2 text-center text-[2rem] font-semibold shadow-sm ${activeTab === 'coops' ? 'bg-[#6f4bb8] text-white' : 'border border-[#d9c9fb] bg-white text-[#c4b2f4]'}`}
         >
 
-          <img src="/egg/media/icons/ico-fried-egg.png" alt="" className={`h-[2.2rem] w-auto object-contain ${activeTab === 'coops' ? 'opacity-100 brightness-0 invert' : 'opacity-70'}`} />
-          <span>Coops</span>
+          <img src="/egg/media/icons/ico-coop.png" alt="" className={`h-[3.4rem] w-auto object-contain`} />
+          <span></span>
         </button>
         <button
+          type="button"
+          onClick={() => {
+            if (activeTab === 'chicks') onAddChickCard();
+            if (activeTab === 'hens') onAddHenCard();
+            if (activeTab === 'coops') onAddCoopCard();
+          }}
+          className={`flex-[1] flex flex-col items-center justify-center gap-0 rounded-[var(--ui-radius)] px-3 py-2 text-center text-[2rem] font-semibold `}
+        >
+
+          <img src="/egg/media/icons/ico-plus.png" alt="" className={`h-[2.8rem] w-auto object-contain`} />
+          <span></span>
+        </button>
+        {/*<button
           type="button"
           className="flex-[1] rounded-[var(--ui-radius)] bg-[#6f4bb8] px-2 py-3 text-center text-[1rem] font-semibold text-white shadow-sm"
         >
           +
-        </button>
+        </button>*/}
       </div>
 
-      <div className="mt-5">
+      <hr className="mt-4 border-0 border-t border-[#e7ddfb]" />
+
+      <div className="mt-4">
         <div className={activeTab === 'chicks' ? 'block' : 'hidden'}>
           <ChickCardsSection onEditCard={onEditChickCard} onDeleteCard={onDeleteChickCard} />
         </div>
@@ -1071,7 +1087,7 @@ function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard }: { o
           <HenCardsSection onEditCard={onEditHenCard} />
         </div>
         <div className={activeTab === 'coops' ? 'block' : 'hidden'}>
-          <div className="text-[2rem] font-black italic text-[#6f4bb8]">Coops</div>
+          <CoopCardsSection />
         </div>
       </div>
 
@@ -1157,6 +1173,8 @@ export default function AppShellPage({ title, active }: { title: string; active:
       {activeModal === 'logout' ? <ConfirmModal title="Log out?" description="Are you sure you want to log out of your account?" confirmLabel="Log out" onClose={() => setActiveModal('none')} onConfirm={() => setActiveModal('none')} /> : null}
       {activeModal === 'eggs' ? <AddEggsModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'chicks' ? <AddChicksModal onClose={() => setActiveModal('none')} /> : null}
+      {activeModal === 'hen' ? <AddHenModal onClose={() => setActiveModal('none')} /> : null}
+      {activeModal === 'editHen' ? <EditHenModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'meds' ? <AddMedsModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'expense' ? <AddExpenseModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'editChicks' ? <EditChicksModal onClose={() => setActiveModal('none')} /> : null}
@@ -1164,7 +1182,7 @@ export default function AppShellPage({ title, active }: { title: string; active:
       <main className="mx-auto flex min-h-[calc(100vh-11rem)] max-w-6xl items-start px-4 pt-5 pb-40 sm:px-6 lg:px-8">
         {active === 'home' ? <HomeContent /> : active === 'calendar' ? <div className="w-full">
 
-          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : active === 'flock' ? <FlockContent onEditChickCard={() => setActiveModal('editChicks')} onDeleteChickCard={() => { }} /> : <PlaceholderContent title={title} />}
+          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : active === 'flock' ? <FlockContent onEditChickCard={() => setActiveModal('editChicks')} onDeleteChickCard={() => { }} onEditHenCard={() => setActiveModal('editHen')} onAddChickCard={() => setActiveModal('chicks')} onAddHenCard={() => setActiveModal('hen')} onAddCoopCard={() => setActiveModal('expense')} /> : <PlaceholderContent title={title} />}
       </main>
 
       <BottomNav active={active} menuOpen={bottomNavOpen} setMenuOpen={setBottomNavOpen} closeSettingsNav={() => setSettingsOpen(false)} openChicksModal={() => setActiveModal('chicks')} openEggsModal={() => setActiveModal('eggs')} openMedsModal={() => setActiveModal('meds')} openExpenseModal={() => setActiveModal('expense')} />
