@@ -32,9 +32,7 @@ if (use_database()) {
         $_SESSION['user_id'] = $user['id'];
         respond(['user' => public_user($user)]);
     } catch (Throwable $exception) {
-        if (!app_config('legacy_json_fallback', true)) {
-            fail('Registration failed', 500, $exception);
-        }
+        fail('Registration failed', 500, $exception);
     }
 }
 

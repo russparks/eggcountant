@@ -3878,3 +3878,419 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_183707
+- Request time: 2026-04-06 18:37:07 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_184013
+- Request time: 2026-04-06 18:40:13 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_184617
+- Request time: 2026-04-06 18:46:17 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_185238
+- Request time: 2026-04-06 18:52:38 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_195100
+- Request time: 2026-04-06 19:51:00 BST
+- User instruction: Fix live auth/API so registration hits DB and sales page uses real API data instead of fake fallback; deploy updated /egg site
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_200030
+- Request time: 2026-04-06 20:00:30 BST
+- User instruction: Expose live API registration error detail for Eggcountant auth debugging and deploy updated API config
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_200620
+- Request time: 2026-04-06 20:06:20 BST
+- User instruction: Show raw live server registration errors in Eggcountant auth UI and deploy frontend patch
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_204045
+- Request time: 2026-04-06 20:40:45 BST
+- User instruction: Update Eggcountant live DB password in api/config.php and deploy auth/API fix
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_204840
+- Request time: 2026-04-06 20:48:40 BST
+- User instruction: Update Eggcountant live DB password to confirmed Hostinger value and redeploy API
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_205550
+- Request time: 2026-04-06 20:55:50 BST
+- User instruction: Add temporary Eggcountant DB debug endpoint to verify live config and PDO connection; deploy minimal API change
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_210630
+- Request time: 2026-04-06 21:06:30 BST
+- User instruction: Update Eggcountant live API config to new Hostinger DB name/user/password and redeploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_211610
+- Request time: 2026-04-06 21:16:10 BST
+- User instruction: Add standalone Eggcountant PDO smoke test endpoint with hardcoded DB creds and deploy for final runtime verification
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_212310
+- Request time: 2026-04-06 21:23:10 BST
+- User instruction: Switch Eggcountant MySQL host to localhost per Hostinger support and redeploy API/smoke test
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_212835
+- Request time: 2026-04-06 21:28:35 BST
+- User instruction: Update Eggcountant localhost DB password after Hostinger reset and redeploy API/smoke test
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213620
+- Request time: 2026-04-06 21:36:20 BST
+- User instruction: Patch Eggcountant auth page to verify persisted session after register/login before redirecting to sales
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214230
+- Request time: 2026-04-06 21:42:30 BST
+- User instruction: Expose Eggcountant sales API failure detail for debugging live sales page request failure
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214640
+- Request time: 2026-04-06 21:46:40 BST
+- User instruction: Fix Eggcountant sales API invalid parameter number by using distinct PDO user-id placeholders across UNION queries
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_214950
+- Request time: 2026-04-06 21:49:50 BST
+- User instruction: Fix remaining Eggcountant sales summary PDO placeholder reuse causing HY093 invalid parameter number
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215440
+- Request time: 2026-04-06 21:54:40 BST
+- User instruction: Set Eggcountant sales page default date filter to All so seeded DB rows appear immediately
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215640
+- Request time: 2026-04-06 21:56:40 BST
+- User instruction: Add quick raw sales-data debug page and API dump to separate DB data presence from sales UI rendering/filter issues
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_220220
+- Request time: 2026-04-06 22:02:20 BST
+- User instruction: Fix Eggcountant route matching so /sales-data renders debug page instead of normal /sales page
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_220710
+- Request time: 2026-04-06 22:07:10 BST
+- User instruction: Clean up temporary Eggcountant debug tooling after DB/auth/sales recovery and redeploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_221850
+- Request time: 2026-04-06 22:18:50 BST
+- User instruction: Wire Eggcountant coops and hens to real DB-backed flock page data and deploy first non-sales data slice
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222410
+- Request time: 2026-04-06 22:24:10 BST
+- User instruction: Fix Eggcountant flock tab icon regression after DB-backed hens/coops wiring
+- Notes: deploy started
+
+## deploy_222530
+- Request time: 2026-04-06 22:25:30 BST
+- User instruction: Fix Eggcountant flock tab icon regression after DB-backed hens/coops wiring
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222910
+- Request time: 2026-04-06 22:29:10 BST
+- User instruction: Fix Eggcountant flock page presentation: visible icons, DB hen photos, and age display from DB dates
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_223240
+- Request time: 2026-04-06 22:32:40 BST
+- User instruction: Fix Eggcountant flock tab icon visibility across active/inactive states
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_223600
+- Request time: 2026-04-06 22:36:00 BST
+- User instruction: Fix Eggcountant flock tab icons properly by using real existing assets and reverting styling hack
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225420
+- Request time: 2026-04-06 22:54:20 BST
+- User instruction: Restore exact original flock tab markup from flock-page branch while keeping DB-backed tab content wiring
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_235330
+- Request time: 2026-04-06 23:53:30 BST
+- User instruction: Deploy current Eggcountant state
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_000710
+- Request time: 2026-04-07 00:07:10 BST
+- User instruction: Restore DB-backed hen profile photos and bottom-right edit icon on flock cards
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_004840
+- Request time: 2026-04-07 00:48:40 BST
+- User instruction: Fix deploy permissions for media/hens, media/coops, and media/nav-icons with backup-first deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_010220
+- Request time: 2026-04-07 01:02:20 BST
+- User instruction: Deploy current Eggcountant state with restored icons
+- Notes: deploy started
+
+## deploy_010330
+- Request time: 2026-04-07 01:03:30 BST
+- User instruction: Deploy current Eggcountant state with restored icons
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_091650
+- Request time: 2026-04-07 09:16:50 BST
+- User instruction: Fix hen profile photo fit so images use contain instead of cover in flock cards
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_092950
+- Request time: 2026-04-07 09:29:50 BST
+- User instruction: Wire hen card breed display from DB breed_id and keep age calculated from DOB
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_094150
+- Request time: 2026-04-07 09:41:50 BST
+- User instruction: Make hen card show age line then breed line italicized with Other fallback
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_094950
+- Request time: 2026-04-07 09:49:50 BST
+- User instruction: Move hen breed line directly under age line on compact cards
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_095250
+- Request time: 2026-04-07 09:52:50 BST
+- User instruction: Split hen compact card note into age line plus separate breed line underneath
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_095450
+- Request time: 2026-04-07 09:54:50 BST
+- User instruction: Fix blank page by wiring breedLabel prop correctly into HenCard and removing duplicate JSX prop
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_100240
+- Request time: 2026-04-07 10:02:40 BST
+- User instruction: Show coops location_label instead of Other on coop cards
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_100540
+- Request time: 2026-04-07 10:05:40 BST
+- User instruction: Use exact DB column name location_label on coop cards
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_100940
+- Request time: 2026-04-07 10:09:40 BST
+- User instruction: Expose location_label in coop DB mapping so coop cards render the correct location label
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_211929
+- Request time: 2026-04-07 21:19:29 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_213920
+- Request time: 2026-04-07 21:39:20 BST
+- User instruction: Wire Add Hen modal to DB-backed hens, breeds, and coops data
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215050
+- Request time: 2026-04-07 21:50:50 BST
+- User instruction: Fix Add Hen field names for DB and dedupe coop dropdown by name
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215950
+- Request time: 2026-04-07 21:59:50 BST
+- User instruction: Expose breeds collection from DB so Add Hen breed picker can save breed_id properly
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_220740
+- Request time: 2026-04-07 22:07:40 BST
+- User instruction: Fix hens upsert to persist breed_id and date_of_birth from Add Hen modal
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_221740
+- Request time: 2026-04-07 22:17:40 BST
+- User instruction: Treat Other as a normal DB breed in Add Hen and remove custom breed text entry
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_222540
+- Request time: 2026-04-07 22:25:40 BST
+- User instruction: Move Other breed to the bottom of the Add Hen breed picker
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_224920
+- Request time: 2026-04-07 22:49:20 BST
+- User instruction: Complete Edit Hen DB wiring including breed/coops/dob/notes/photo and Sadly Departed flow
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_225540
+- Request time: 2026-04-07 22:55:40 BST
+- User instruction: Fix Edit Hen modal so it opens the specific hen card that was clicked
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_230310
+- Request time: 2026-04-07 23:03:10 BST
+- User instruction: Fix Edit Hen Sadly Departed flow so buttons perform the departure update instead of just collapsing the modal
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_230840
+- Request time: 2026-04-07 23:08:40 BST
+- User instruction: Remove forced reload from Edit Hen save/departed flow so it no longer resets the flock page to chicks
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_231540
+- Request time: 2026-04-07 23:15:40 BST
+- User instruction: Add explicit save/error behavior to Edit Hen Sadly Departed flow
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_232040
+- Request time: 2026-04-07 23:20:40 BST
+- User instruction: Persist Edit Hen departed fields in hens upsert mapping
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_233240
+- Request time: 2026-04-07 23:32:40 BST
+- User instruction: Keep Edit Hen main modal open after saving departure state
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_234620
+- Request time: 2026-04-07 23:46:20 BST
+- User instruction: Tweak Edit Hen Hen Status UI and photo treatment after departure selection
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_235340
+- Request time: 2026-04-07 23:53:40 BST
+- User instruction: Add a brief success confirmation state to the Edit Hen Update button before the modal closes
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_235810
+- Request time: 2026-04-07 23:58:10 BST
+- User instruction: Add brief success confirmation state to Add Hen modal before closing
+- Notes: deploy started
+
+- Result: deployed successfully
+

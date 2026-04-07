@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SURFACE_GRADIENT } from '../../constants';
+import { dataApi } from '../../api';
 
 const surfaceGradient = SURFACE_GRADIENT;
 
@@ -167,22 +168,96 @@ export function ChickCardsSection({ onEditCard, onDeleteCard }: { onEditCard?: (
   );
 }
 
-export function HenCardsSection({ onEditCard }: { onEditCard?: () => void }) {
+type HenRecord = {
+  id: string;
+  name: string;
+  breedId?: string | null;
+  breed?: string;
+  breedName?: string;
+  locationId: string;
+  status: string;
+  photoUrl?: string;
+  notes?: string;
+  dateOfBirth?: string;
+};
+
+type CoopRecord = {
+  id: string;
+  name: string;
+  location_label?: string;
+  type?: string;
+  photoUrl?: string;
+};
+
+export function HenCardsSection({ onEditCard, hens = [], coops = [] }: { onEditCard?: (henId: string) => void; hens?: HenRecord[]; coops?: CoopRecord[] }) {
+  const coopNameById = new Map(coops.map((coop) => [coop.id, coop.name]));
+
+  if (!hens.length) {
+    return <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-5 text-center text-[1rem] font-semibold text-[#9c8abf] shadow-sm">No hens yet.</div>;
+  }
+
+  const ageLabel = (dateValue?: string) => {
+    if (!dateValue) return 'AGE: —';
+    const date = new Date(dateValue);
+    if (Number.isNaN(date.getTime())) return 'AGE: —';
+    const now = new Date();
+    let months = (now.getFullYear() - date.getFullYear()) * 12 + (now.getMonth() - date.getMonth());
+    if (now.getDate() < date.getDate()) months -= 1;
+    if (months < 1) return 'AGE: <1m';
+    if (months < 12) return `AGE: ${months}m`;
+    const years = Math.floor(months / 12);
+    const remMonths = months % 12;
+    return remMonths === 0 ? `AGE: ${years}y` : `AGE: ${years}y ${remMonths}m`;
+  };
+
   return (
     <div className="grid grid-cols-2 gap-4">
-      <HenCard name="Willow" coop="Willow House" eggs="24" note="AGE: 2" medal="/egg/media/icons/gold.png" progress={66} nameColor="#FFCC01" compact profileImage="/egg/media/hens/hen-1.png" profileBadge="gold" onEdit={onEditCard} />
-      <HenCard name="Dotty" coop="Speckled Coop" eggs="19" note="AGE: 1" medal="/egg/media/icons/silver.png" progress={51} nameColor="#999999" compact profileImage="/egg/media/hens/hen-2.png" profileBadge="silver" onEdit={onEditCard} />
-      <HenCard name="Mabel" coop="Back Garden Coop" eggs="16" note="AGE: 3" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#CC6602" compact profileImage="/egg/media/hens/hen-3.png" profileBadge="bronze" onEdit={onEditCard} />
+      {hens.map((hen) => {
+        const breedLabel = (hen.breedName || hen.breed || 'Other').trim() || 'Other';
+        return (
+          <HenCard
+            key={hen.id}
+            name={hen.name}
+            coop={coopNameById.get(hen.locationId) ?? 'No coop'}
+            eggs="—"
+            note={ageLabel(hen.dateOfBirth)}
+            breedLabel={breedLabel}
+            medal="/egg/media/icons/gold.png"
+            progress={100}
+            nameColor="#6f4bb8"
+            compact
+            profileImage={hen.photoUrl}
+            onEdit={() => onEditCard?.(hen.id)}
+          />
+        );
+      })}
     </div>
   );
 }
 
-export function CoopCardsSection({ onEditCard }: { onEditCard?: () => void }) {
+export function CoopCardsSection({ onEditCard, coops = [] }: { onEditCard?: () => void; coops?: CoopRecord[] }) {
+  if (!coops.length) {
+    return <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-5 text-center text-[1rem] font-semibold text-[#9c8abf] shadow-sm">No coops yet.</div>;
+  }
+
   return (
     <div className="grid grid-cols-2 gap-4">
-      <HenCard name="Willow House" coop="Willow House" eggs="38" note="North Field" medal="/egg/media/icons/gold.png" progress={66} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-1.png" profileBadge="gold" onEdit={onEditCard} />
-      <HenCard name="Speckled Coop" coop="Speckled Coop" eggs="24" note="Back Orchard" medal="/egg/media/icons/silver.png" progress={51} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-2.png" profileBadge="silver" onEdit={onEditCard} />
-      <HenCard name="Garden Roost" coop="Garden Roost" eggs="31" note="South Run" medal="/egg/media/icons/bronze.png" progress={46} nameColor="#6f4bb8" compact compactMode="coop" profileImage="/egg/media/coops/coop-3.png" profileBadge="bronze" onEdit={onEditCard} />
+      {coops.map((coop) => (
+        <HenCard
+          key={coop.id}
+          name={coop.name}
+          coop={coop.name}
+          eggs="—"
+          note={coop.location_label || coop.type || 'Coop'}
+          medal="/egg/media/icons/gold.png"
+          progress={100}
+          nameColor="#6f4bb8"
+          compact
+          compactMode="coop"
+          profileImage={coop.photoUrl}
+          onEdit={onEditCard}
+        />
+      ))}
     </div>
   );
 }
@@ -192,30 +267,15 @@ function HenBreedPicker({
   onClose,
   selectedBreed,
   setSelectedBreed,
-  otherBreed,
-  setOtherBreed,
+  breedOptions,
 }: {
   open: boolean;
   onClose: () => void;
   selectedBreed: string;
   setSelectedBreed: React.Dispatch<React.SetStateAction<string>>;
-  otherBreed: string;
-  setOtherBreed: React.Dispatch<React.SetStateAction<string>>;
+  breedOptions: { id: string; name: string }[];
 }) {
-  const breeds = [
-    'Black Rock',
-    'Goldline',
-    'Speckledy (Speckled Ranger)',
-    'Sussex',
-    'Rhode Island Red',
-    'Buff Orpington',
-    'Marans',
-    'Silkie',
-    'Cream Legbar',
-    'Wyandotte',
-    'Pekin Bantam',
-    'Other (enter breed)',
-  ];
+  const breeds = breedOptions;
 
   if (!open) return null;
 
@@ -228,23 +288,20 @@ function HenBreedPicker({
         </div>
         <div className="mt-4 grid grid-cols-2 gap-3">
           {breeds.map((breed) => {
-            const active = selectedBreed === breed;
+            const active = selectedBreed === breed.id;
             return (
               <button
-                key={breed}
+                key={breed.id}
                 type="button"
                 className={`rounded-[var(--ui-radius)] border px-3 py-3 text-center shadow-sm ${active ? 'border-[#6f4bb8] bg-[#f3edff] text-[#6f4bb8]' : 'border-[#e7ddfb] bg-white text-[#c4b2f4]'}`}
-                onClick={() => setSelectedBreed(breed)}
+                onClick={() => setSelectedBreed(breed.id)}
               >
                 <div className="text-[1.5rem]">🐔</div>
-                <div className="mt-2 text-[0.88rem] font-semibold leading-tight">{breed}</div>
+                <div className="mt-2 text-[0.88rem] font-semibold leading-tight">{breed.name}</div>
               </button>
             );
           })}
         </div>
-        {selectedBreed === 'Other (enter breed)' ? (
-          <input type="text" value={otherBreed} onChange={(e) => setOtherBreed(e.target.value)} placeholder="Enter breed" className="mt-4 w-full rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white px-3 py-3 text-[0.98rem] text-[#6f4bb8] outline-none" />
-        ) : null}
         <button type="button" className="mt-4 w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={onClose}>Done</button>
       </div>
     </div>
@@ -253,13 +310,92 @@ function HenBreedPicker({
 
 export function AddHenModal({ onClose }: { onClose: () => void }) {
   const [breedModalOpen, setBreedModalOpen] = useState(false);
-  const [selectedBreed, setSelectedBreed] = useState('Black Rock');
-  const [otherBreed, setOtherBreed] = useState('');
+  const [selectedBreed, setSelectedBreed] = useState('');
+  const [henName, setHenName] = useState('');
   const [henDob, setHenDob] = useState('2025-05-01');
-  const [henCoop, setHenCoop] = useState('Eggstein Island');
+  const [henCoop, setHenCoop] = useState('');
   const [henPhotoAdded, setHenPhotoAdded] = useState(false);
+  const [henPhotoUrl, setHenPhotoUrl] = useState('');
   const [henNotesOpen, setHenNotesOpen] = useState(false);
   const [henNotes, setHenNotes] = useState('');
+  const [breeds, setBreeds] = useState<any[]>([]);
+  const [coops, setCoops] = useState<any[]>([]);
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  useEffect(() => {
+    dataApi.list('locations').then((items) => {
+      setCoops(items as any[]);
+      if (items.length) {
+        setHenCoop((current) => current || String((items[0] as any).id || ''));
+      }
+    }).catch(() => setCoops([]));
+
+    fetch('./api/debug.db.php', { credentials: 'include' }).catch(() => null);
+  }, []);
+
+  useEffect(() => {
+    fetch('./api/data.php?collection=breeds', { credentials: 'include' })
+      .then(async (response) => {
+        const text = await response.text();
+        const json = text ? JSON.parse(text) : {};
+        const items = Array.isArray(json.items) ? json.items : [];
+        setBreeds(items);
+        if (items.length) {
+          setSelectedBreed((current) => current || String(items[0]?.id || ''));
+        }
+      })
+      .catch(() => setBreeds([]));
+  }, []);
+
+  const breedOptions = useMemo(() => {
+    const mapped = breeds.map((breed: any) => ({ id: String(breed.id), name: String(breed.name || 'Other') }));
+    return mapped.sort((a, b) => {
+      const aOther = a.name.trim().toLowerCase() === 'other';
+      const bOther = b.name.trim().toLowerCase() === 'other';
+      if (aOther && !bOther) return 1;
+      if (!aOther && bOther) return -1;
+      return a.name.localeCompare(b.name);
+    });
+  }, [breeds]);
+  const coopOptions = useMemo(() => {
+    const seen = new Set<string>();
+    return coops
+      .map((coop: any) => ({ id: String(coop.id), name: String(coop.name || 'Coop') }))
+      .filter((coop) => {
+        const key = coop.name.trim().toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+  }, [coops]);
+
+  const selectedBreedLabel = breedOptions.find((breed) => breed.id === selectedBreed)?.name || 'Select breed';
+
+  const saveHen = async () => {
+    if (!henName.trim()) return;
+    setSaving(true);
+    try {
+      await dataApi.upsert('hens', {
+        id: crypto.randomUUID(),
+        name: henName.trim(),
+        breed_id: selectedBreed || null,
+        breed: selectedBreedLabel,
+        locationId: henCoop,
+        status: 'active',
+        photoUrl: henPhotoUrl || undefined,
+        notes: henNotes || undefined,
+        date_of_birth: henDob,
+      } as any);
+      setSaveSuccess(true);
+      window.setTimeout(() => {
+        onClose();
+        window.location.reload();
+      }, 1800);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <>
@@ -273,14 +409,14 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
           <div className="mt-4 space-y-4">
             <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm block">
               <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Name</div>
-              <input type="text" placeholder="Henrietta" className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
+              <input type="text" value={henName} onChange={(e) => setHenName(e.target.value)} placeholder="Henrietta" className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
             </label>
 
             <div className="grid grid-cols-2 gap-3">
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-left shadow-sm" onClick={() => setBreedModalOpen(true)}>
                 <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Breed</div>
                 <div className="mt-2 flex items-center justify-between gap-3 text-[1rem] font-semibold text-[#6f4bb8]">
-                  <span className="truncate">{selectedBreed === 'Other (enter breed)' && otherBreed ? otherBreed : selectedBreed}</span>
+                  <span className="truncate">{selectedBreedLabel}</span>
                   <span className="text-[#c4b2f4]">+</span>
                 </div>
               </button>
@@ -295,10 +431,9 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
               <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                 <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Coop</div>
                 <select value={henCoop} onChange={(e) => setHenCoop(e.target.value)} className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none">
-                  <option>Eggstein Island</option>
-                  <option>Willow House</option>
-                  <option>Speckled Coop</option>
-                  <option>Back Garden Coop</option>
+                  {coopOptions.map((coop) => (
+                    <option key={coop.id} value={coop.id}>{coop.name}</option>
+                  ))}
                 </select>
               </label>
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setHenNotesOpen((v) => !v)}>{henNotes ? 'Edit notes' : 'Notes'}</button>
@@ -314,19 +449,19 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
             <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
               <div className="flex items-center justify-between gap-3">
                 <div className="text-[1rem] font-semibold text-[#6f4bb8]">{henPhotoAdded ? 'Photo ready' : 'No photo added yet'}</div>
-                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setHenPhotoAdded(true)}>{henPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
+                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => { const url = window.prompt('Paste photo URL', henPhotoUrl || '/egg/media/hens/hen-1.png'); if (url !== null) { setHenPhotoUrl(url); setHenPhotoAdded(Boolean(url.trim())); } }}>{henPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <button type="button" onClick={onClose} className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#6f4bb8] shadow-sm">Cancel</button>
-              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Let's Cluckin' Go!</button>
+              <button type="button" onClick={saveHen} disabled={saving || saveSuccess} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Added ✓' : saving ? 'Saving...' : "Let's Cluckin' Go!"}</button>
             </div>
           </div>
         </div>
       </div>
 
-      <HenBreedPicker open={breedModalOpen} onClose={() => setBreedModalOpen(false)} selectedBreed={selectedBreed} setSelectedBreed={setSelectedBreed} otherBreed={otherBreed} setOtherBreed={setOtherBreed} />
+      <HenBreedPicker open={breedModalOpen} onClose={() => setBreedModalOpen(false)} selectedBreed={selectedBreed} setSelectedBreed={setSelectedBreed} breedOptions={breedOptions} />
     </>
   );
 }
@@ -519,19 +654,127 @@ export function EditCoopModal({ onClose }: { onClose: () => void }) {
   );
 }
 
-export function EditHenModal({ onClose }: { onClose: () => void }) {
+export function EditHenModal({ henId, onClose }: { henId?: string | null; onClose: () => void }) {
   const [editBreedModalOpen, setEditBreedModalOpen] = useState(false);
-  const [editSelectedBreed, setEditSelectedBreed] = useState('Goldline');
-  const [editOtherBreed, setEditOtherBreed] = useState('');
-  const [editHenDob, setEditHenDob] = useState('2024-04-01');
-  const [editHenCoop, setEditHenCoop] = useState('Willow House');
-  const [editHenPhotoAdded, setEditHenPhotoAdded] = useState(true);
+  const [editSelectedBreed, setEditSelectedBreed] = useState('');
+  const [editHenName, setEditHenName] = useState('');
+  const [editHenDob, setEditHenDob] = useState('');
+  const [editHenCoop, setEditHenCoop] = useState('');
+  const [editHenPhotoAdded, setEditHenPhotoAdded] = useState(false);
+  const [editHenPhotoUrl, setEditHenPhotoUrl] = useState('');
   const [editHenPhotoMiniModalOpen, setEditHenPhotoMiniModalOpen] = useState(false);
   const [editHenNotesOpen, setEditHenNotesOpen] = useState(false);
-  const [editHenNotes, setEditHenNotes] = useState('Top layer this spring, calm temperament, likes the left perch.');
+  const [editHenNotes, setEditHenNotes] = useState('');
   const [editHenPhotoZoom, setEditHenPhotoZoom] = useState(1);
   const [editHenPhotoOffset, setEditHenPhotoOffset] = useState(0);
   const [henDepartureModalOpen, setHenDepartureModalOpen] = useState(false);
+  const [breeds, setBreeds] = useState<any[]>([]);
+  const [coops, setCoops] = useState<any[]>([]);
+  const [hens, setHens] = useState<any[]>([]);
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [departureError, setDepartureError] = useState('');
+  const [departureStatusLabel, setDepartureStatusLabel] = useState('Hen Status');
+
+  useEffect(() => {
+    dataApi.list('breeds' as any).then((items) => setBreeds(items as any[])).catch(() => setBreeds([]));
+    dataApi.list('locations').then((items) => setCoops(items as any[])).catch(() => setCoops([]));
+    dataApi.list('hens').then((items) => {
+      const list = items as any[];
+      setHens(list);
+      const hen = list.find((item) => String(item.id) === String(henId || '')) || list[0];
+      if (!hen) return;
+      setEditHenName(String(hen.name || ''));
+      setEditSelectedBreed(String(hen.breedId || hen.breed_id || ''));
+      setEditHenDob(String(hen.dateOfBirth || hen.date_of_birth || ''));
+      setEditHenCoop(String(hen.locationId || hen.coop_id || ''));
+      setEditHenNotes(String(hen.notes || ''));
+      setEditHenPhotoUrl(String(hen.photoUrl || ''));
+      setEditHenPhotoAdded(Boolean(hen.photoUrl));
+      setDepartureStatusLabel(String(hen.departure_reason || 'Hen Status'));
+    }).catch(() => setHens([]));
+  }, []);
+
+  const breedOptions = useMemo(() => {
+    const mapped = breeds.map((breed: any) => ({ id: String(breed.id), name: String(breed.name || 'Other') }));
+    return mapped.sort((a, b) => {
+      const aOther = a.name.trim().toLowerCase() === 'other';
+      const bOther = b.name.trim().toLowerCase() === 'other';
+      if (aOther && !bOther) return 1;
+      if (!aOther && bOther) return -1;
+      return a.name.localeCompare(b.name);
+    });
+  }, [breeds]);
+
+  const coopOptions = useMemo(() => {
+    const seen = new Set<string>();
+    return coops
+      .map((coop: any) => ({ id: String(coop.id), name: String(coop.name || 'Coop') }))
+      .filter((coop) => {
+        const key = coop.name.trim().toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+  }, [coops]);
+
+  const selectedBreedLabel = breedOptions.find((breed) => breed.id === editSelectedBreed)?.name || 'Select breed';
+  const currentHen = hens.find((item) => String(item.id) === String(henId || '')) || hens[0];
+
+  const saveHen = async () => {
+    if (!currentHen?.id || !editHenName.trim()) return;
+    setSaving(true);
+    try {
+      await dataApi.upsert('hens', {
+        ...currentHen,
+        id: currentHen.id,
+        name: editHenName.trim(),
+        breed_id: editSelectedBreed || null,
+        breed: selectedBreedLabel,
+        date_of_birth: editHenDob || null,
+        locationId: editHenCoop,
+        notes: editHenNotes || undefined,
+        photoUrl: editHenPhotoUrl || undefined,
+      } as any);
+      setSaveSuccess(true);
+      window.setTimeout(() => {
+        onClose();
+      }, 1800);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const markDeparted = async (reason: 'Passed Away' | 'Sold / Moved') => {
+    if (!currentHen?.id) {
+      setDepartureError('No hen selected.');
+      return;
+    }
+    setSaving(true);
+    setDepartureError('');
+    try {
+      await dataApi.upsert('hens', {
+        ...currentHen,
+        id: currentHen.id,
+        name: editHenName.trim(),
+        breed_id: editSelectedBreed || null,
+        breed: selectedBreedLabel,
+        date_of_birth: editHenDob || null,
+        locationId: editHenCoop,
+        notes: editHenNotes || undefined,
+        photoUrl: editHenPhotoUrl || undefined,
+        status: reason === 'Passed Away' ? 'deceased' : 'rehomed',
+        departed_on: new Date().toISOString().slice(0, 10),
+        departure_reason: reason,
+      } as any);
+      setDepartureStatusLabel(reason);
+      setHenDepartureModalOpen(false);
+    } catch (error) {
+      setDepartureError(error instanceof Error ? error.message : 'Unable to update departure status.');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <>
@@ -545,14 +788,14 @@ export function EditHenModal({ onClose }: { onClose: () => void }) {
           <div className="mt-4 space-y-4">
             <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm block">
               <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Name</div>
-              <input type="text" value="Willow" readOnly className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none" />
+              <input type="text" value={editHenName} onChange={(e) => setEditHenName(e.target.value)} className="mt-2 w-full bg-transparent text-[1.15rem] font-semibold text-[#6f4bb8] outline-none" />
             </label>
 
             <div className="grid grid-cols-2 gap-3">
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-left shadow-sm" onClick={() => setEditBreedModalOpen(true)}>
                 <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Breed</div>
                 <div className="mt-2 flex items-center justify-between gap-3 text-[1rem] font-semibold text-[#6f4bb8]">
-                  <span className="truncate">{editSelectedBreed === 'Other (enter breed)' && editOtherBreed ? editOtherBreed : editSelectedBreed}</span>
+                  <span className="truncate">{selectedBreedLabel}</span>
                   <span className="text-[#c4b2f4]">+</span>
                 </div>
               </button>
@@ -567,10 +810,9 @@ export function EditHenModal({ onClose }: { onClose: () => void }) {
               <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                 <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Coop</div>
                 <select value={editHenCoop} onChange={(e) => setEditHenCoop(e.target.value)} className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none">
-                  <option>Eggstein Island</option>
-                  <option>Willow House</option>
-                  <option>Speckled Coop</option>
-                  <option>Back Garden Coop</option>
+                  {coopOptions.map((coop) => (
+                    <option key={coop.id} value={coop.id}>{coop.name}</option>
+                  ))}
                 </select>
               </label>
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setEditHenNotesOpen((v) => !v)}>{editHenNotes ? 'Edit notes' : 'Notes'}</button>
@@ -579,9 +821,9 @@ export function EditHenModal({ onClose }: { onClose: () => void }) {
             <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
               <div className="flex items-center justify-between gap-3">
                 <div className="text-[1rem] font-semibold text-[#6f4bb8]">{editHenPhotoAdded ? 'Photo ready' : 'No photo added yet'}</div>
-                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setEditHenPhotoMiniModalOpen(true)}>{editHenPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
+                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => { const url = window.prompt('Paste photo URL', editHenPhotoUrl || '/egg/media/hens/hen-1.png'); if (url !== null) { setEditHenPhotoUrl(url); setEditHenPhotoAdded(Boolean(url.trim())); } }}>{editHenPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
               </div>
-              {editHenPhotoAdded ? <div className="mt-3 flex justify-center"><img src="/egg/media/hens/hen-1.png" alt="Hen" className="h-[8rem] w-[8rem] rounded-full border-2 border-[#e7ddfb] object-cover" /></div> : null}
+              {editHenPhotoAdded ? <div className="mt-3 flex justify-center"><div className="relative"><img src={editHenPhotoUrl || '/egg/media/hens/hen-1.png'} alt="Hen" className={`h-[8rem] w-[8rem] rounded-full border-2 border-[#e7ddfb] object-cover ${departureStatusLabel !== 'Hen Status' ? 'grayscale opacity-70' : ''}`} />{departureStatusLabel === 'Passed Away' ? <img src="/egg/media/icons/ico-perishX.png" alt="" className="absolute right-[-0.8rem] top-1/2 h-[2.1rem] w-auto -translate-y-1/2 object-contain" /> : null}{departureStatusLabel === 'Sold / Moved' ? <img src="/egg/media/icons/ico-right.png" alt="" className="absolute right-[-0.8rem] top-1/2 h-[2.1rem] w-auto -translate-y-1/2 object-contain" /> : null}</div></div> : null}
             </div>
 
             {editHenNotesOpen ? (
@@ -592,14 +834,14 @@ export function EditHenModal({ onClose }: { onClose: () => void }) {
             ) : null}
 
             <div className="grid grid-cols-2 gap-3">
-              <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#f3c6d2] bg-[#fff5f7] px-5 py-4 text-[1.05rem] font-semibold text-[#d14d6f] shadow-sm" onClick={() => setHenDepartureModalOpen(true)}>Sadly Departed</button>
-              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Update</button>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-[#c4b2f4] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-sm" onClick={() => setHenDepartureModalOpen(true)}>{departureStatusLabel}</button>
+              <button type="button" onClick={saveHen} disabled={saving || saveSuccess} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Updated ✓' : saving ? 'Updating...' : 'Update'}</button>
             </div>
           </div>
         </div>
       </div>
 
-      <HenBreedPicker open={editBreedModalOpen} onClose={() => setEditBreedModalOpen(false)} selectedBreed={editSelectedBreed} setSelectedBreed={setEditSelectedBreed} otherBreed={editOtherBreed} setOtherBreed={setEditOtherBreed} />
+      <HenBreedPicker open={editBreedModalOpen} onClose={() => setEditBreedModalOpen(false)} selectedBreed={editSelectedBreed} setSelectedBreed={setEditSelectedBreed} breedOptions={breedOptions} />
 
       {editHenPhotoMiniModalOpen ? (
         <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
@@ -637,10 +879,11 @@ export function EditHenModal({ onClose }: { onClose: () => void }) {
           <div className={`w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
             <div className="text-[1.45rem] font-bold text-[#6f4bb8]">Mark Willow as departed?</div>
             <div className="mt-2 text-[0.98rem] text-[#c4b2f4]">Choose how Willow left the flock. This keeps her records tidy without deleting her history.</div>
+            {departureError ? <div className="mt-4 rounded-[var(--ui-radius)] bg-[#fff1f1] px-4 py-3 text-[0.95rem] font-semibold text-[#c05454]">{departureError}</div> : null}
             <div className="mt-4 grid gap-3">
-              <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setHenDepartureModalOpen(false)}>Sold / Moved</button>
-              <button type="button" className="rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-4 py-3 text-[1rem] font-semibold text-[#d14d6f] shadow-sm" onClick={() => setHenDepartureModalOpen(false)}>Passed Away</button>
-              <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setHenDepartureModalOpen(false)}>Cancel</button>
+              <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm disabled:opacity-50" onClick={() => markDeparted('Sold / Moved')}>{saving ? 'Saving...' : 'Sold / Moved'}</button>
+              <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-4 py-3 text-[1rem] font-semibold text-[#d14d6f] shadow-sm disabled:opacity-50" onClick={() => markDeparted('Passed Away')}>{saving ? 'Saving...' : 'Passed Away'}</button>
+              <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50" onClick={() => setHenDepartureModalOpen(false)}>Cancel</button>
             </div>
           </div>
         </div>
@@ -661,6 +904,7 @@ export function HenCard({
   compact = false,
   profileImage,
   profileBadge,
+  breedLabel,
   compactMode = 'hen',
 }: {
   name: string;
@@ -673,19 +917,22 @@ export function HenCard({
   compact?: boolean;
   profileImage?: string;
   profileBadge?: 'gold' | 'silver' | 'bronze';
+  breedLabel?: string;
   compactMode?: 'hen' | 'coop';
   onEdit?: () => void;
 }) {
   if (compact) {
     return (
       <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
-        <div className="flex min-h-[3.4rem] w-full items-center justify-center overflow-hidden">
+        <div className="flex min-h-[3.4rem] w-full items-center justify-center overflow-hidden bg-transparent">
           <div className="m-0 line-clamp-2 w-full text-center text-[1.55rem] font-bold leading-none text-[#6f4bb8]">{name}</div>
         </div>
         <div className="relative mt-3 flex justify-center">
           {profileImage ? (
-            <img src={profileImage} alt="" className="w-[92%] rounded-[var(--ui-radius)] object-contain drop-shadow-[0_8px_12px_rgba(47,31,77,0.12)]" />
-          ) : null}
+            <img src={profileImage} alt="" className="h-[8.4rem] w-[92%] object-contain bg-transparent" />
+          ) : (
+            <div className="flex h-[8.4rem] w-[92%] items-center justify-center rounded-[var(--ui-radius)] bg-[#f7f2ff] text-[0.95rem] font-semibold text-[#c4b2f4]">No photo</div>
+          )}
           {profileBadge ? (
             <img
               src={`/egg/media/icons/${profileBadge}-over.png`}
@@ -696,9 +943,13 @@ export function HenCard({
         </div>
         <hr className="mt-3 border-0 border-t border-slate-200" />
         {compactMode === 'hen' ? (
-          <div className="mt-[0.05rem] text-center text-[1.14rem] text-[#c4b2f4]">AGE: {note.replace('AGE: ', '')}</div>
-        ) : null}
-        <div className="mt-[0.05rem] text-center text-[0.9rem] uppercase text-[#9E9E9E]">{compactMode === 'coop' ? note : coop}</div>
+          <>
+            <div className="mt-[0.05rem] text-center text-[1rem] text-[#c4b2f4]">{note}</div>
+            <div className="mt-[0.05rem] text-center text-[1.2rem] italic text-[#9E9E9E]">{breedLabel ?? 'Other'}</div>
+          </>
+        ) : (
+          <div className="mt-[0.05rem] text-center text-[0.9rem] uppercase text-[#9E9E9E]">{note}</div>
+        )}
         <hr className="mt-[0.35rem] border-0 border-t border-slate-200" />
         <div className="mt-[0.35rem] flex items-center justify-between gap-2 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
           <div className="flex items-center gap-2">

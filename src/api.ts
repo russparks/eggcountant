@@ -1,4 +1,4 @@
-import { AppRecordMap, CollectionName, SessionUser } from './types';
+import { AppRecordMap, CollectionName, SalesPagination, SalesRecord, SalesSummary, SessionUser } from './types';
 
 const API_BASE = import.meta.env.DEV ? 'http://localhost:8000/api' : './api';
 
@@ -14,10 +14,20 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   });
 
   const text = await response.text();
-  const data = text ? JSON.parse(text) : {};
+  let data: any = {};
+
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    if (!response.ok) {
+      throw new Error(text || 'Request failed');
+    }
+    throw new Error('Invalid server response');
+  }
 
   if (!response.ok) {
-    throw new Error(data.error || 'Request failed');
+    const detail = data.detail ? ` (${data.detail})` : '';
+    throw new Error((data.error || 'Request failed') + detail);
   }
 
   return data as T;
@@ -40,6 +50,31 @@ export const authApi = {
       method: 'POST',
       body: JSON.stringify({}),
     }),
+};
+
+export const salesApi = {
+  list: async (params: {
+    page?: number;
+    perPage?: number;
+    type?: string;
+    status?: string;
+    dateRange?: string;
+    dateFrom?: string;
+    dateTo?: string;
+  }) => {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        query.set(key, String(value));
+      }
+    });
+
+    return request<{
+      summary: SalesSummary;
+      items: SalesRecord[];
+      pagination: SalesPagination;
+    }>(`/sales.list.php?${query.toString()}`);
+  },
 };
 
 export const dataApi = {

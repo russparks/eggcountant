@@ -2,13 +2,17 @@
 return [
     'allowed_origins' => [
         'http://localhost:3000',
-        'https://your-domain.example',
+        'http://127.0.0.1:3000',
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+        'https://www.axislabs.co.uk',
+        'https://axislabs.co.uk',
     ],
     'db' => [
-        'host' => 'localhost',
-        'name' => 'eggcountant',
-        'user' => 'root',
-        'password' => 'your-password-here',
+        'host' => 'srv1733.hstgr.io',
+        'name' => 'u726116940_henlife_main',
+        'user' => 'u726116940_admin',
+        'password' => 'RU55-Basics-Passverda@69',
         'charset' => 'utf8mb4',
     ],
 ];

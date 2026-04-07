@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { dataApi, salesApi } from '../../api';
 import { ChevronUp } from 'lucide-react';
 import navIconHome from '../../../media/nav-icons/lm-home.png';
 import navIconCalendar from '../../../media/nav-icons/lm-calendar.png';
@@ -1023,8 +1024,15 @@ function HomeContent() {
   );
 }
 
-function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard, onEditCoopCard, onAddChickCard, onAddHenCard, onAddCoopCard }: { onEditChickCard: () => void; onDeleteChickCard: () => void; onEditHenCard: () => void; onEditCoopCard: () => void; onAddChickCard: () => void; onAddHenCard: () => void; onAddCoopCard: () => void }) {
+function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard, onEditCoopCard, onAddChickCard, onAddHenCard, onAddCoopCard }: { onEditChickCard: () => void; onDeleteChickCard: () => void; onEditHenCard: (henId: string) => void; onEditCoopCard: () => void; onAddChickCard: () => void; onAddHenCard: () => void; onAddCoopCard: () => void }) {
   const [activeTab, setActiveTab] = useState<'chicks' | 'hens' | 'coops'>('chicks');
+  const [hens, setHens] = useState<any[]>([]);
+  const [coops, setCoops] = useState<any[]>([]);
+
+  useEffect(() => {
+    dataApi.list('hens').then(setHens).catch(() => setHens([]));
+    dataApi.list('locations').then(setCoops).catch(() => setCoops([]));
+  }, []);
 
   return (
     <div className="w-full">
@@ -1084,10 +1092,10 @@ function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard, onEdi
           <ChickCardsSection onEditCard={onEditChickCard} onDeleteCard={onDeleteChickCard} />
         </div>
         <div className={activeTab === 'hens' ? 'block' : 'hidden'}>
-          <HenCardsSection onEditCard={onEditHenCard} />
+          <HenCardsSection onEditCard={onEditHenCard} hens={hens} coops={coops} />
         </div>
         <div className={activeTab === 'coops' ? 'block' : 'hidden'}>
-          <CoopCardsSection onEditCard={onEditCoopCard} />
+          <CoopCardsSection onEditCard={onEditCoopCard} coops={coops} />
         </div>
       </div>
 
@@ -1099,54 +1107,55 @@ function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard, onEdi
 }
 
 function SalesContent() {
+  const [remoteSummary, setRemoteSummary] = useState<{ allTimeNet: number; salesTotal: number; expensesTotal: number } | null>(null);
+  const [remoteItems, setRemoteItems] = useState<any[] | null>(null);
+  const [remotePagination, setRemotePagination] = useState<{ page: number; perPage: number; total: number; totalPages: number } | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const typeFilters = ['All', 'Eggs', 'Chicks', 'Chicken', 'Feed', 'Equipment', 'Expenses'];
-  const dateFilters = ['1W', '2W', '1M', 'Custom'];
+  const dateFilters = ['All', '1W', '2W', '1M', 'Custom'];
   const statusFilters = ['All', 'Paid', 'Due', 'Overdue'];
   const [activeTypeFilter, setActiveTypeFilter] = useState('All');
-  const [activeDateFilter, setActiveDateFilter] = useState('1M');
+  const [activeDateFilter, setActiveDateFilter] = useState('All');
   const [activeStatusFilter, setActiveStatusFilter] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 20;
 
-  const records = [
-    { date: '06 Apr 2026', type: 'Eggs', item: 'Mixed dozen', party: 'Farm Gate', qty: '12', total: 4.8, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
-    { date: '05 Apr 2026', type: 'Chicks', item: 'Lavender chicks', party: 'J. Porter', qty: '4', total: 22, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-chick.png' },
-    { date: '04 Apr 2026', type: 'Feed', item: 'Half bag layers pellets', party: 'Neighbour', qty: '1', total: 6.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '03 Apr 2026', type: 'Eggs', item: 'Tray of 30', party: 'Market stall', qty: '30', total: 10.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
-    { date: '02 Apr 2026', type: 'Chicken', item: 'Point-of-lay pullet', party: 'A. Green', qty: '1', total: 18, status: 'Due', direction: 'sale', icon: '/egg/media/icons/ico-hen.png' },
-    { date: '01 Apr 2026', type: 'Equipment', item: 'Spare drinker', party: 'Allotment mate', qty: '1', total: 7, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '31 Mar 2026', type: 'Eggs', item: '6 white eggs', party: 'Honesty box', qty: '6', total: 2.2, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
-    { date: '30 Mar 2026', type: 'Expenses', item: 'Wood shavings bale', party: 'Country Store', qty: '2', total: -13.8, status: 'Paid', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '29 Mar 2026', type: 'Expenses', item: 'Fence repair staples', party: 'Tool Shed', qty: '1', total: -8.45, status: 'Paid', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '28 Mar 2026', type: 'Expenses', item: 'Mineral grit tub', party: 'Feed Merchant', qty: '1', total: -6.95, status: 'Due', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '27 Mar 2026', type: 'Expenses', item: 'Nest box liner pack', party: 'Village shop', qty: '2', total: -9.5, status: 'Overdue', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '26 Mar 2026', type: 'Expenses', item: 'Disinfectant refill', party: 'Agri Supplies', qty: '1', total: -11.2, status: 'Paid', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '25 Mar 2026', type: 'Eggs', item: 'Brown dozen', party: 'Bakery lane', qty: '12', total: 4.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
-    { date: '24 Mar 2026', type: 'Chicken', item: 'Rescue hen adoption', party: 'L. Marsh', qty: '1', total: 16, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-hen.png' },
-    { date: '23 Mar 2026', type: 'Chicks', item: 'Barn mix chicks', party: 'School visit', qty: '6', total: 24, status: 'Due', direction: 'sale', icon: '/egg/media/icons/ico-chick.png' },
-    { date: '22 Mar 2026', type: 'Equipment', item: 'Spare feeder', party: 'P. Vale', qty: '1', total: 8.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '21 Mar 2026', type: 'Expenses', item: 'Wheelbarrow repair bolts', party: 'Fixings Direct', qty: '1', total: -5.2, status: 'Paid', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '20 Mar 2026', type: 'Eggs', item: 'Cafe breakfast tray', party: 'Oak Cafe', qty: '24', total: 8.8, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
-    { date: '19 Mar 2026', type: 'Feed', item: 'Scratch grain split', party: 'R. Moss', qty: '1', total: 5.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '18 Mar 2026', type: 'Expenses', item: 'Red mite powder', party: 'Farm Chem', qty: '1', total: -14.1, status: 'Overdue', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '17 Mar 2026', type: 'Eggs', item: 'Honesty shelf refill', party: 'Village shelf', qty: '18', total: 6.3, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
-    { date: '16 Mar 2026', type: 'Chicken', item: 'Trio reservation', party: 'D. Kent', qty: '3', total: 42, status: 'Due', direction: 'sale', icon: '/egg/media/icons/ico-hen.png' },
-    { date: '15 Mar 2026', type: 'Expenses', item: 'Brooder bulb', party: 'Agri Supplies', qty: '2', total: -12.6, status: 'Paid', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '14 Mar 2026', type: 'Chicks', item: 'Cream legbar chicks', party: 'T. Ellis', qty: '5', total: 27.5, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-chick.png' },
-    { date: '13 Mar 2026', type: 'Equipment', item: 'Used crate bundle', party: 'Yard sale', qty: '3', total: 15, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '12 Mar 2026', type: 'Expenses', item: 'Coop latch set', party: 'Ironmongers', qty: '1', total: -7.9, status: 'Due', direction: 'expense', icon: '/egg/media/icons/ico-plus.png' },
-    { date: '11 Mar 2026', type: 'Eggs', item: 'Family pack', party: 'N. Clarke', qty: '15', total: 5.4, status: 'Paid', direction: 'sale', icon: '/egg/media/icons/ico-egg.png' },
-  ];
+  useEffect(() => {
+    setLoading(true);
+    setLoadError(null);
 
-  const filteredRecords = records.filter((record) => {
-    const typeMatch = activeTypeFilter === 'All' ? true : record.type === activeTypeFilter;
-    const statusMatch = activeStatusFilter === 'All' ? true : record.status === activeStatusFilter;
-    return typeMatch && statusMatch;
-  });
+    salesApi.list({
+      page: currentPage,
+      perPage: recordsPerPage,
+      type: activeTypeFilter,
+      status: activeStatusFilter,
+      dateRange: activeDateFilter,
+    })
+      .then((data) => {
+        setRemoteSummary(data.summary ?? null);
+        setRemoteItems(Array.isArray(data.items) ? data.items : []);
+        setRemotePagination(data.pagination ?? null);
+      })
+      .catch((error) => {
+        setRemoteSummary(null);
+        setRemoteItems([]);
+        setRemotePagination({
+          page: 1,
+          perPage: recordsPerPage,
+          total: 0,
+          totalPages: 1,
+        });
+        setLoadError(error instanceof Error ? error.message : 'Unable to load sales data.');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [activeDateFilter, activeStatusFilter, activeTypeFilter, currentPage]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredRecords.length / recordsPerPage));
-  const pagedRecords = filteredRecords.slice((currentPage - 1) * recordsPerPage, currentPage * recordsPerPage);
-  const allTimeNet = records.reduce((sum, record) => sum + record.total, 0);
+  const totalPages = remotePagination?.totalPages ?? 1;
+  const pagedRecords = remoteItems ?? [];
+  const allTimeNet = remoteSummary?.allTimeNet ?? 0;
 
   return (
     <div className="w-full">
@@ -1184,6 +1193,11 @@ function SalesContent() {
       <hr className="mt-5 border-0 border-t border-[#e7ddfb]" />
 
       <div className="mt-5 overflow-hidden rounded-[1.4rem] border border-[#e7ddfb] bg-white/90 shadow-[0_10px_24px_rgba(47,31,77,0.06)]">
+        {loadError ? (
+          <div className="border-b border-[#f3d6de] bg-[#fff4f6] px-4 py-3 text-[0.95rem] font-semibold text-[#b04a6a]">
+            {loadError}
+          </div>
+        ) : null}
         <div className="hidden grid-cols-[1fr_0.95fr_1.8fr_1.1fr_0.55fr_0.8fr_0.8fr] gap-3 border-b border-[#eee6ff] bg-[#f8f4ff] px-4 py-3 text-[0.9rem] font-bold uppercase tracking-[0.12em] text-[#9c8abf] sm:grid">
           <div>Date</div>
           <div>Type</div>
@@ -1195,7 +1209,11 @@ function SalesContent() {
         </div>
 
         <div className="divide-y divide-[#f0e8ff]">
-          {pagedRecords.map((record, index) => (
+          {loading ? (
+            <div className="px-4 py-8 text-center text-[1rem] font-semibold text-[#9c8abf]">Loading sales data…</div>
+          ) : pagedRecords.length === 0 ? (
+            <div className="px-4 py-8 text-center text-[1rem] font-semibold text-[#9c8abf]">No sales data found yet.</div>
+          ) : pagedRecords.map((record, index) => (
             <div key={`${record.date}-${record.item}-${index}`} className="px-4 py-4 sm:grid sm:grid-cols-[1fr_0.95fr_1.8fr_1.1fr_0.55fr_0.8fr_0.8fr] sm:items-center sm:gap-3 sm:px-4 sm:py-4">
               <div className="flex items-start justify-between gap-3 sm:block">
                 <div className="flex items-start gap-3">
@@ -1225,7 +1243,7 @@ function SalesContent() {
         </div>
       </div>
 
-      {filteredRecords.length > recordsPerPage ? (
+      {(remotePagination ? remotePagination.total > recordsPerPage : false) ? (
         <div className="mt-4 flex items-center justify-between gap-3 rounded-[1rem] border border-[#e7ddfb] bg-white px-4 py-3 shadow-sm">
           <div className="text-[0.96rem] font-semibold text-[#8f7db8]">Page {currentPage} of {totalPages}</div>
           <div className="flex gap-2">
@@ -1253,6 +1271,7 @@ export default function AppShellPage({ title, active }: { title: string; active:
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [bottomNavOpen, setBottomNavOpen] = useState(false);
   const [activeModal, setActiveModal] = useState<ModalKey>('none');
+  const [selectedHenId, setSelectedHenId] = useState<string | null>(null);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -1315,7 +1334,7 @@ export default function AppShellPage({ title, active }: { title: string; active:
       {activeModal === 'chicks' ? <AddChicksModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'hen' ? <AddHenModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'coop' ? <AddCoopModal onClose={() => setActiveModal('none')} /> : null}
-      {activeModal === 'editHen' ? <EditHenModal onClose={() => setActiveModal('none')} /> : null}
+      {activeModal === 'editHen' ? <EditHenModal henId={selectedHenId} onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'editCoop' ? <EditCoopModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'meds' ? <AddMedsModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'expense' ? <AddExpenseModal onClose={() => setActiveModal('none')} /> : null}
@@ -1324,7 +1343,7 @@ export default function AppShellPage({ title, active }: { title: string; active:
       <main className="mx-auto flex min-h-[calc(100vh-11rem)] max-w-6xl items-start px-4 pt-5 pb-40 sm:px-6 lg:px-8">
         {active === 'home' ? <HomeContent /> : active === 'calendar' ? <div className="w-full">
 
-          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : active === 'flock' ? <FlockContent onEditChickCard={() => setActiveModal('editChicks')} onDeleteChickCard={() => { }} onEditHenCard={() => setActiveModal('editHen')} onEditCoopCard={() => setActiveModal('editCoop')} onAddChickCard={() => setActiveModal('chicks')} onAddHenCard={() => setActiveModal('hen')} onAddCoopCard={() => setActiveModal('coop')} /> : active === 'sales' ? <SalesContent /> : <PlaceholderContent title={title} />}
+          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : active === 'flock' ? <FlockContent onEditChickCard={() => setActiveModal('editChicks')} onDeleteChickCard={() => { }} onEditHenCard={(henId) => { setSelectedHenId(henId); setActiveModal('editHen'); }} onEditCoopCard={() => setActiveModal('editCoop')} onAddChickCard={() => setActiveModal('chicks')} onAddHenCard={() => setActiveModal('hen')} onAddCoopCard={() => setActiveModal('coop')} /> : active === 'sales' ? <SalesContent /> : <PlaceholderContent title={title} />}
       </main>
 
       <BottomNav active={active} menuOpen={bottomNavOpen} setMenuOpen={setBottomNavOpen} closeSettingsNav={() => setSettingsOpen(false)} openChicksModal={() => setActiveModal('chicks')} openEggsModal={() => setActiveModal('eggs')} openMedsModal={() => setActiveModal('meds')} openExpenseModal={() => setActiveModal('expense')} />

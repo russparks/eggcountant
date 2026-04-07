@@ -114,3 +114,30 @@ export type AppRecordMap = {
   saleLogs: SaleLog;
   chickBatches: ChickBatch;
 };
+
+export type SalesRecord = {
+  id: string;
+  recordType: 'sale' | 'expense';
+  date: string;
+  type: string;
+  item: string;
+  party: string;
+  qty: string;
+  total: number;
+  status: 'Paid' | 'Due' | 'Overdue' | 'Cancelled' | string;
+  dueDate?: string | null;
+  icon: string;
+};
+
+export type SalesSummary = {
+  salesTotal: number;
+  expensesTotal: number;
+  allTimeNet: number;
+};
+
+export type SalesPagination = {
+  page: number;
+  perPage: number;
+  total: number;
+  totalPages: number;
+};

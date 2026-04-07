@@ -23,10 +23,10 @@ if (use_database()) {
                 respond(['user' => public_user($user)]);
             }
         }
+
+        respond(['error' => 'Invalid email or password'], 401);
     } catch (Throwable $exception) {
-        if (!app_config('legacy_json_fallback', true)) {
-            fail('Login failed', 500, $exception);
-        }
+        fail('Login failed', 500, $exception);
     }
 }
 

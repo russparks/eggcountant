@@ -6,6 +6,8 @@ PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 LOG_FILE="${PROJECT_DIR}/deploy-log.md"
 REGISTER_DIR="${PROJECT_DIR}/deploy-register"
 META_FILE="${PROJECT_DIR}/deploy-meta.env"
+DESKTOP_DIR="${HOME}/Desktop"
+BACKUP_ROOT="${DESKTOP_DIR}/Egg BUs"
 
 if [ -f "$META_FILE" ]; then
   set -a
@@ -22,7 +24,9 @@ source /Users/russparks/.openclaw/workspace/.secrets
 
 cd "$PROJECT_DIR"
 mkdir -p "$REGISTER_DIR"
+mkdir -p "$BACKUP_ROOT"
 REGISTER_FILE="${REGISTER_DIR}/${CHECKPOINT}.md"
+BACKUP_DIR="${BACKUP_ROOT}/${CHECKPOINT}"
 
 if [ -f "$LOG_FILE" ]; then
   {
@@ -47,10 +51,26 @@ fi
   printf '%s\n' "$CHANGED_FILES" | sed 's/^/- /'
   echo
   echo "## Status"
+  echo "- Backup pending"
   echo "- Deploy started"
 } > "$REGISTER_FILE"
 
 echo "→ Checkpoint: $CHECKPOINT"
+echo "→ Backing up project folder to $BACKUP_DIR ..."
+rm -rf "$BACKUP_DIR"
+mkdir -p "$BACKUP_DIR"
+rsync -a "$PROJECT_DIR/" "$BACKUP_DIR/"
+
+if ! diff -qr \
+  --exclude '.DS_Store' \
+  --exclude 'dist' \
+  --exclude 'deploy-meta.env' \
+  "$PROJECT_DIR" "$BACKUP_DIR" >/dev/null; then
+  echo "✗ Backup verification failed"
+  exit 1
+fi
+
+echo "→ Backup verified"
 echo "→ Building The Eggcountant..."
 npm run build
 
@@ -76,6 +96,12 @@ cd ${REMOTE}/media
 glob chmod 644 *
 cd ${REMOTE}/media/icons
 glob chmod 644 *
+cd ${REMOTE}/media/hens
+glob chmod 644 *
+cd ${REMOTE}/media/coops
+glob chmod 644 *
+cd ${REMOTE}/media/nav-icons
+glob chmod 644 *
 bye
 LFTP
 
@@ -87,6 +113,8 @@ if [ -f "$LOG_FILE" ]; then
 fi
 
 {
+  echo "- Backup created: ${BACKUP_DIR}"
+  echo "- Backup verified against project folder before deploy"
   echo
   echo "- Deploy completed successfully"
 } >> "$REGISTER_FILE"

@@ -1,8 +1,9 @@
 import React from 'react';
 import ComponentsShowcase from './components/mockup/ComponentsShowcase';
 import AppShellPage from './components/mockup/AppShellPage';
+import AuthPage from './components/AuthPage';
 
-type ViewMode = 'home' | 'components' | 'calendar' | 'flock' | 'sales' | 'blank';
+type ViewMode = 'home' | 'components' | 'calendar' | 'flock' | 'sales' | 'blank' | 'auth';
 
 export default function App() {
   const path = typeof window !== 'undefined' ? window.location.pathname : '/';
@@ -14,12 +15,18 @@ export default function App() {
         ? 'flock'
         : path.includes('/sales')
           ? 'sales'
-          : path.includes('/blank')
-            ? 'blank'
-            : 'home';
+            : path.includes('/blank')
+              ? 'blank'
+              : path.includes('/auth')
+                ? 'auth'
+                : 'home';
 
   if (viewMode === 'components') {
     return <ComponentsShowcase />;
+  }
+
+  if (viewMode === 'auth') {
+    return <AuthPage />;
   }
 
   return <AppShellPage title={viewMode === 'home' ? 'Home' : viewMode === 'blank' ? 'Blank' : viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} active={viewMode} />;

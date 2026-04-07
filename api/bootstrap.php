@@ -13,11 +13,12 @@ header('Access-Control-Allow-Credentials: true');
 const DATA_ROOT = __DIR__ . '/../data';
 const USERS_ROOT = DATA_ROOT . '/users';
 const USERS_FILE = USERS_ROOT . '/users.json';
-const LEGACY_COLLECTIONS = ['locations', 'eggLogs', 'hens', 'feedLogs', 'medicationLogs', 'saleLogs', 'chickBatches'];
-const DB_COLLECTIONS = ['locations', 'eggLogs', 'hens', 'feedLogs', 'medicationLogs', 'saleLogs', 'chickBatches'];
+const LEGACY_COLLECTIONS = ['locations', 'eggLogs', 'hens', 'breeds', 'feedLogs', 'medicationLogs', 'saleLogs', 'chickBatches'];
+const DB_COLLECTIONS = ['locations', 'eggLogs', 'hens', 'breeds', 'feedLogs', 'medicationLogs', 'saleLogs', 'chickBatches'];
 const COLLECTION_TABLES = [
     'locations' => 'coops',
-    'hens' => 'birds',
+    'hens' => 'hens',
+    'breeds' => 'breeds',
     'eggLogs' => 'egg_logs',
     'feedLogs' => 'feed_logs',
     'medicationLogs' => 'feed_logs',
@@ -255,6 +256,10 @@ function use_database(): bool {
 
     $resolved = $dbName !== '' && $dbUser !== '' && $dbPassword !== '';
     return $resolved;
+}
+
+function database_auth_only(): bool {
+    return use_database();
 }
 
 function db(): PDO {
@@ -758,7 +763,9 @@ function db_collection_data(string $userId, string $collection): array {
         case 'locations':
             return sorted_records(fetch_coops($userId));
         case 'hens':
-            return sorted_records(fetch_birds($userId));
+            return sorted_records(fetch_hens($userId));
+        case 'breeds':
+            return sorted_records(fetch_breeds($userId));
         case 'eggLogs':
             return sorted_records(fetch_egg_logs($userId));
         case 'feedLogs':
@@ -780,7 +787,7 @@ function db_upsert_collection_item(string $userId, string $collection, array $it
             upsert_coop($userId, $item);
             return;
         case 'hens':
-            upsert_bird($userId, $item);
+            upsert_hen($userId, $item);
             return;
         case 'eggLogs':
             upsert_egg_log($userId, $item);
@@ -1021,6 +1028,7 @@ function map_coop_row_to_record(array $row): array {
     return [
         'id' => app_record_id_from_row('coops', $row),
         'name' => (string) column_value($row, ['name', 'coop_name', 'title'], $payload['name'] ?? ''),
+        'location_label' => (string) column_value($row, ['location_label', 'locationLabel'], $payload['location_label'] ?? ($payload['locationLabel'] ?? '')),
         'type' => (string) column_value($row, ['type', 'coop_type'], $payload['type'] ?? 'Other'),
         'photoUrl' => column_value($row, ['photo_url', 'photoUrl', 'photo_path', 'photoPath', 'image_url', 'imageUrl'], $payload['photoUrl'] ?? ($payload['photoPath'] ?? null)),
     ];
@@ -1047,36 +1055,85 @@ function upsert_coop(string $userId, array $item): void {
     ], fn($value, $key) => $key !== '__skip_payload' && $value !== null, ARRAY_FILTER_USE_BOTH));
 }
 
-function fetch_birds(string $userId): array {
-    return array_map('map_bird_row_to_record', fetch_rows('birds', $userId));
+function fetch_hens(string $userId): array {
+    return array_map('map_hen_row_to_record', fetch_rows('hens', $userId));
 }
 
-function map_bird_row_to_record(array $row): array {
-    $payload = payload_for_table_row('birds', $row);
+function fetch_breeds(string $userId): array {
+    $statement = db()->prepare('SELECT id, name, species, is_custom FROM breeds WHERE user_id IS NULL OR user_id = :user_id ORDER BY name ASC');
+    $statement->bindValue(':user_id', (int) $userId, PDO::PARAM_INT);
+    $statement->execute();
+
+    return array_map(static function (array $row): array {
+        return [
+            'id' => (string) ($row['id'] ?? ''),
+            'name' => (string) ($row['name'] ?? ''),
+            'species' => (string) ($row['species'] ?? 'chicken'),
+            'is_custom' => (bool) ($row['is_custom'] ?? false),
+        ];
+    }, $statement->fetchAll());
+}
+
+function map_hen_row_to_record(array $row): array {
+    $payload = payload_for_table_row('hens', $row);
+    $breedId = column_value($row, ['breed_id', 'breedId'], $payload['breed_id'] ?? ($payload['breedId'] ?? null));
     return [
-        'id' => app_record_id_from_row('birds', $row),
+        'id' => app_record_id_from_row('hens', $row),
         'name' => (string) column_value($row, ['name'], $payload['name'] ?? ''),
-        'breed' => column_value($row, ['breed'], $payload['breed'] ?? null),
+        'breedId' => $breedId !== null && $breedId !== '' ? (string) $breedId : null,
+        'breed' => (string) column_value($row, ['breed', 'breed_name'], $payload['breed'] ?? ''),
+        'breedName' => resolve_breed_name((string) ($breedId ?? '')),
         'locationId' => (string) (related_input_value($payload, ['locationId', 'coopId', 'location_id', 'coop_id']) ?? related_record_app_id_from_foreign_value('coops', (string) column_value($row, ['user_id', 'userId', 'account_id', 'owner_id'], ''), column_value($row, ['coop_id', 'coopId', 'location_id', 'locationId'], ''))),
-        'status' => (string) column_value($row, ['status', 'appearance'], $payload['status'] ?? 'Healthy'),
-        'photoUrl' => column_value($row, ['photo_url', 'photoUrl', 'photo_path', 'photoPath', 'image_url', 'imageUrl'], $payload['photoUrl'] ?? ($payload['photoPath'] ?? null)),
+        'status' => (string) ($payload['status'] ?? 'Healthy'),
+        'photoUrl' => column_value($row, ['profile_photo_url', 'photo_url', 'photoUrl', 'photo_path', 'photoPath', 'image_url', 'imageUrl'], $payload['photoUrl'] ?? ($payload['photoPath'] ?? null)),
         'notes' => column_value($row, ['notes'], $payload['notes'] ?? null),
+        'dateOfBirth' => column_value($row, ['date_of_birth', 'dateOfBirth', 'acquired_on', 'acquiredOn'], $payload['dateOfBirth'] ?? ($payload['acquiredOn'] ?? null)),
     ];
 }
 
-function upsert_bird(string $userId, array $item): void {
-    $locationId = related_input_value($item, ['locationId', 'coopId', 'location_id', 'coop_id']);
+function resolve_breed_name(string $breedId): string {
+    $breedId = trim($breedId);
+    if ($breedId === '') {
+        return 'Other';
+    }
 
-    persist_row('birds', (string) $item['id'], $userId, array_filter([
+    try {
+        $statement = db()->prepare('SELECT name FROM breeds WHERE id = :id LIMIT 1');
+        $statement->execute([':id' => $breedId]);
+        $row = $statement->fetch();
+        if (!$row) {
+            return 'Other';
+        }
+        return (string) ($row['name'] ?? 'Other');
+    } catch (Throwable $exception) {
+        return 'Other';
+    }
+}
+
+function upsert_hen(string $userId, array $item): void {
+    $locationId = related_input_value($item, ['locationId', 'coopId', 'location_id', 'coop_id']);
+    $breedId = $item['breed_id'] ?? $item['breedId'] ?? null;
+    $dateOfBirth = $item['date_of_birth'] ?? $item['dateOfBirth'] ?? null;
+    $status = $item['status'] ?? null;
+    $departedOn = $item['departed_on'] ?? $item['departedOn'] ?? null;
+    $departureReason = $item['departure_reason'] ?? $item['departureReason'] ?? null;
+
+    persist_row('hens', (string) $item['id'], $userId, array_filter([
         ...app_owned_identifier_values($item['id'] ?? null),
         'name' => $item['name'] ?? null,
+        'breed_id' => $breedId,
+        'breedId' => $breedId,
         'breed' => $item['breed'] ?? null,
-        'coop_id' => foreign_identifier_value('birds', 'coop_id', 'coops', $userId, $locationId),
-        'coopId' => foreign_identifier_value('birds', 'coopId', 'coops', $userId, $locationId),
-        'location_id' => foreign_identifier_value('birds', 'location_id', 'coops', $userId, $locationId),
-        'locationId' => foreign_identifier_value('birds', 'locationId', 'coops', $userId, $locationId),
-        'status' => $item['status'] ?? null,
-        'appearance' => $item['status'] ?? null,
+        'breed_name' => $item['breed'] ?? null,
+        'date_of_birth' => $dateOfBirth,
+        'dateOfBirth' => $dateOfBirth,
+        'coop_id' => foreign_identifier_value('hens', 'coop_id', 'coops', $userId, $locationId),
+        'coopId' => foreign_identifier_value('hens', 'coopId', 'coops', $userId, $locationId),
+        'location_id' => foreign_identifier_value('hens', 'location_id', 'coops', $userId, $locationId),
+        'locationId' => foreign_identifier_value('hens', 'locationId', 'coops', $userId, $locationId),
+        'status' => $status ?? 'active',
+        'appearance' => $status,
+        'profile_photo_url' => $item['photoUrl'] ?? null,
         'photo_url' => $item['photoUrl'] ?? null,
         'photoUrl' => $item['photoUrl'] ?? null,
         'photo_path' => $item['photoUrl'] ?? null,
@@ -1084,7 +1141,11 @@ function upsert_bird(string $userId, array $item): void {
         'image_url' => $item['photoUrl'] ?? null,
         'imageUrl' => $item['photoUrl'] ?? null,
         'notes' => $item['notes'] ?? null,
-        payload_column('birds') ?: '__skip_payload' => json_encode($item, JSON_UNESCAPED_SLASHES),
+        'departed_on' => $departedOn,
+        'departedOn' => $departedOn,
+        'departure_reason' => $departureReason,
+        'departureReason' => $departureReason,
+        payload_column('hens') ?: '__skip_payload' => json_encode($item, JSON_UNESCAPED_SLASHES),
     ], fn($value, $key) => $key !== '__skip_payload' && $value !== null, ARRAY_FILTER_USE_BOTH));
 }
 
@@ -1170,7 +1231,7 @@ function map_feed_log_row_to_record(array $row, string $kind): array {
         return [
             'id' => app_record_id_from_row('feed_logs', $row),
             'date' => iso_datetime((string) column_value($row, ['date', 'log_date', 'feed_date', 'logged_at', 'logged_on'], $payload['date'] ?? '')),
-            'henId' => related_input_value($payload, ['henId', 'birdId', 'hen_id', 'bird_id']) ?? related_record_app_id_from_foreign_value('birds', (string) column_value($row, ['user_id', 'userId', 'account_id', 'owner_id'], ''), column_value($row, ['bird_id', 'birdId', 'hen_id', 'henId'], null)),
+            'henId' => related_input_value($payload, ['henId', 'birdId', 'hen_id', 'bird_id']) ?? related_record_app_id_from_foreign_value('hens', (string) column_value($row, ['user_id', 'userId', 'account_id', 'owner_id'], ''), column_value($row, ['bird_id', 'birdId', 'hen_id', 'henId'], null)),
             'locationId' => (string) (related_input_value($payload, ['locationId', 'coopId', 'location_id', 'coop_id']) ?? related_record_app_id_from_foreign_value('coops', (string) column_value($row, ['user_id', 'userId', 'account_id', 'owner_id'], ''), column_value($row, ['coop_id', 'coopId', 'location_id', 'locationId'], ''))),
             'medicationName' => (string) column_value($row, ['medication_name', 'medicationName', 'name'], $payload['medicationName'] ?? ''),
             'dosage' => (string) column_value($row, ['dosage'], $payload['dosage'] ?? ''),
@@ -1214,10 +1275,10 @@ function upsert_feed_log(string $userId, array $item, string $kind): void {
 
     if ($kind === 'medication') {
         $values += [
-            'bird_id' => foreign_identifier_value('feed_logs', 'bird_id', 'birds', $userId, $item['henId'] ?? null),
-            'birdId' => foreign_identifier_value('feed_logs', 'birdId', 'birds', $userId, $item['henId'] ?? null),
-            'hen_id' => foreign_identifier_value('feed_logs', 'hen_id', 'birds', $userId, $item['henId'] ?? null),
-            'henId' => foreign_identifier_value('feed_logs', 'henId', 'birds', $userId, $item['henId'] ?? null),
+            'bird_id' => foreign_identifier_value('feed_logs', 'bird_id', 'hens', $userId, $item['henId'] ?? null),
+            'birdId' => foreign_identifier_value('feed_logs', 'birdId', 'hens', $userId, $item['henId'] ?? null),
+            'hen_id' => foreign_identifier_value('feed_logs', 'hen_id', 'hens', $userId, $item['henId'] ?? null),
+            'henId' => foreign_identifier_value('feed_logs', 'henId', 'hens', $userId, $item['henId'] ?? null),
             'medication_name' => $item['medicationName'] ?? null,
             'medicationName' => $item['medicationName'] ?? null,
             'dosage' => $item['dosage'] ?? null,
