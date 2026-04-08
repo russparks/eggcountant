@@ -56,16 +56,12 @@ fi
 } > "$REGISTER_FILE"
 
 echo "→ Checkpoint: $CHECKPOINT"
-echo "→ Backing up project folder to $BACKUP_DIR ..."
+echo "→ Backing up project media folder to $BACKUP_DIR ..."
 rm -rf "$BACKUP_DIR"
 mkdir -p "$BACKUP_DIR"
-rsync -a "$PROJECT_DIR/" "$BACKUP_DIR/"
+rsync -a "$PROJECT_DIR/media/" "$BACKUP_DIR/media/"
 
-if ! diff -qr \
-  --exclude '.DS_Store' \
-  --exclude 'dist' \
-  --exclude 'deploy-meta.env' \
-  "$PROJECT_DIR" "$BACKUP_DIR" >/dev/null; then
+if ! diff -qr "$PROJECT_DIR/media" "$BACKUP_DIR/media" >/dev/null; then
   echo "✗ Backup verification failed"
   exit 1
 fi
