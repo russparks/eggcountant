@@ -341,6 +341,25 @@ function ensure_table_column(string $table, string $column, string $definition):
     refresh_schema_columns($table);
 }
 
+function ensure_hen_status_values(): void {
+    if (!table_has_column('hens', 'status')) {
+        return;
+    }
+
+    $type = column_type('hens', 'status');
+    if ($type === '' || !str_starts_with($type, 'enum(')) {
+        return;
+    }
+
+    foreach (['active', 'sold', 'deceased', 'rehomed', 'missing', 'archived'] as $value) {
+        if (!str_contains($type, "'{$value}'")) {
+            db()->exec("ALTER TABLE `hens` MODIFY COLUMN `status` ENUM('active','sold','deceased','rehomed','missing','archived') NOT NULL DEFAULT 'active'");
+            refresh_schema_columns('hens');
+            return;
+        }
+    }
+}
+
 function table_uses_auto_increment_id(string $table): bool {
     $idColumn = id_column($table);
     if (!$idColumn) {
@@ -1084,7 +1103,9 @@ function map_hen_row_to_record(array $row): array {
         'breed' => (string) column_value($row, ['breed', 'breed_name'], $payload['breed'] ?? ''),
         'breedName' => resolve_breed_name((string) ($breedId ?? '')),
         'locationId' => (string) (related_input_value($payload, ['locationId', 'coopId', 'location_id', 'coop_id']) ?? related_record_app_id_from_foreign_value('coops', (string) column_value($row, ['user_id', 'userId', 'account_id', 'owner_id'], ''), column_value($row, ['coop_id', 'coopId', 'location_id', 'locationId'], ''))),
-        'status' => (string) ($payload['status'] ?? 'Healthy'),
+        'status' => (string) column_value($row, ['status'], $payload['status'] ?? 'active'),
+        'departed_on' => column_value($row, ['departed_on', 'departedOn'], $payload['departed_on'] ?? ($payload['departedOn'] ?? null)),
+        'departure_reason' => column_value($row, ['departure_reason', 'departureReason'], $payload['departure_reason'] ?? ($payload['departureReason'] ?? null)),
         'photoUrl' => column_value($row, ['profile_photo_url', 'photo_url', 'photoUrl', 'photo_path', 'photoPath', 'image_url', 'imageUrl'], $payload['photoUrl'] ?? ($payload['photoPath'] ?? null)),
         'notes' => column_value($row, ['notes'], $payload['notes'] ?? null),
         'dateOfBirth' => column_value($row, ['date_of_birth', 'dateOfBirth', 'acquired_on', 'acquiredOn'], $payload['dateOfBirth'] ?? ($payload['acquiredOn'] ?? null)),
@@ -1111,6 +1132,7 @@ function resolve_breed_name(string $breedId): string {
 }
 
 function upsert_hen(string $userId, array $item): void {
+    ensure_hen_status_values();
     $locationId = related_input_value($item, ['locationId', 'coopId', 'location_id', 'coop_id']);
     $breedId = $item['breed_id'] ?? $item['breedId'] ?? null;
     $dateOfBirth = $item['date_of_birth'] ?? $item['dateOfBirth'] ?? null;

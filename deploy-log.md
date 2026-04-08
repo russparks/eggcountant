@@ -4322,3 +4322,31 @@ Format:
 
 - Result: deployed successfully
 
+## deploy_215120
+- Request time: 2026-04-08 21:51:20 BST
+- User instruction: Restore live site to last pushed data-connections commit a2e0b36
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_215940
+- Request time: 2026-04-08 21:59:40 GMT+1
+- User instruction: Fix hens.status saving for Passed Away and Sold / Moved without changing departed_on/departure_reason logic
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_220140
+- Request time: 2026-04-08 22:01:40 GMT+1
+- User instruction: Fix backend read mapping so status, departed_on, and departure_reason actually return to frontend
+- Notes: deploy started
+
+- Result: deployed successfully
+
+## deploy_223004
+- Request time: 2026-04-08 22:30:04 BST
+- User instruction: manual deploy
+- Notes: deploy started
+
+- Result: deployed successfully
+

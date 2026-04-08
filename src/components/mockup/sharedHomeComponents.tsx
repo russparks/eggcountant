@@ -769,6 +769,8 @@ export function EditHenModal({ henId, onClose }: { henId?: string | null; onClos
       } as any);
       setDepartureStatusLabel(reason);
       setHenDepartureModalOpen(false);
+      setSaveSuccess(true);
+      window.setTimeout(() => { onClose(); }, 1800);
     } catch (error) {
       setDepartureError(error instanceof Error ? error.message : 'Unable to update departure status.');
     } finally {
