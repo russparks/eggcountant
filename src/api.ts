@@ -94,4 +94,9 @@ export const dataApi = {
       method: 'DELETE',
     });
   },
+  uploadPhoto: async (blob: Blob, filename = 'photo.jpg'): Promise<{ url: string }> => {
+    const formData = new FormData();
+    formData.append('photo', blob, filename);
+    return request<{ url: string }>('/upload.php', { method: 'POST', body: formData });
+  },
 };

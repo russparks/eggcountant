@@ -462,11 +462,8 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
     setHenPhotoUploading(true);
     e.target.value = '';
     try {
-      const formData = new FormData();
-      formData.append('photo', blob, 'photo.jpg');
-      const res = await fetch('./api/upload.php', { method: 'POST', credentials: 'include', body: formData });
-      const json = await res.json();
-      if (json.url) setHenPhotoUrl(json.url);
+      const { url } = await dataApi.uploadPhoto(blob);
+      if (url) setHenPhotoUrl(url);
     } catch {
       // Preview stays as data URL fallback — upload failed silently
     } finally {
