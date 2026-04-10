@@ -464,8 +464,12 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
     try {
       const { url } = await dataApi.uploadPhoto(blob);
       if (url) setHenPhotoUrl(url);
-    } catch {
-      // Preview stays as data URL fallback — upload failed silently
+    } catch (err) {
+      console.error('Photo upload failed:', err);
+      // Clear the preview so data URL doesn't get saved to DB
+      setHenPhotoUrl('');
+      setHenPhotoAdded(false);
+      alert('Photo upload failed — please try again. ' + (err instanceof Error ? err.message : ''));
     } finally {
       setHenPhotoUploading(false);
     }

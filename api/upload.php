@@ -44,6 +44,14 @@ $uploadDir = __DIR__ . '/../media/hens/uploads/';
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0755, true);
 }
+if (!is_writable($uploadDir)) {
+    @chmod($uploadDir, 0755);
+}
+if (!is_writable($uploadDir)) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Upload directory is not writable']);
+    exit;
+}
 
 $ext = $allowed[$mimeType];
 $filename = 'hen_' . bin2hex(random_bytes(8)) . '.' . $ext;

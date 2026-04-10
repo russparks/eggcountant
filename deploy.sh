@@ -75,7 +75,7 @@ lftp -u "$FTP_USER,$FTP_PASS" "$FTP_HOST" << LFTP
 set ftp:ssl-allow no
 set net:timeout 30
 mirror -R --delete dist/ ${REMOTE}/
-mirror -R --delete media/ ${REMOTE}/media/
+mirror -R --delete --exclude 'uploads' media/ ${REMOTE}/media/
 put .htaccess -o ${REMOTE}/.htaccess
 mirror -R --delete api/ ${REMOTE}/api/
 chmod 755 ${REMOTE}
@@ -94,6 +94,8 @@ cd ${REMOTE}/media/icons
 glob chmod 644 *
 cd ${REMOTE}/media/hens
 glob chmod 644 *
+-mkdir ${REMOTE}/media/hens/uploads
+chmod 755 ${REMOTE}/media/hens/uploads
 cd ${REMOTE}/media/coops
 glob chmod 644 *
 cd ${REMOTE}/media/nav-icons
