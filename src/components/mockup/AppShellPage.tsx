@@ -1028,11 +1028,12 @@ function FlockContent({ refreshKey = 0, onEditChickCard, onDeleteChickCard, onEd
   const [activeTab, setActiveTab] = useState<'chicks' | 'hens' | 'coops'>('chicks');
   const [hens, setHens] = useState<any[]>([]);
   const [coops, setCoops] = useState<any[]>([]);
+  const [localRefreshKey, setLocalRefreshKey] = useState(0);
 
   useEffect(() => {
     dataApi.list('hens').then(setHens).catch(() => setHens([]));
     dataApi.list('locations').then(setCoops).catch(() => setCoops([]));
-  }, [refreshKey]);
+  }, [refreshKey, localRefreshKey]);
 
   return (
     <div className="w-full">
@@ -1092,7 +1093,7 @@ function FlockContent({ refreshKey = 0, onEditChickCard, onDeleteChickCard, onEd
           <ChickCardsSection onEditCard={onEditChickCard} onDeleteCard={onDeleteChickCard} />
         </div>
         <div className={activeTab === 'hens' ? 'block' : 'hidden'}>
-          <HenCardsSection onEditCard={onEditHenCard} hens={hens} coops={coops} />
+          <HenCardsSection onEditCard={onEditHenCard} onDataChanged={() => setLocalRefreshKey((k) => k + 1)} hens={hens} coops={coops} />
         </div>
         <div className={activeTab === 'coops' ? 'block' : 'hidden'}>
           <CoopCardsSection onEditCard={onEditCoopCard} coops={coops} />

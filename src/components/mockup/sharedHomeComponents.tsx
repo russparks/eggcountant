@@ -1,8 +1,28 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { SURFACE_GRADIENT } from '../../constants';
 import { dataApi } from '../../api';
 
 const surfaceGradient = SURFACE_GRADIENT;
+
+function resizeImage(file: File, maxDim = 600): Promise<{ dataUrl: string; blob: Blob }> {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(maxDim / img.width, maxDim / img.height, 1);
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext('2d')?.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+        canvas.toBlob((blob) => resolve({ dataUrl, blob: blob! }), 'image/jpeg', 0.82);
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 export function ShellCard({ children, className = '', surfaceGradient: gradientOverride = SURFACE_GRADIENT }: { children: React.ReactNode; className?: string; surfaceGradient?: string }) {
   const resolvedClassName = className.replaceAll(SURFACE_GRADIENT, gradientOverride);
@@ -189,8 +209,33 @@ type CoopRecord = {
   photoUrl?: string;
 };
 
-export function HenCardsSection({ onEditCard, hens = [], coops = [] }: { onEditCard?: (henId: string) => void; hens?: HenRecord[]; coops?: CoopRecord[] }) {
+export function HenCardsSection({ onEditCard, onDataChanged, hens = [], coops = [] }: { onEditCard?: (henId: string) => void; onDataChanged?: () => void; hens?: HenRecord[]; coops?: CoopRecord[] }) {
   const coopNameById = new Map(coops.map((coop) => [coop.id, coop.name]));
+  const [restorePending, setRestorePending] = useState<{ id: string; name: string } | null>(null);
+  const [restoring, setRestoring] = useState(false);
+  const [restoreError, setRestoreError] = useState('');
+
+  const confirmRestore = async () => {
+    if (!restorePending) return;
+    const hen = hens.find((h) => h.id === restorePending.id);
+    if (!hen) return;
+    setRestoring(true);
+    setRestoreError('');
+    try {
+      await dataApi.upsert('hens', {
+        ...hen,
+        status: 'active',
+        departed_on: null,
+        departure_reason: null,
+      } as any);
+      setRestorePending(null);
+      onDataChanged?.();
+    } catch (err) {
+      setRestoreError(err instanceof Error ? err.message : 'Unable to restore hen.');
+    } finally {
+      setRestoring(false);
+    }
+  };
 
   if (!hens.length) {
     return <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-5 text-center text-[1rem] font-semibold text-[#9c8abf] shadow-sm">No hens yet.</div>;
@@ -217,34 +262,51 @@ export function HenCardsSection({ onEditCard, hens = [], coops = [] }: { onEditC
   });
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      {sortedHens.map((hen) => {
-        const breedLabel = (hen.breedName || hen.breed || 'Other').trim() || 'Other';
-        const departureIcon = hen.status === 'deceased'
-          ? '/egg/media/icons/ico-hen-perishedX.png'
-          : hen.status === 'rehomed'
-          ? '/egg/media/icons/ico-hen-moved.png'
-          : undefined;
-        return (
-          <HenCard
-            key={hen.id}
-            name={hen.name}
-            coop={coopNameById.get(hen.locationId) ?? 'No coop'}
-            eggs="—"
-            note={ageLabel(hen.dateOfBirth)}
-            breedLabel={breedLabel}
-            medal="/egg/media/icons/gold.png"
-            progress={100}
-            nameColor="#6f4bb8"
-            compact
-            departed={hen.status !== 'active'}
-            departureIcon={departureIcon}
-            profileImage={hen.photoUrl}
-            onEdit={() => onEditCard?.(hen.id)}
-          />
-        );
-      })}
-    </div>
+    <>
+      <div className="grid grid-cols-2 gap-4">
+        {sortedHens.map((hen) => {
+          const breedLabel = (hen.breedName || hen.breed || 'Other').trim() || 'Other';
+          const departureIcon = hen.status === 'deceased'
+            ? '/egg/media/icons/ico-hen-perishedX.png'
+            : hen.status === 'rehomed'
+            ? '/egg/media/icons/ico-hen-moved.png'
+            : undefined;
+          return (
+            <HenCard
+              key={hen.id}
+              name={hen.name}
+              coop={coopNameById.get(hen.locationId) ?? 'No coop'}
+              eggs="—"
+              note={ageLabel(hen.dateOfBirth)}
+              breedLabel={breedLabel}
+              medal="/egg/media/icons/gold.png"
+              progress={100}
+              nameColor="#6f4bb8"
+              compact
+              departed={hen.status !== 'active'}
+              departureIcon={departureIcon}
+              profileImage={hen.photoUrl}
+              onEdit={() => onEditCard?.(hen.id)}
+              onRestoreClick={hen.status !== 'active' ? () => setRestorePending({ id: hen.id, name: hen.name }) : undefined}
+            />
+          );
+        })}
+      </div>
+
+      {restorePending ? (
+        <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
+            <div className="text-[1.45rem] font-bold text-[#6f4bb8]">Restore {restorePending.name}?</div>
+            <div className="mt-2 text-[0.98rem] text-[#9c8abf]">She'll be marked as active again and returned to the top of the flock.</div>
+            {restoreError ? <div className="mt-4 rounded-[var(--ui-radius)] bg-[#fff1f1] px-4 py-3 text-[0.95rem] font-semibold text-[#c05454]">{restoreError}</div> : null}
+            <div className="mt-4 grid gap-3">
+              <button type="button" disabled={restoring} className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50" onClick={confirmRestore}>{restoring ? 'Restoring...' : 'Restore Hen'}</button>
+              <button type="button" disabled={restoring} className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm disabled:opacity-50" onClick={() => { setRestorePending(null); setRestoreError(''); }}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 }
 
@@ -329,6 +391,10 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
   const [henCoop, setHenCoop] = useState('');
   const [henPhotoAdded, setHenPhotoAdded] = useState(false);
   const [henPhotoUrl, setHenPhotoUrl] = useState('');
+  const [henPhotoPickerOpen, setHenPhotoPickerOpen] = useState(false);
+  const [henPhotoUploading, setHenPhotoUploading] = useState(false);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const libraryInputRef = useRef<HTMLInputElement>(null);
   const [henNotesOpen, setHenNotesOpen] = useState(false);
   const [henNotes, setHenNotes] = useState('');
   const [breeds, setBreeds] = useState<any[]>([]);
@@ -385,10 +451,34 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
 
   const selectedBreedLabel = breedOptions.find((breed) => breed.id === selectedBreed)?.name || 'Select breed';
 
+  const handleHenPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const { dataUrl, blob } = await resizeImage(file);
+    // Show preview immediately while upload happens in background
+    setHenPhotoUrl(dataUrl);
+    setHenPhotoAdded(true);
+    setHenPhotoPickerOpen(false);
+    setHenPhotoUploading(true);
+    e.target.value = '';
+    try {
+      const formData = new FormData();
+      formData.append('photo', blob, 'photo.jpg');
+      const res = await fetch('./api/upload.php', { method: 'POST', credentials: 'include', body: formData });
+      const json = await res.json();
+      if (json.url) setHenPhotoUrl(json.url);
+    } catch {
+      // Preview stays as data URL fallback — upload failed silently
+    } finally {
+      setHenPhotoUploading(false);
+    }
+  };
+
   const saveHen = async () => {
     if (!henName.trim()) return;
     setSaving(true);
     try {
+      const safePhotoUrl = henPhotoUrl && !henPhotoUrl.startsWith('data:') ? henPhotoUrl : undefined;
       await dataApi.upsert('hens', {
         id: crypto.randomUUID(),
         name: henName.trim(),
@@ -396,7 +486,7 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
         breed: selectedBreedLabel,
         locationId: henCoop,
         status: 'active',
-        photoUrl: henPhotoUrl || undefined,
+        photoUrl: safePhotoUrl,
         notes: henNotes || undefined,
         date_of_birth: henDob,
       } as any);
@@ -462,19 +552,46 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
             <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
               <div className="flex items-center justify-between gap-3">
                 <div className="text-[1rem] font-semibold text-[#6f4bb8]">{henPhotoAdded ? 'Photo ready' : 'No photo added yet'}</div>
-                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => { const url = window.prompt('Paste photo URL', henPhotoUrl || '/egg/media/hens/hen-1.png'); if (url !== null) { setHenPhotoUrl(url); setHenPhotoAdded(Boolean(url.trim())); } }}>{henPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
+                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setHenPhotoPickerOpen(true)}>{henPhotoAdded ? 'Change photo' : 'Add photo'}</button>
               </div>
+              {henPhotoAdded && henPhotoUrl ? (
+                <div className="mt-3 flex flex-col items-center gap-2">
+                  <div className="relative">
+                    <img src={henPhotoUrl} alt="Hen preview" className={`h-[8rem] w-[8rem] rounded-full border-2 border-[#e7ddfb] object-cover ${henPhotoUploading ? 'opacity-60' : ''}`} />
+                    {henPhotoUploading ? <div className="absolute inset-0 flex items-center justify-center rounded-full"><span className="text-[0.75rem] font-semibold text-[#6f4bb8]">Uploading…</span></div> : null}
+                  </div>
+                </div>
+              ) : null}
             </div>
+            <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleHenPhoto} />
+            <input ref={libraryInputRef} type="file" accept="image/*" className="hidden" onChange={handleHenPhoto} />
 
             <div className="grid grid-cols-2 gap-3">
               <button type="button" onClick={onClose} className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#6f4bb8] shadow-sm">Cancel</button>
-              <button type="button" onClick={saveHen} disabled={saving || saveSuccess} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Added ✓' : saving ? 'Saving...' : "Let's Cluckin' Go!"}</button>
+              <button type="button" onClick={saveHen} disabled={saving || saveSuccess || henPhotoUploading} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Added ✓' : saving ? 'Saving...' : henPhotoUploading ? 'Photo uploading…' : "Let's Cluckin' Go!"}</button>
             </div>
           </div>
         </div>
       </div>
 
       <HenBreedPicker open={breedModalOpen} onClose={() => setBreedModalOpen(false)} selectedBreed={selectedBreed} setSelectedBreed={setSelectedBreed} breedOptions={breedOptions} />
+
+      {henPhotoPickerOpen ? (
+        <div className="fixed inset-0 z-[77] flex items-end justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px] sm:items-center">
+          <div className={`w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
+            <div className="text-[1.3rem] font-bold text-[#6f4bb8]">{henPhotoAdded ? 'Change Photo' : 'Add Photo'}</div>
+            <div className="mt-4 grid gap-3">
+              <button type="button" className="flex items-center gap-3 rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => cameraInputRef.current?.click()}>
+                <span className="text-[1.4rem]">📷</span> Take Photo
+              </button>
+              <button type="button" className="flex items-center gap-3 rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => libraryInputRef.current?.click()}>
+                <span className="text-[1.4rem]">🖼️</span> Upload from Library
+              </button>
+              <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setHenPhotoPickerOpen(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }
@@ -1056,6 +1173,7 @@ export function HenCard({
   compactMode = 'hen',
   departed = false,
   departureIcon,
+  onRestoreClick,
 }: {
   name: string;
   coop: string;
@@ -1071,6 +1189,7 @@ export function HenCard({
   compactMode?: 'hen' | 'coop';
   departed?: boolean;
   departureIcon?: string;
+  onRestoreClick?: () => void;
   onEdit?: () => void;
 }) {
   if (compact) {
@@ -1083,10 +1202,9 @@ export function HenCard({
         <div className="relative mt-3 flex justify-center">
           <div className={`flex w-full justify-center ${fade}`}>
             {profileImage ? (
-              <img src={profileImage} alt="" className="h-[8.4rem] w-[92%] object-contain bg-transparent" />
-            ) : (
-              <div className="flex h-[8.4rem] w-[92%] items-center justify-center rounded-[var(--ui-radius)] bg-[#f7f2ff] text-[0.95rem] font-semibold text-[#c4b2f4]">No photo</div>
-            )}
+              <img src={profileImage} alt="" className="h-[8.4rem] w-[92%] object-contain bg-transparent" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; (e.currentTarget.nextElementSibling as HTMLElement | null)?.style.setProperty('display', 'flex'); }} />
+            ) : null}
+            <div className={`h-[8.4rem] w-[92%] items-center justify-center rounded-[var(--ui-radius)] bg-[#f7f2ff] text-[0.95rem] font-semibold text-[#c4b2f4] ${profileImage ? 'hidden' : 'flex'}`}>No photo</div>
             {profileBadge ? (
               <img
                 src={`/egg/media/icons/${profileBadge}-over.png`}
@@ -1095,7 +1213,11 @@ export function HenCard({
               />
             ) : null}
           </div>
-          {departed && departureIcon ? <img src={departureIcon} alt="" className="pointer-events-none absolute right-[4%] bottom-0 h-[3.2rem] w-auto object-contain" /> : null}
+          {departed && departureIcon ? (
+            <button type="button" onClick={onRestoreClick} className="absolute right-[4%] bottom-0 p-0 bg-transparent">
+              <img src={departureIcon} alt="Restore hen" className="h-[3.2rem] w-auto object-contain" />
+            </button>
+          ) : null}
         </div>
         <div className={fade}>
           <hr className="mt-3 border-0 border-t border-slate-200" />
