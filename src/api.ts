@@ -20,14 +20,14 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     data = text ? JSON.parse(text) : {};
   } catch {
     if (!response.ok) {
-      throw new Error(text || 'Request failed');
+      throw new Error(`HTTP ${response.status}: ${text.substring(0, 300) || 'Request failed'}`);
     }
     throw new Error('Invalid server response');
   }
 
   if (!response.ok) {
     const detail = data.detail ? ` (${data.detail})` : '';
-    throw new Error((data.error || 'Request failed') + detail);
+    throw new Error(`HTTP ${response.status}: ${data.error || 'Request failed'}` + detail);
   }
 
   return data as T;
