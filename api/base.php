@@ -31,7 +31,7 @@ if ($config && isset($config['db'])) {
             'mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['name'] . ';charset=' . $config['db']['charset'],
             $config['db']['user'],
             $config['db']['password'],
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_THROW]
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
         );
     } catch (PDOException $e) {
         error_log('DB error: ' . $e->getMessage());
