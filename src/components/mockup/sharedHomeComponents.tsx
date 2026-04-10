@@ -210,10 +210,21 @@ export function HenCardsSection({ onEditCard, hens = [], coops = [] }: { onEditC
     return remMonths === 0 ? `AGE: ${years}y` : `AGE: ${years}y ${remMonths}m`;
   };
 
+  const sortedHens = [...hens].sort((a, b) => {
+    const aActive = a.status === 'active' ? 0 : 1;
+    const bActive = b.status === 'active' ? 0 : 1;
+    return aActive - bActive;
+  });
+
   return (
     <div className="grid grid-cols-2 gap-4">
-      {hens.map((hen) => {
+      {sortedHens.map((hen) => {
         const breedLabel = (hen.breedName || hen.breed || 'Other').trim() || 'Other';
+        const departureIcon = hen.status === 'deceased'
+          ? '/egg/media/icons/ico-hen-perishedX.png'
+          : hen.status === 'rehomed'
+          ? '/egg/media/icons/ico-hen-moved.png'
+          : undefined;
         return (
           <HenCard
             key={hen.id}
@@ -226,6 +237,8 @@ export function HenCardsSection({ onEditCard, hens = [], coops = [] }: { onEditC
             progress={100}
             nameColor="#6f4bb8"
             compact
+            departed={hen.status !== 'active'}
+            departureIcon={departureIcon}
             profileImage={hen.photoUrl}
             onEdit={() => onEditCard?.(hen.id)}
           />
@@ -235,7 +248,7 @@ export function HenCardsSection({ onEditCard, hens = [], coops = [] }: { onEditC
   );
 }
 
-export function CoopCardsSection({ onEditCard, coops = [] }: { onEditCard?: () => void; coops?: CoopRecord[] }) {
+export function CoopCardsSection({ onEditCard, coops = [] }: { onEditCard?: (coopId: string) => void; coops?: CoopRecord[] }) {
   if (!coops.length) {
     return <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-5 text-center text-[1rem] font-semibold text-[#9c8abf] shadow-sm">No coops yet.</div>;
   }
@@ -255,7 +268,7 @@ export function CoopCardsSection({ onEditCard, coops = [] }: { onEditCard?: () =
           compact
           compactMode="coop"
           profileImage={coop.photoUrl || '/egg/media/icons/ico-coop.png'}
-          onEdit={onEditCard}
+          onEdit={() => onEditCard?.(coop.id)}
         />
       ))}
     </div>
@@ -478,6 +491,16 @@ export function AddCoopModal({ onClose }: { onClose: () => void }) {
   const [addCoopPhotoOffset, setAddCoopPhotoOffset] = useState(0);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [existingLocations, setExistingLocations] = useState<string[]>([]);
+
+  useEffect(() => {
+    dataApi.list('locations').then((items) => {
+      const labels = (items as any[])
+        .map((c) => c.location_label || c.locationLabel || '')
+        .filter((l) => l.trim() !== '');
+      setExistingLocations([...new Set(labels)]);
+    }).catch(() => setExistingLocations([]));
+  }, []);
 
   const saveCoop = async () => {
     if (!addCoopName.trim()) return;
@@ -516,7 +539,13 @@ export function AddCoopModal({ onClose }: { onClose: () => void }) {
             <div className="grid grid-cols-[1fr_auto] gap-3">
               <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                 <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Location</div>
-                <input type="text" value={addCoopLocation} onChange={(e) => setAddCoopLocation(e.target.value)} placeholder="e.g. Back Garden" className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
+                <div className="mt-2 flex items-center gap-1">
+                  <input id="add-coop-location-input" type="text" list="coop-location-options" value={addCoopLocation} onChange={(e) => setAddCoopLocation(e.target.value)} placeholder="e.g. Back Garden" className="w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
+                  {existingLocations.length > 0 && <button type="button" tabIndex={-1} className="shrink-0 text-[1.1rem] leading-none text-[#c4b2f4] hover:text-[#6f4bb8]" onClick={() => { setAddCoopLocation(''); document.getElementById('add-coop-location-input')?.focus(); }}>▾</button>}
+                </div>
+                <datalist id="coop-location-options">
+                  {existingLocations.map((loc) => <option key={loc} value={loc} />)}
+                </datalist>
               </label>
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setAddCoopNotesOpen((v) => !v)}>{addCoopNotes ? 'Edit notes' : 'Notes'}</button>
             </div>
@@ -578,15 +607,74 @@ export function AddCoopModal({ onClose }: { onClose: () => void }) {
   );
 }
 
-export function EditCoopModal({ onClose }: { onClose: () => void }) {
-  const [coopName, setCoopName] = useState('Willow House');
-  const [coopLocation, setCoopLocation] = useState('Home');
-  const [coopPhotoAdded, setCoopPhotoAdded] = useState(true);
+export function EditCoopModal({ coopId, onClose }: { coopId?: string | null; onClose: () => void }) {
+  const [coopName, setCoopName] = useState('');
+  const [coopLocation, setCoopLocation] = useState('');
+  const [coopPhotoAdded, setCoopPhotoAdded] = useState(false);
+  const [coopPhotoUrl, setCoopPhotoUrl] = useState('');
   const [coopPhotoMiniModalOpen, setCoopPhotoMiniModalOpen] = useState(false);
   const [coopNotesOpen, setCoopNotesOpen] = useState(false);
-  const [coopNotes, setCoopNotes] = useState('Main laying coop, cleaned twice weekly, south-facing run.');
+  const [coopNotes, setCoopNotes] = useState('');
   const [coopPhotoZoom, setCoopPhotoZoom] = useState(1);
   const [coopPhotoOffset, setCoopPhotoOffset] = useState(0);
+  const [coops, setCoops] = useState<any[]>([]);
+  const [existingLocations, setExistingLocations] = useState<string[]>([]);
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
+
+  useEffect(() => {
+    dataApi.list('locations').then((items) => {
+      const list = items as any[];
+      setCoops(list);
+      const labels = list.map((c) => c.location_label || '').filter((l) => l.trim() !== '');
+      setExistingLocations([...new Set(labels)]);
+      const coop = list.find((c) => String(c.id) === String(coopId || '')) || list[0];
+      if (!coop) return;
+      setCoopName(String(coop.name || ''));
+      setCoopLocation(String(coop.location_label || ''));
+      setCoopNotes(String(coop.notes || ''));
+      setCoopPhotoUrl(String(coop.photoUrl || ''));
+      setCoopPhotoAdded(Boolean(coop.photoUrl));
+    }).catch(() => {});
+  }, []);
+
+  const currentCoop = coops.find((c) => String(c.id) === String(coopId || '')) || coops[0];
+
+  const deleteCoop = async () => {
+    if (!currentCoop?.id) return;
+    setSaving(true);
+    setDeleteError('');
+    try {
+      await dataApi.remove('locations', String(currentCoop.id));
+      setDeleteModalOpen(false);
+      onClose();
+    } catch (error) {
+      setDeleteError(error instanceof Error ? error.message : 'Unable to delete coop.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const saveCoop = async () => {
+    if (!currentCoop?.id || !coopName.trim()) return;
+    setSaving(true);
+    try {
+      await dataApi.upsert('locations', {
+        ...currentCoop,
+        id: currentCoop.id,
+        name: coopName.trim(),
+        location_label: coopLocation,
+        notes: coopNotes || undefined,
+        photoUrl: coopPhotoUrl || undefined,
+      } as any);
+      setSaveSuccess(true);
+      window.setTimeout(() => { onClose(); }, 1800);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <>
@@ -606,11 +694,13 @@ export function EditCoopModal({ onClose }: { onClose: () => void }) {
             <div className="grid grid-cols-[1fr_auto] gap-3">
               <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                 <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Location</div>
-                <select value={coopLocation} onChange={(e) => setCoopLocation(e.target.value)} className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none">
-                  <option>Home</option>
-                  <option>Allotment</option>
-                  <option>Other</option>
-                </select>
+                <div className="mt-2 flex items-center gap-1">
+                  <input id="edit-coop-location-input" type="text" list="edit-coop-location-options" value={coopLocation} onChange={(e) => setCoopLocation(e.target.value)} placeholder="e.g. Back Garden" className="w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
+                  {existingLocations.length > 0 && <button type="button" tabIndex={-1} className="shrink-0 text-[1.1rem] leading-none text-[#c4b2f4] hover:text-[#6f4bb8]" onClick={() => { setCoopLocation(''); document.getElementById('edit-coop-location-input')?.focus(); }}>▾</button>}
+                </div>
+                <datalist id="edit-coop-location-options">
+                  {existingLocations.map((loc) => <option key={loc} value={loc} />)}
+                </datalist>
               </label>
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setCoopNotesOpen((v) => !v)}>{coopNotes ? 'Edit notes' : 'Notes'}</button>
             </div>
@@ -620,7 +710,7 @@ export function EditCoopModal({ onClose }: { onClose: () => void }) {
                 <div className="text-[1rem] font-semibold text-[#6f4bb8]">{coopPhotoAdded ? 'Current photo' : 'No photo added yet'}</div>
                 <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-4 py-3 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setCoopPhotoMiniModalOpen(true)}>{coopPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
               </div>
-              {coopPhotoAdded ? <div className="mt-3 flex justify-center"><img src="/egg/media/coops/coop-1.png" alt="Coop" className="h-[8rem] w-full rounded-[1rem] border border-[#e7ddfb] object-cover" /></div> : null}
+              {coopPhotoAdded ? <div className="mt-3 flex justify-center"><img src={coopPhotoUrl || '/egg/media/icons/ico-coop.png'} alt="Coop" className="h-[8rem] w-full rounded-[1rem] border border-[#e7ddfb] object-cover" /></div> : null}
             </div>
 
             {coopNotesOpen ? (
@@ -630,13 +720,29 @@ export function EditCoopModal({ onClose }: { onClose: () => void }) {
               </div>
             ) : null}
 
+            <button type="button" onClick={() => setDeleteModalOpen(true)} disabled={saving} className="w-full rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-5 py-3 text-[1rem] font-semibold text-[#d14d6f] shadow-sm disabled:opacity-50">Delete coop</button>
+
             <div className="grid grid-cols-2 gap-3">
               <button type="button" onClick={onClose} className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#6f4bb8] shadow-sm">Cancel</button>
-              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Save</button>
+              <button type="button" onClick={saveCoop} disabled={saving || saveSuccess} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Updated ✓' : saving ? 'Saving...' : 'Save'}</button>
             </div>
           </div>
         </div>
       </div>
+
+      {deleteModalOpen ? (
+        <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
+          <div className={`w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
+            <div className="text-[1.45rem] font-bold text-[#6f4bb8]">Delete {coopName || 'this coop'}?</div>
+            <div className="mt-2 text-[0.98rem] text-[#c4b2f4]">This will permanently remove the coop. Hens assigned to it will need to be reassigned.</div>
+            {deleteError ? <div className="mt-4 rounded-[var(--ui-radius)] bg-[#fff1f1] px-4 py-3 text-[0.95rem] font-semibold text-[#c05454]">{deleteError}</div> : null}
+            <div className="mt-4 grid gap-3">
+              <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-4 py-3 text-[1rem] font-semibold text-[#d14d6f] shadow-sm disabled:opacity-50" onClick={deleteCoop}>{saving ? 'Deleting...' : 'Yes, delete coop'}</button>
+              <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50" onClick={() => setDeleteModalOpen(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       {coopPhotoMiniModalOpen ? (
         <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
@@ -693,6 +799,7 @@ export function EditHenModal({ henId, onClose }: { henId?: string | null; onClos
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [departureError, setDepartureError] = useState('');
   const [departureStatusLabel, setDepartureStatusLabel] = useState('Hen Status');
+  const [pendingDeparture, setPendingDeparture] = useState<'Sold / Moved' | 'Passed Away' | null>(null);
 
   useEffect(() => {
     dataApi.list('breeds' as any).then((items) => setBreeds(items as any[])).catch(() => setBreeds([]));
@@ -763,40 +870,7 @@ export function EditHenModal({ henId, onClose }: { henId?: string | null; onClos
     }
   };
 
-  const markActive = async () => {
-    if (!currentHen?.id) {
-      setDepartureError('No hen selected.');
-      return;
-    }
-    setSaving(true);
-    setDepartureError('');
-    try {
-      await dataApi.upsert('hens', {
-        ...currentHen,
-        id: currentHen.id,
-        name: editHenName.trim(),
-        breed_id: editSelectedBreed || null,
-        breed: selectedBreedLabel,
-        date_of_birth: editHenDob || null,
-        locationId: editHenCoop,
-        notes: editHenNotes || undefined,
-        photoUrl: editHenPhotoUrl || undefined,
-        status: 'active',
-        departed_on: null,
-        departure_reason: null,
-      } as any);
-      setDepartureStatusLabel('Hen Status');
-      setHenDepartureModalOpen(false);
-      setSaveSuccess(true);
-      window.setTimeout(() => { onClose(); }, 1800);
-    } catch (error) {
-      setDepartureError(error instanceof Error ? error.message : 'Unable to update status.');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const markDeparted = async (reason: 'Passed Away' | 'Sold / Moved') => {
+  const markDeparted = async (reason: 'Sold / Moved' | 'Passed Away') => {
     if (!currentHen?.id) {
       setDepartureError('No hen selected.');
       return;
@@ -819,6 +893,7 @@ export function EditHenModal({ henId, onClose }: { henId?: string | null; onClos
         departure_reason: reason,
       } as any);
       setDepartureStatusLabel(reason);
+      setPendingDeparture(null);
       setHenDepartureModalOpen(false);
       setSaveSuccess(true);
       window.setTimeout(() => { onClose(); }, 1800);
@@ -876,7 +951,7 @@ export function EditHenModal({ henId, onClose }: { henId?: string | null; onClos
                 <div className="text-[1rem] font-semibold text-[#6f4bb8]">{editHenPhotoAdded ? 'Photo ready' : 'No photo added yet'}</div>
                 <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-3 py-2 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => { const url = window.prompt('Paste photo URL', editHenPhotoUrl || '/egg/media/hens/hen-1.png'); if (url !== null) { setEditHenPhotoUrl(url); setEditHenPhotoAdded(Boolean(url.trim())); } }}>{editHenPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
               </div>
-              {editHenPhotoAdded ? <div className="mt-3 flex justify-center"><div className="relative"><img src={editHenPhotoUrl || '/egg/media/hens/hen-1.png'} alt="Hen" className={`h-[8rem] w-[8rem] rounded-full border-2 border-[#e7ddfb] object-cover ${departureStatusLabel !== 'Hen Status' ? 'grayscale opacity-70' : ''}`} />{departureStatusLabel === 'Passed Away' ? <img src="/egg/media/icons/ico-hen-perishedX.png" alt="" className="absolute right-0 bottom-0 h-[5rem] w-auto object-contain" /> : null}{departureStatusLabel === 'Sold / Moved' ? <img src="/egg/media/icons/ico-hen-moved.png" alt="" className="absolute right-0 bottom-0 h-[5rem] w-auto object-contain" /> : null}</div></div> : null}
+              {editHenPhotoAdded ? <div className="mt-3 flex justify-center"><div className="relative"><img src={editHenPhotoUrl || '/egg/media/hens/hen-1.png'} alt="Hen" className={`h-[8rem] w-[8rem] rounded-full border-2 border-[#e7ddfb] object-cover ${departureStatusLabel !== 'Hen Status' ? 'grayscale opacity-70' : ''}`} />{departureStatusLabel === 'Sold / Moved' ? <img src="/egg/media/icons/ico-hen-moved.png" alt="" className="absolute right-0 bottom-0 h-[5rem] w-auto object-contain" /> : null}{departureStatusLabel === 'Passed Away' ? <img src="/egg/media/icons/ico-hen-perishedX.png" alt="" className="absolute right-0 bottom-0 h-[5rem] w-auto object-contain" /> : null}</div></div> : null}
             </div>
 
             {editHenNotesOpen ? (
@@ -887,7 +962,7 @@ export function EditHenModal({ henId, onClose }: { henId?: string | null; onClos
             ) : null}
 
             <div className="grid grid-cols-2 gap-3">
-              <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-[#c4b2f4] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-sm" onClick={() => setHenDepartureModalOpen(true)}>{departureStatusLabel}</button>
+              <button type="button" className="w-full rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-5 py-4 text-[1.05rem] font-semibold text-[#d14d6f] shadow-sm" onClick={() => { setPendingDeparture(null); setDepartureError(''); setHenDepartureModalOpen(true); }}>Remove Hen</button>
               <button type="button" onClick={saveHen} disabled={saving || saveSuccess} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Updated ✓' : saving ? 'Updating...' : 'Update'}</button>
             </div>
           </div>
@@ -930,15 +1005,34 @@ export function EditHenModal({ henId, onClose }: { henId?: string | null; onClos
       {henDepartureModalOpen ? (
         <div className="fixed inset-0 z-[76] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
           <div className={`w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 text-[#6f4bb8] shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
-            <div className="text-[1.45rem] font-bold text-[#6f4bb8]">Mark Willow as departed?</div>
-            <div className="mt-2 text-[0.98rem] text-[#c4b2f4]">Choose how Willow left the flock. This keeps her records tidy without deleting her history.</div>
-            {departureError ? <div className="mt-4 rounded-[var(--ui-radius)] bg-[#fff1f1] px-4 py-3 text-[0.95rem] font-semibold text-[#c05454]">{departureError}</div> : null}
-            <div className="mt-4 grid gap-3">
-              <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm disabled:opacity-50" onClick={() => markDeparted('Sold / Moved')}>{saving ? 'Saving...' : 'Sold / Moved'}</button>
-              <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-4 py-3 text-[1rem] font-semibold text-[#d14d6f] shadow-sm disabled:opacity-50" onClick={() => markDeparted('Passed Away')}>{saving ? 'Saving...' : 'Passed Away'}</button>
-              <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] border border-[#c8f5d6] bg-[#f2fcf6] px-4 py-3 text-[1rem] font-semibold text-[#2e7d4f] shadow-sm disabled:opacity-50" onClick={() => markActive()}>{saving ? 'Saving...' : 'Active'}</button>
-              <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50" onClick={() => setHenDepartureModalOpen(false)}>Cancel</button>
-            </div>
+            {pendingDeparture === null ? (
+              <>
+                <div className="text-[1.45rem] font-bold text-[#6f4bb8]">Remove Hen</div>
+                <div className="mt-2 text-[0.98rem] text-[#c4b2f4]">What happened? This keeps her records without deleting her history.</div>
+                {departureError ? <div className="mt-4 rounded-[var(--ui-radius)] bg-[#fff1f1] px-4 py-3 text-[0.95rem] font-semibold text-[#c05454]">{departureError}</div> : null}
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <button type="button" className="flex flex-col items-center gap-2 rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-4 text-[0.95rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => { setDepartureError(''); setPendingDeparture('Sold / Moved'); }}>
+                    <img src="/egg/media/icons/ico-hen-moved.png" alt="" className="h-[3.5rem] w-auto object-contain" />
+                    Sold / Moved
+                  </button>
+                  <button type="button" className="flex flex-col items-center gap-2 rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-4 py-4 text-[0.95rem] font-semibold text-[#d14d6f] shadow-sm" onClick={() => { setDepartureError(''); setPendingDeparture('Passed Away'); }}>
+                    <img src="/egg/media/icons/ico-hen-perishedX.png" alt="" className="h-[3.5rem] w-auto object-contain" />
+                    Passed Away
+                  </button>
+                </div>
+                <button type="button" className="mt-3 w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => { setHenDepartureModalOpen(false); }}>Cancel</button>
+              </>
+            ) : (
+              <>
+                <div className="text-[1.45rem] font-bold text-[#6f4bb8]">Confirm — {pendingDeparture}</div>
+                <div className="mt-2 text-[0.98rem] text-[#c4b2f4]">This will mark her as {pendingDeparture === 'Passed Away' ? 'passed away' : 'sold / moved'} and record today as her departure date.</div>
+                {departureError ? <div className="mt-4 rounded-[var(--ui-radius)] bg-[#fff1f1] px-4 py-3 text-[0.95rem] font-semibold text-[#c05454]">{departureError}</div> : null}
+                <div className="mt-4 grid gap-3">
+                  <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50" onClick={() => markDeparted(pendingDeparture)}>{saving ? 'Saving...' : 'Confirm'}</button>
+                  <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm disabled:opacity-50" onClick={() => setPendingDeparture(null)}>Back</button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       ) : null}
@@ -960,6 +1054,8 @@ export function HenCard({
   profileBadge,
   breedLabel,
   compactMode = 'hen',
+  departed = false,
+  departureIcon,
 }: {
   name: string;
   coop: string;
@@ -973,44 +1069,52 @@ export function HenCard({
   profileBadge?: 'gold' | 'silver' | 'bronze';
   breedLabel?: string;
   compactMode?: 'hen' | 'coop';
+  departed?: boolean;
+  departureIcon?: string;
   onEdit?: () => void;
 }) {
   if (compact) {
+    const fade = departed ? 'opacity-50 grayscale' : '';
     return (
       <ShellCard surfaceGradient="bg-[linear-gradient(135deg,_#f1ecfb_0%,_#ffffff_58%,_#f3edff_100%)]" className={`border border-[#d9c9fb] ${surfaceGradient} p-3`}>
-        <div className="flex min-h-[3.4rem] w-full items-center justify-center overflow-hidden bg-transparent">
+        <div className={`flex min-h-[3.4rem] w-full items-center justify-center overflow-hidden bg-transparent ${fade}`}>
           <div className="m-0 line-clamp-2 w-full text-center text-[1.55rem] font-bold leading-none text-[#6f4bb8]">{name}</div>
         </div>
         <div className="relative mt-3 flex justify-center">
-          {profileImage ? (
-            <img src={profileImage} alt="" className="h-[8.4rem] w-[92%] object-contain bg-transparent" />
-          ) : (
-            <div className="flex h-[8.4rem] w-[92%] items-center justify-center rounded-[var(--ui-radius)] bg-[#f7f2ff] text-[0.95rem] font-semibold text-[#c4b2f4]">No photo</div>
-          )}
-          {profileBadge ? (
-            <img
-              src={`/egg/media/icons/${profileBadge}-over.png`}
-              alt=""
-              className="absolute bottom-0 left-[75%] h-[2.3025rem] w-auto -translate-x-1/2 object-contain"
-            />
-          ) : null}
-        </div>
-        <hr className="mt-3 border-0 border-t border-slate-200" />
-        {compactMode === 'hen' ? (
-          <>
-            <div className="mt-[0.05rem] text-center text-[1rem] text-[#c4b2f4]">{note}</div>
-            <div className="mt-[0.05rem] text-center text-[1.2rem] italic text-[#9E9E9E]">{breedLabel ?? 'Other'}</div>
-          </>
-        ) : (
-          <div className="mt-[0.05rem] text-center text-[0.9rem] uppercase text-[#9E9E9E]">{note}</div>
-        )}
-        <hr className="mt-[0.35rem] border-0 border-t border-slate-200" />
-        <div className="mt-[0.35rem] flex items-center justify-between gap-2 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
-          <div className="flex items-center gap-2">
-            <img src={compactMode === 'coop' ? '/egg/media/icons/ico-chick.png' : '/egg/media/icons/ico-egg.png'} alt="" className="h-[1.99rem] w-auto object-contain" />
-            <span>x {eggs}</span>
+          <div className={`flex w-full justify-center ${fade}`}>
+            {profileImage ? (
+              <img src={profileImage} alt="" className="h-[8.4rem] w-[92%] object-contain bg-transparent" />
+            ) : (
+              <div className="flex h-[8.4rem] w-[92%] items-center justify-center rounded-[var(--ui-radius)] bg-[#f7f2ff] text-[0.95rem] font-semibold text-[#c4b2f4]">No photo</div>
+            )}
+            {profileBadge ? (
+              <img
+                src={`/egg/media/icons/${profileBadge}-over.png`}
+                alt=""
+                className="absolute bottom-0 left-[75%] h-[2.3025rem] w-auto -translate-x-1/2 object-contain"
+              />
+            ) : null}
           </div>
-          <button type="button" onClick={onEdit} className="bg-transparent p-0"><img src="/egg/media/icons/ico-edit-hand.png" alt="" className="h-[1.99rem] w-auto object-contain" /></button>
+          {departed && departureIcon ? <img src={departureIcon} alt="" className="pointer-events-none absolute right-[4%] bottom-0 h-[3.2rem] w-auto object-contain" /> : null}
+        </div>
+        <div className={fade}>
+          <hr className="mt-3 border-0 border-t border-slate-200" />
+          {compactMode === 'hen' ? (
+            <>
+              <div className="mt-[0.05rem] text-center text-[1rem] text-[#c4b2f4]">{note}</div>
+              <div className="mt-[0.05rem] text-center text-[1.2rem] italic text-[#9E9E9E]">{breedLabel ?? 'Other'}</div>
+            </>
+          ) : (
+            <div className="mt-[0.05rem] text-center text-[0.9rem] uppercase text-[#9E9E9E]">{note}</div>
+          )}
+          <hr className="mt-[0.35rem] border-0 border-t border-slate-200" />
+          <div className="mt-[0.35rem] flex items-center justify-between gap-2 text-[1.326rem] font-bold leading-none text-[#9E9E9E]">
+            <div className="flex items-center gap-2">
+              <img src={compactMode === 'coop' ? '/egg/media/icons/ico-chick.png' : '/egg/media/icons/ico-egg.png'} alt="" className="h-[1.99rem] w-auto object-contain" />
+              <span>x {eggs}</span>
+            </div>
+            <button type="button" onClick={onEdit} className="bg-transparent p-0"><img src="/egg/media/icons/ico-edit-hand.png" alt="" className="h-[1.99rem] w-auto object-contain" /></button>
+          </div>
         </div>
       </ShellCard>
     );
