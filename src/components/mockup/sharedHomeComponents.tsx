@@ -254,7 +254,7 @@ export function CoopCardsSection({ onEditCard, coops = [] }: { onEditCard?: () =
           nameColor="#6f4bb8"
           compact
           compactMode="coop"
-          profileImage={coop.photoUrl}
+          profileImage={coop.photoUrl || '/egg/media/icons/ico-coop.png'}
           onEdit={onEditCard}
         />
       ))}
@@ -468,13 +468,35 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
 
 export function AddCoopModal({ onClose }: { onClose: () => void }) {
   const [addCoopName, setAddCoopName] = useState('');
-  const [addCoopLocation, setAddCoopLocation] = useState('Home');
+  const [addCoopLocation, setAddCoopLocation] = useState('');
   const [addCoopPhotoAdded, setAddCoopPhotoAdded] = useState(false);
+  const [addCoopPhotoUrl, setAddCoopPhotoUrl] = useState('');
   const [addCoopPhotoMiniModalOpen, setAddCoopPhotoMiniModalOpen] = useState(false);
   const [addCoopNotesOpen, setAddCoopNotesOpen] = useState(false);
   const [addCoopNotes, setAddCoopNotes] = useState('');
   const [addCoopPhotoZoom, setAddCoopPhotoZoom] = useState(1);
   const [addCoopPhotoOffset, setAddCoopPhotoOffset] = useState(0);
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  const saveCoop = async () => {
+    if (!addCoopName.trim()) return;
+    setSaving(true);
+    try {
+      await dataApi.upsert('locations', {
+        id: crypto.randomUUID(),
+        name: addCoopName.trim(),
+        location_label: addCoopLocation,
+        status: 'active',
+        photoUrl: addCoopPhotoUrl || undefined,
+        notes: addCoopNotes || undefined,
+      } as any);
+      setSaveSuccess(true);
+      window.setTimeout(() => { onClose(); }, 1800);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <>
@@ -494,11 +516,7 @@ export function AddCoopModal({ onClose }: { onClose: () => void }) {
             <div className="grid grid-cols-[1fr_auto] gap-3">
               <label className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
                 <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Location</div>
-                <select value={addCoopLocation} onChange={(e) => setAddCoopLocation(e.target.value)} className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none">
-                  <option>Home</option>
-                  <option>Allotment</option>
-                  <option>Other</option>
-                </select>
+                <input type="text" value={addCoopLocation} onChange={(e) => setAddCoopLocation(e.target.value)} placeholder="e.g. Back Garden" className="mt-2 w-full bg-transparent text-[1rem] font-semibold text-[#6f4bb8] outline-none placeholder:text-[#c4b2f4]" />
               </label>
               <button type="button" className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setAddCoopNotesOpen((v) => !v)}>{addCoopNotes ? 'Edit notes' : 'Notes'}</button>
             </div>
@@ -520,7 +538,7 @@ export function AddCoopModal({ onClose }: { onClose: () => void }) {
 
             <div className="grid grid-cols-2 gap-3">
               <button type="button" onClick={onClose} className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#6f4bb8] shadow-sm">Cancel</button>
-              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]">Save</button>
+              <button type="button" onClick={saveCoop} disabled={saving || saveSuccess} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Added ✓' : saving ? 'Saving...' : 'Save'}</button>
             </div>
           </div>
         </div>

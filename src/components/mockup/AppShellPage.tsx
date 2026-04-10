@@ -1024,7 +1024,7 @@ function HomeContent() {
   );
 }
 
-function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard, onEditCoopCard, onAddChickCard, onAddHenCard, onAddCoopCard }: { onEditChickCard: () => void; onDeleteChickCard: () => void; onEditHenCard: (henId: string) => void; onEditCoopCard: () => void; onAddChickCard: () => void; onAddHenCard: () => void; onAddCoopCard: () => void }) {
+function FlockContent({ refreshKey = 0, onEditChickCard, onDeleteChickCard, onEditHenCard, onEditCoopCard, onAddChickCard, onAddHenCard, onAddCoopCard }: { refreshKey?: number; onEditChickCard: () => void; onDeleteChickCard: () => void; onEditHenCard: (henId: string) => void; onEditCoopCard: () => void; onAddChickCard: () => void; onAddHenCard: () => void; onAddCoopCard: () => void }) {
   const [activeTab, setActiveTab] = useState<'chicks' | 'hens' | 'coops'>('chicks');
   const [hens, setHens] = useState<any[]>([]);
   const [coops, setCoops] = useState<any[]>([]);
@@ -1032,7 +1032,7 @@ function FlockContent({ onEditChickCard, onDeleteChickCard, onEditHenCard, onEdi
   useEffect(() => {
     dataApi.list('hens').then(setHens).catch(() => setHens([]));
     dataApi.list('locations').then(setCoops).catch(() => setCoops([]));
-  }, []);
+  }, [refreshKey]);
 
   return (
     <div className="w-full">
@@ -1272,6 +1272,7 @@ export default function AppShellPage({ title, active }: { title: string; active:
   const [bottomNavOpen, setBottomNavOpen] = useState(false);
   const [activeModal, setActiveModal] = useState<ModalKey>('none');
   const [selectedHenId, setSelectedHenId] = useState<string | null>(null);
+  const [flockRefreshKey, setFlockRefreshKey] = useState(0);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -1333,7 +1334,7 @@ export default function AppShellPage({ title, active }: { title: string; active:
       {activeModal === 'eggs' ? <AddEggsModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'chicks' ? <AddChicksModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'hen' ? <AddHenModal onClose={() => setActiveModal('none')} /> : null}
-      {activeModal === 'coop' ? <AddCoopModal onClose={() => setActiveModal('none')} /> : null}
+      {activeModal === 'coop' ? <AddCoopModal onClose={() => { setActiveModal('none'); setFlockRefreshKey((k) => k + 1); }} /> : null}
       {activeModal === 'editHen' ? <EditHenModal henId={selectedHenId} onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'editCoop' ? <EditCoopModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'meds' ? <AddMedsModal onClose={() => setActiveModal('none')} /> : null}
@@ -1343,7 +1344,7 @@ export default function AppShellPage({ title, active }: { title: string; active:
       <main className="mx-auto flex min-h-[calc(100vh-11rem)] max-w-6xl items-start px-4 pt-5 pb-40 sm:px-6 lg:px-8">
         {active === 'home' ? <HomeContent /> : active === 'calendar' ? <div className="w-full">
 
-          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : active === 'flock' ? <FlockContent onEditChickCard={() => setActiveModal('editChicks')} onDeleteChickCard={() => { }} onEditHenCard={(henId) => { setSelectedHenId(henId); setActiveModal('editHen'); }} onEditCoopCard={() => setActiveModal('editCoop')} onAddChickCard={() => setActiveModal('chicks')} onAddHenCard={() => setActiveModal('hen')} onAddCoopCard={() => setActiveModal('coop')} /> : active === 'sales' ? <SalesContent /> : <PlaceholderContent title={title} />}
+          <CalendarCard /><CalendarSummarySection /><EggToHenFooter /></div> : active === 'flock' ? <FlockContent refreshKey={flockRefreshKey} onEditChickCard={() => setActiveModal('editChicks')} onDeleteChickCard={() => { }} onEditHenCard={(henId) => { setSelectedHenId(henId); setActiveModal('editHen'); }} onEditCoopCard={() => setActiveModal('editCoop')} onAddChickCard={() => setActiveModal('chicks')} onAddHenCard={() => setActiveModal('hen')} onAddCoopCard={() => setActiveModal('coop')} /> : active === 'sales' ? <SalesContent /> : <PlaceholderContent title={title} />}
       </main>
 
       <BottomNav active={active} menuOpen={bottomNavOpen} setMenuOpen={setBottomNavOpen} closeSettingsNav={() => setSettingsOpen(false)} openChicksModal={() => setActiveModal('chicks')} openEggsModal={() => setActiveModal('eggs')} openMedsModal={() => setActiveModal('meds')} openExpenseModal={() => setActiveModal('expense')} />
