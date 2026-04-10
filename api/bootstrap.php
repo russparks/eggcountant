@@ -1140,7 +1140,7 @@ function upsert_hen(string $userId, array $item): void {
     $departedOn = $item['departed_on'] ?? $item['departedOn'] ?? null;
     $departureReason = $item['departure_reason'] ?? $item['departureReason'] ?? null;
 
-    persist_row('hens', (string) $item['id'], $userId, array_filter([
+    $henValues = array_filter([
         ...app_owned_identifier_values($item['id'] ?? null),
         'name' => $item['name'] ?? null,
         'breed_id' => $breedId,
@@ -1163,12 +1163,16 @@ function upsert_hen(string $userId, array $item): void {
         'image_url' => $item['photoUrl'] ?? null,
         'imageUrl' => $item['photoUrl'] ?? null,
         'notes' => $item['notes'] ?? null,
-        'departed_on' => $departedOn,
-        'departedOn' => $departedOn,
-        'departure_reason' => $departureReason,
-        'departureReason' => $departureReason,
         payload_column('hens') ?: '__skip_payload' => json_encode($item, JSON_UNESCAPED_SLASHES),
-    ], fn($value, $key) => $key !== '__skip_payload' && $value !== null, ARRAY_FILTER_USE_BOTH));
+    ], fn($value, $key) => $key !== '__skip_payload' && $value !== null, ARRAY_FILTER_USE_BOTH);
+
+    // Merge departure fields after filtering so explicit NULLs are preserved in the DB
+    $henValues['departed_on'] = $departedOn;
+    $henValues['departedOn'] = $departedOn;
+    $henValues['departure_reason'] = $departureReason;
+    $henValues['departureReason'] = $departureReason;
+
+    persist_row('hens', (string) $item['id'], $userId, $henValues);
 }
 
 function ensure_egg_log_temperature_storage(): void {

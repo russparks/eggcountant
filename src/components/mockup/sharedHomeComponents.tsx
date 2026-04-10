@@ -745,6 +745,39 @@ export function EditHenModal({ henId, onClose }: { henId?: string | null; onClos
     }
   };
 
+  const markActive = async () => {
+    if (!currentHen?.id) {
+      setDepartureError('No hen selected.');
+      return;
+    }
+    setSaving(true);
+    setDepartureError('');
+    try {
+      await dataApi.upsert('hens', {
+        ...currentHen,
+        id: currentHen.id,
+        name: editHenName.trim(),
+        breed_id: editSelectedBreed || null,
+        breed: selectedBreedLabel,
+        date_of_birth: editHenDob || null,
+        locationId: editHenCoop,
+        notes: editHenNotes || undefined,
+        photoUrl: editHenPhotoUrl || undefined,
+        status: 'active',
+        departed_on: null,
+        departure_reason: null,
+      } as any);
+      setDepartureStatusLabel('Hen Status');
+      setHenDepartureModalOpen(false);
+      setSaveSuccess(true);
+      window.setTimeout(() => { onClose(); }, 1800);
+    } catch (error) {
+      setDepartureError(error instanceof Error ? error.message : 'Unable to update status.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const markDeparted = async (reason: 'Passed Away' | 'Sold / Moved') => {
     if (!currentHen?.id) {
       setDepartureError('No hen selected.');
@@ -885,6 +918,7 @@ export function EditHenModal({ henId, onClose }: { henId?: string | null; onClos
             <div className="mt-4 grid gap-3">
               <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm disabled:opacity-50" onClick={() => markDeparted('Sold / Moved')}>{saving ? 'Saving...' : 'Sold / Moved'}</button>
               <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-4 py-3 text-[1rem] font-semibold text-[#d14d6f] shadow-sm disabled:opacity-50" onClick={() => markDeparted('Passed Away')}>{saving ? 'Saving...' : 'Passed Away'}</button>
+              <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] border border-[#c8f5d6] bg-[#f2fcf6] px-4 py-3 text-[1rem] font-semibold text-[#2e7d4f] shadow-sm disabled:opacity-50" onClick={() => markActive()}>{saving ? 'Saving...' : 'Active'}</button>
               <button type="button" disabled={saving} className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50" onClick={() => setHenDepartureModalOpen(false)}>Cancel</button>
             </div>
           </div>
