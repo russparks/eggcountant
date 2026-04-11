@@ -6,8 +6,7 @@ PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 LOG_FILE="${PROJECT_DIR}/deploy-log.md"
 REGISTER_DIR="${PROJECT_DIR}/deploy-register"
 META_FILE="${PROJECT_DIR}/deploy-meta.env"
-DESKTOP_DIR="${HOME}/Desktop"
-BACKUP_ROOT="${DESKTOP_DIR}/Egg BUs"
+BACKUP_ROOT="/Volumes/Local/Egg BUs"
 
 if [ -f "$META_FILE" ]; then
   set -a
@@ -59,9 +58,9 @@ echo "→ Checkpoint: $CHECKPOINT"
 echo "→ Backing up project media folder to $BACKUP_DIR ..."
 rm -rf "$BACKUP_DIR"
 mkdir -p "$BACKUP_DIR"
-rsync -a "$PROJECT_DIR/media/" "$BACKUP_DIR/media/"
+rsync -a --exclude='._*' "$PROJECT_DIR/media/" "$BACKUP_DIR/media/"
 
-if ! diff -qr "$PROJECT_DIR/media" "$BACKUP_DIR/media" >/dev/null; then
+if ! diff -qr --exclude='._*' "$PROJECT_DIR/media" "$BACKUP_DIR/media" >/dev/null; then
   echo "✗ Backup verification failed"
   exit 1
 fi
@@ -94,11 +93,11 @@ cd ${REMOTE}/media/icons
 glob chmod 644 *
 cd ${REMOTE}/media/hens
 glob chmod 644 *
--mkdir ${REMOTE}/media/hens/uploads
+mkdir -f ${REMOTE}/media/hens/uploads
 chmod 755 ${REMOTE}/media/hens/uploads
 cd ${REMOTE}/media/coops
 glob chmod 644 *
--mkdir ${REMOTE}/media/coops/uploads
+mkdir -f ${REMOTE}/media/coops/uploads
 chmod 755 ${REMOTE}/media/coops/uploads
 cd ${REMOTE}/media/nav-icons
 glob chmod 644 *
