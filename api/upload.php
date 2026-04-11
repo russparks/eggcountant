@@ -60,7 +60,11 @@ if ($file['size'] > 8 * 1024 * 1024) {
     exit;
 }
 
-$uploadDir = __DIR__ . '/../media/hens/uploads/';
+$type = $_POST['type'] ?? 'hen';
+if (!in_array($type, ['hen', 'coop'])) $type = 'hen';
+
+$mediaSubdir = $type === 'coop' ? 'coops' : 'hens';
+$uploadDir = __DIR__ . '/../media/' . $mediaSubdir . '/uploads/';
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0755, true);
 }
@@ -74,7 +78,7 @@ if (!is_writable($uploadDir)) {
 }
 
 $ext = $allowed[$mimeType];
-$filename = 'hen_' . bin2hex(random_bytes(8)) . '.' . $ext;
+$filename = $type . '_' . bin2hex(random_bytes(8)) . '.' . $ext;
 $destination = $uploadDir . $filename;
 
 if (!move_uploaded_file($file['tmp_name'], $destination)) {
@@ -83,4 +87,4 @@ if (!move_uploaded_file($file['tmp_name'], $destination)) {
     exit;
 }
 
-echo json_encode(['url' => '/egg/media/hens/uploads/' . $filename]);
+echo json_encode(['url' => '/egg/media/' . $mediaSubdir . '/uploads/' . $filename]);

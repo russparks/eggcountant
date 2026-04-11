@@ -601,11 +601,12 @@ export function AddCoopModal({ onClose }: { onClose: () => void }) {
   const [addCoopLocation, setAddCoopLocation] = useState('');
   const [addCoopPhotoAdded, setAddCoopPhotoAdded] = useState(false);
   const [addCoopPhotoUrl, setAddCoopPhotoUrl] = useState('');
-  const [addCoopPhotoMiniModalOpen, setAddCoopPhotoMiniModalOpen] = useState(false);
+  const [addCoopPhotoPickerOpen, setAddCoopPhotoPickerOpen] = useState(false);
+  const [addCoopPhotoUploading, setAddCoopPhotoUploading] = useState(false);
+  const addCoopCameraRef = useRef<HTMLInputElement>(null);
+  const addCoopLibraryRef = useRef<HTMLInputElement>(null);
   const [addCoopNotesOpen, setAddCoopNotesOpen] = useState(false);
   const [addCoopNotes, setAddCoopNotes] = useState('');
-  const [addCoopPhotoZoom, setAddCoopPhotoZoom] = useState(1);
-  const [addCoopPhotoOffset, setAddCoopPhotoOffset] = useState(0);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [existingLocations, setExistingLocations] = useState<string[]>([]);
@@ -619,16 +620,39 @@ export function AddCoopModal({ onClose }: { onClose: () => void }) {
     }).catch(() => setExistingLocations([]));
   }, []);
 
+  const handleAddCoopPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const { dataUrl, blob } = await resizeImage(file);
+    setAddCoopPhotoUrl(dataUrl);
+    setAddCoopPhotoAdded(true);
+    setAddCoopPhotoPickerOpen(false);
+    setAddCoopPhotoUploading(true);
+    e.target.value = '';
+    try {
+      const { url } = await dataApi.uploadPhoto(blob, 'photo.jpg', 'coop');
+      if (url) setAddCoopPhotoUrl(url);
+    } catch (err) {
+      console.error('Photo upload failed:', err);
+      setAddCoopPhotoUrl('');
+      setAddCoopPhotoAdded(false);
+      alert('Photo upload failed — please try again. ' + (err instanceof Error ? err.message : ''));
+    } finally {
+      setAddCoopPhotoUploading(false);
+    }
+  };
+
   const saveCoop = async () => {
     if (!addCoopName.trim()) return;
     setSaving(true);
     try {
+      const safePhotoUrl = addCoopPhotoUrl && !addCoopPhotoUrl.startsWith('data:') ? addCoopPhotoUrl : undefined;
       await dataApi.upsert('locations', {
         id: crypto.randomUUID(),
         name: addCoopName.trim(),
         location_label: addCoopLocation,
         status: 'active',
-        photoUrl: addCoopPhotoUrl || undefined,
+        photoUrl: safePhotoUrl,
         notes: addCoopNotes || undefined,
       } as any);
       setSaveSuccess(true);
@@ -669,10 +693,18 @@ export function AddCoopModal({ onClose }: { onClose: () => void }) {
 
             <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
               <div className="flex items-center justify-between gap-3">
-                <div className="text-[1rem] font-semibold text-[#6f4bb8]">{addCoopPhotoAdded ? 'Current photo' : 'No photo added yet'}</div>
-                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-4 py-3 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setAddCoopPhotoMiniModalOpen(true)}>{addCoopPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
+                <div className="text-[1rem] font-semibold text-[#6f4bb8]">
+                  {addCoopPhotoUploading ? 'Uploading photo…' : addCoopPhotoAdded ? 'Current photo' : 'No photo added yet'}
+                </div>
+                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-4 py-3 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setAddCoopPhotoPickerOpen(true)} disabled={addCoopPhotoUploading}>
+                  {addCoopPhotoAdded ? 'Edit photo' : 'Add photo'}
+                </button>
               </div>
-              {addCoopPhotoAdded ? <div className="mt-3 flex justify-center"><img src="/egg/media/coops/coop-1.png" alt="Coop" className="h-[8rem] w-full rounded-[1rem] border border-[#e7ddfb] object-cover" /></div> : null}
+              {addCoopPhotoAdded && addCoopPhotoUrl ? (
+                <div className="mt-3 flex justify-center">
+                  <img src={addCoopPhotoUrl} alt="Coop" className="h-[8rem] w-full rounded-[1rem] border border-[#e7ddfb] object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                </div>
+              ) : null}
             </div>
 
             {addCoopNotesOpen ? (
@@ -682,40 +714,29 @@ export function AddCoopModal({ onClose }: { onClose: () => void }) {
               </div>
             ) : null}
 
+            <input ref={addCoopCameraRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleAddCoopPhoto} />
+            <input ref={addCoopLibraryRef} type="file" accept="image/*" className="hidden" onChange={handleAddCoopPhoto} />
+
             <div className="grid grid-cols-2 gap-3">
               <button type="button" onClick={onClose} className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#6f4bb8] shadow-sm">Cancel</button>
-              <button type="button" onClick={saveCoop} disabled={saving || saveSuccess} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Added ✓' : saving ? 'Saving...' : 'Save'}</button>
+              <button type="button" onClick={saveCoop} disabled={saving || saveSuccess || addCoopPhotoUploading} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Added ✓' : saving ? 'Saving...' : 'Save'}</button>
             </div>
           </div>
         </div>
       </div>
 
-      {addCoopPhotoMiniModalOpen ? (
+      {addCoopPhotoPickerOpen ? (
         <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
-          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
-            <div className="flex items-start justify-between gap-4">
-              <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Photograph coop</div>
-              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setAddCoopPhotoMiniModalOpen(false)}>×</button>
-            </div>
-            <div className="mt-4 flex justify-center">
-              <div className="relative h-[11rem] w-full max-w-[14rem] overflow-hidden rounded-[1rem] border-2 border-[#e7ddfb] bg-[#f3edff]">
-                {addCoopPhotoAdded ? <img src="/egg/media/coops/coop-1.png" alt="Coop preview" className="absolute inset-0 h-full w-full object-cover" style={{ transform: `translateX(${addCoopPhotoOffset}px) scale(${addCoopPhotoZoom})` }} /> : <div className="absolute inset-0 flex items-center justify-center text-center text-[0.95rem] font-semibold text-[#c4b2f4]" style={{ transform: `translateX(${addCoopPhotoOffset}px) scale(${addCoopPhotoZoom})` }}>Coop photo preview</div>}
-              </div>
-            </div>
-            <div className="mt-4 space-y-3">
-              <div>
-                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Zoom</div>
-                <input type="range" min="1" max="2" step="0.1" value={addCoopPhotoZoom} onChange={(e) => setAddCoopPhotoZoom(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
-              </div>
-              <div>
-                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Pan</div>
-                <input type="range" min="-30" max="30" step="1" value={addCoopPhotoOffset} onChange={(e) => setAddCoopPhotoOffset(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setAddCoopPhotoAdded(true)}>Upload</button>
-                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setAddCoopPhotoAdded(true)}>Take photo</button>
-              </div>
-              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => { setAddCoopPhotoAdded(true); setAddCoopPhotoMiniModalOpen(false); }}>Save photo</button>
+          <div className={`w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
+            <div className="text-[1.3rem] font-bold text-[#6f4bb8]">{addCoopPhotoAdded ? 'Change Photo' : 'Add Photo'}</div>
+            <div className="mt-4 grid gap-3">
+              <button type="button" className="flex items-center gap-3 rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => addCoopCameraRef.current?.click()}>
+                <span className="text-[1.4rem]">📷</span> Take Photo
+              </button>
+              <button type="button" className="flex items-center gap-3 rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => addCoopLibraryRef.current?.click()}>
+                <span className="text-[1.4rem]">🖼️</span> Upload from Library
+              </button>
+              <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setAddCoopPhotoPickerOpen(false)}>Cancel</button>
             </div>
           </div>
         </div>
@@ -729,11 +750,12 @@ export function EditCoopModal({ coopId, onClose }: { coopId?: string | null; onC
   const [coopLocation, setCoopLocation] = useState('');
   const [coopPhotoAdded, setCoopPhotoAdded] = useState(false);
   const [coopPhotoUrl, setCoopPhotoUrl] = useState('');
-  const [coopPhotoMiniModalOpen, setCoopPhotoMiniModalOpen] = useState(false);
+  const [coopPhotoPickerOpen, setCoopPhotoPickerOpen] = useState(false);
+  const [coopPhotoUploading, setCoopPhotoUploading] = useState(false);
+  const coopCameraRef = useRef<HTMLInputElement>(null);
+  const coopLibraryRef = useRef<HTMLInputElement>(null);
   const [coopNotesOpen, setCoopNotesOpen] = useState(false);
   const [coopNotes, setCoopNotes] = useState('');
-  const [coopPhotoZoom, setCoopPhotoZoom] = useState(1);
-  const [coopPhotoOffset, setCoopPhotoOffset] = useState(0);
   const [coops, setCoops] = useState<any[]>([]);
   const [existingLocations, setExistingLocations] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
@@ -774,17 +796,40 @@ export function EditCoopModal({ coopId, onClose }: { coopId?: string | null; onC
     }
   };
 
+  const handleCoopPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const { dataUrl, blob } = await resizeImage(file);
+    setCoopPhotoUrl(dataUrl);
+    setCoopPhotoAdded(true);
+    setCoopPhotoPickerOpen(false);
+    setCoopPhotoUploading(true);
+    e.target.value = '';
+    try {
+      const { url } = await dataApi.uploadPhoto(blob, 'photo.jpg', 'coop');
+      if (url) setCoopPhotoUrl(url);
+    } catch (err) {
+      console.error('Photo upload failed:', err);
+      setCoopPhotoUrl('');
+      setCoopPhotoAdded(false);
+      alert('Photo upload failed — please try again. ' + (err instanceof Error ? err.message : ''));
+    } finally {
+      setCoopPhotoUploading(false);
+    }
+  };
+
   const saveCoop = async () => {
     if (!currentCoop?.id || !coopName.trim()) return;
     setSaving(true);
     try {
+      const safePhotoUrl = coopPhotoUrl && !coopPhotoUrl.startsWith('data:') ? coopPhotoUrl : undefined;
       await dataApi.upsert('locations', {
         ...currentCoop,
         id: currentCoop.id,
         name: coopName.trim(),
         location_label: coopLocation,
         notes: coopNotes || undefined,
-        photoUrl: coopPhotoUrl || undefined,
+        photoUrl: safePhotoUrl,
       } as any);
       setSaveSuccess(true);
       window.setTimeout(() => { onClose(); }, 1800);
@@ -824,10 +869,18 @@ export function EditCoopModal({ coopId, onClose }: { coopId?: string | null; onC
 
             <div className="rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white/85 px-4 py-3 shadow-sm">
               <div className="flex items-center justify-between gap-3">
-                <div className="text-[1rem] font-semibold text-[#6f4bb8]">{coopPhotoAdded ? 'Current photo' : 'No photo added yet'}</div>
-                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-4 py-3 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setCoopPhotoMiniModalOpen(true)}>{coopPhotoAdded ? 'Edit photo' : 'Add photo'}</button>
+                <div className="text-[1rem] font-semibold text-[#6f4bb8]">
+                  {coopPhotoUploading ? 'Uploading photo…' : coopPhotoAdded ? 'Current photo' : 'No photo added yet'}
+                </div>
+                <button type="button" className="rounded-[var(--ui-radius)] bg-[#f3edff] px-4 py-3 text-[0.95rem] font-semibold text-[#6f4bb8]" onClick={() => setCoopPhotoPickerOpen(true)} disabled={coopPhotoUploading}>
+                  {coopPhotoAdded ? 'Edit photo' : 'Add photo'}
+                </button>
               </div>
-              {coopPhotoAdded ? <div className="mt-3 flex justify-center"><img src={coopPhotoUrl || '/egg/media/icons/ico-coop.png'} alt="Coop" className="h-[8rem] w-full rounded-[1rem] border border-[#e7ddfb] object-cover" /></div> : null}
+              {coopPhotoAdded && coopPhotoUrl ? (
+                <div className="mt-3 flex justify-center">
+                  <img src={coopPhotoUrl} alt="Coop" className="h-[8rem] w-full rounded-[1rem] border border-[#e7ddfb] object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                </div>
+              ) : null}
             </div>
 
             {coopNotesOpen ? (
@@ -837,11 +890,14 @@ export function EditCoopModal({ coopId, onClose }: { coopId?: string | null; onC
               </div>
             ) : null}
 
+            <input ref={coopCameraRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleCoopPhoto} />
+            <input ref={coopLibraryRef} type="file" accept="image/*" className="hidden" onChange={handleCoopPhoto} />
+
             <button type="button" onClick={() => setDeleteModalOpen(true)} disabled={saving} className="w-full rounded-[var(--ui-radius)] border border-[#f4c7d2] bg-[#fff6f8] px-5 py-3 text-[1rem] font-semibold text-[#d14d6f] shadow-sm disabled:opacity-50">Delete coop</button>
 
             <div className="grid grid-cols-2 gap-3">
               <button type="button" onClick={onClose} className="w-full rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white/85 px-5 py-4 text-[1.05rem] font-semibold text-[#6f4bb8] shadow-sm">Cancel</button>
-              <button type="button" onClick={saveCoop} disabled={saving || saveSuccess} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Updated ✓' : saving ? 'Saving...' : 'Save'}</button>
+              <button type="button" onClick={saveCoop} disabled={saving || saveSuccess || coopPhotoUploading} className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)] disabled:opacity-50">{saveSuccess ? 'Updated ✓' : saving ? 'Saving...' : 'Save'}</button>
             </div>
           </div>
         </div>
@@ -861,32 +917,18 @@ export function EditCoopModal({ coopId, onClose }: { coopId?: string | null; onC
         </div>
       ) : null}
 
-      {coopPhotoMiniModalOpen ? (
+      {coopPhotoPickerOpen ? (
         <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#2b124f]/35 p-4 backdrop-blur-[2px]">
-          <div className="w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]">
-            <div className="flex items-start justify-between gap-4">
-              <div className="text-[1.25rem] font-bold text-[#6f4bb8]">Photograph coop</div>
-              <button type="button" className="text-[2rem] leading-none text-[#c4b2f4]" onClick={() => setCoopPhotoMiniModalOpen(false)}>×</button>
-            </div>
-            <div className="mt-4 flex justify-center">
-              <div className="relative h-[11rem] w-full max-w-[14rem] overflow-hidden rounded-[1rem] border-2 border-[#e7ddfb] bg-[#f3edff]">
-                <img src="/egg/media/coops/coop-1.png" alt="Coop preview" className="absolute inset-0 h-full w-full object-cover" style={{ transform: `translateX(${coopPhotoOffset}px) scale(${coopPhotoZoom})` }} />
-              </div>
-            </div>
-            <div className="mt-4 space-y-3">
-              <div>
-                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Zoom</div>
-                <input type="range" min="1" max="2" step="0.1" value={coopPhotoZoom} onChange={(e) => setCoopPhotoZoom(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
-              </div>
-              <div>
-                <div className="text-[0.8rem] font-bold uppercase tracking-wide text-[#9E9E9E]">Pan</div>
-                <input type="range" min="-30" max="30" step="1" value={coopPhotoOffset} onChange={(e) => setCoopPhotoOffset(Number(e.target.value))} className="mt-2 h-2 w-full accent-[#6f4bb8]" />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setCoopPhotoAdded(true)}>Upload</button>
-                <button type="button" className="rounded-[var(--ui-radius)] border border-[#d9c9fb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => setCoopPhotoAdded(true)}>Take photo</button>
-              </div>
-              <button type="button" className="w-full rounded-[var(--ui-radius)] bg-[#6f4bb8] px-5 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => { setCoopPhotoAdded(true); setCoopPhotoMiniModalOpen(false); }}>Save photo</button>
+          <div className={`w-full max-w-[24rem] rounded-[var(--ui-radius)] border border-[#d9c9fb] ${surfaceGradient} p-4 shadow-[0_20px_50px_rgba(47,31,77,0.16)]`}>
+            <div className="text-[1.3rem] font-bold text-[#6f4bb8]">{coopPhotoAdded ? 'Change Photo' : 'Add Photo'}</div>
+            <div className="mt-4 grid gap-3">
+              <button type="button" className="flex items-center gap-3 rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => coopCameraRef.current?.click()}>
+                <span className="text-[1.4rem]">📷</span> Take Photo
+              </button>
+              <button type="button" className="flex items-center gap-3 rounded-[var(--ui-radius)] border border-[#e7ddfb] bg-white px-4 py-3 text-[1rem] font-semibold text-[#6f4bb8] shadow-sm" onClick={() => coopLibraryRef.current?.click()}>
+                <span className="text-[1.4rem]">🖼️</span> Upload from Library
+              </button>
+              <button type="button" className="rounded-[var(--ui-radius)] bg-[#6f4bb8] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_10px_24px_rgba(47,31,77,0.14)]" onClick={() => setCoopPhotoPickerOpen(false)}>Cancel</button>
             </div>
           </div>
         </div>

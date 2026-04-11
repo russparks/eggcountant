@@ -98,6 +98,8 @@ glob chmod 644 *
 chmod 755 ${REMOTE}/media/hens/uploads
 cd ${REMOTE}/media/coops
 glob chmod 644 *
+-mkdir ${REMOTE}/media/coops/uploads
+chmod 755 ${REMOTE}/media/coops/uploads
 cd ${REMOTE}/media/nav-icons
 glob chmod 644 *
 bye
