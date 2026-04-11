@@ -1335,7 +1335,7 @@ export default function AppShellPage({ title, active }: { title: string; active:
       {activeModal === 'logout' ? <ConfirmModal title="Log out?" description="Are you sure you want to log out of your account?" confirmLabel="Log out" onClose={() => setActiveModal('none')} onConfirm={() => setActiveModal('none')} /> : null}
       {activeModal === 'eggs' ? <AddEggsModal onClose={() => setActiveModal('none')} /> : null}
       {activeModal === 'chicks' ? <AddChicksModal onClose={() => setActiveModal('none')} /> : null}
-      {activeModal === 'hen' ? <AddHenModal onClose={() => setActiveModal('none')} /> : null}
+      {activeModal === 'hen' ? <AddHenModal onClose={() => { setActiveModal('none'); setFlockRefreshKey((k) => k + 1); }} /> : null}
       {activeModal === 'coop' ? <AddCoopModal onClose={() => { setActiveModal('none'); setFlockRefreshKey((k) => k + 1); }} /> : null}
       {activeModal === 'editHen' ? <EditHenModal henId={selectedHenId} onClose={() => { setActiveModal('none'); setFlockRefreshKey((k) => k + 1); }} /> : null}
       {activeModal === 'editCoop' ? <EditCoopModal coopId={selectedCoopId} onClose={() => { setActiveModal('none'); setFlockRefreshKey((k) => k + 1); }} /> : null}

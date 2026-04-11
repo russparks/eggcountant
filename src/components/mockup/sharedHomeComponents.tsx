@@ -494,7 +494,6 @@ export function AddHenModal({ onClose }: { onClose: () => void }) {
       setSaveSuccess(true);
       window.setTimeout(() => {
         onClose();
-        window.location.reload();
       }, 1800);
     } finally {
       setSaving(false);
